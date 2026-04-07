@@ -396,6 +396,41 @@
             border-color: rgba(255, 136, 68, 0.5);
         }
 
+        .card-nuke .card-bg {
+            background: linear-gradient(135deg, #2a0a0a 0%, #1a0505 100%);
+        }
+        .card-nuke .card-art::after {
+            background: linear-gradient(to top, #2a0a0a, transparent);
+        }
+        .card-nuke .card-genre { color: #ff4444; }
+        .card-nuke .card-title { color: #ff6666; }
+        .card-nuke .feature-tag {
+            background: rgba(255, 68, 68, 0.15);
+            color: #ff4444;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+        .card-nuke .play-btn {
+            background: linear-gradient(135deg, #aa2222, #cc4444);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 68, 68, 0.4);
+        }
+        .card-nuke:hover {
+            box-shadow: 0 30px 60px rgba(255, 68, 68, 0.2);
+        }
+        .card-nuke .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 68, 68, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-nuke:hover .glow-border {
+            border-color: rgba(255, 68, 68, 0.5);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -448,7 +483,7 @@
     <div class="studio-badge">AI Slop Games Incorporated</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>3</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>4</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -530,6 +565,34 @@
                     <span class="feature-tag">Wave-Based</span>
                     <span class="feature-tag">Arcade</span>
                     <span class="feature-tag">Controller Support</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Thermonuclear War Game -->
+    <a href="https://thermonuclearwargame.onrender.com" target="_blank" rel="noopener" class="game-card card-nuke">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-nuke"></canvas>
+                <div class="game-icon">&#x2622;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Global Thermonuclear Strategy</div>
+                <div class="card-title">Thermonuclear War</div>
+                <p class="card-desc">
+                    The only winning move is to play. Launch ICBMs, manage your nuclear arsenal, and try not to trigger mutually assured destruction. Inspired by that one scene from WarGames &mdash; except this time, WOPR doesn't get to say no.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Strategy</span>
+                    <span class="feature-tag">Cold War</span>
+                    <span class="feature-tag">Nuclear</span>
+                    <span class="feature-tag">WarGames</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -837,17 +900,122 @@ function drawDino(ctx, x, y, scale, color) {
     ctx.globalAlpha = 1;
 }
 
+function drawNukeScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Dark sky
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#0a0000');
+    sky.addColorStop(1, '#1a0505');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // Scanline grid (war room display)
+    ctx.strokeStyle = 'rgba(255,50,50,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let y = 0; y < H; y += 6) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(W, y);
+        ctx.stroke();
+    }
+
+    // World map outline (simplified continents)
+    ctx.strokeStyle = 'rgba(255,68,68,0.2)';
+    ctx.lineWidth = 1;
+    // North America
+    ctx.beginPath();
+    ctx.ellipse(W*0.22, H*0.4, 35, 22, -0.2, 0, Math.PI*2);
+    ctx.stroke();
+    // Europe/Asia
+    ctx.beginPath();
+    ctx.ellipse(W*0.6, H*0.35, 50, 18, 0.1, 0, Math.PI*2);
+    ctx.stroke();
+    // South America
+    ctx.beginPath();
+    ctx.ellipse(W*0.28, H*0.65, 15, 22, 0.2, 0, Math.PI*2);
+    ctx.stroke();
+    // Africa
+    ctx.beginPath();
+    ctx.ellipse(W*0.5, H*0.6, 18, 24, 0, 0, Math.PI*2);
+    ctx.stroke();
+
+    // Missile trajectories (arcs)
+    ctx.strokeStyle = 'rgba(255,68,68,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 4]);
+    for (let i = 0; i < 5; i++) {
+        const sx = W*0.15 + Math.random()*W*0.15;
+        const sy = H*0.3 + Math.random()*H*0.2;
+        const ex = W*0.5 + Math.random()*W*0.3;
+        const ey = H*0.25 + Math.random()*H*0.3;
+        const cp = (sx+ex)/2;
+        const cpy = Math.min(sy, ey) - 30 - Math.random()*30;
+        ctx.beginPath();
+        ctx.moveTo(sx, sy);
+        ctx.quadraticCurveTo(cp, cpy, ex, ey);
+        ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    // Impact points with glow
+    const impacts = [
+        [W*0.6, H*0.35], [W*0.7, H*0.4], [W*0.55, H*0.3],
+        [W*0.22, H*0.4], [W*0.75, H*0.45]
+    ];
+    for (const [ix, iy] of impacts) {
+        const r = Math.random()*10+6;
+        const grad = ctx.createRadialGradient(ix, iy, 0, ix, iy, r);
+        grad.addColorStop(0, 'rgba(255,220,100,0.7)');
+        grad.addColorStop(0.4, 'rgba(255,68,68,0.4)');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(ix, iy, r, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    // Mushroom cloud silhouette (center-right)
+    const mx = W*0.65, my = H*0.38;
+    ctx.fillStyle = 'rgba(255,100,50,0.15)';
+    ctx.beginPath();
+    ctx.ellipse(mx, my-15, 20, 12, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillRect(mx-4, my-5, 8, 25);
+    ctx.beginPath();
+    ctx.ellipse(mx, my+20, 12, 5, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // DEFCON indicator
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(8, 8, 80, 22);
+    ctx.fillStyle = '#ff4444';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText('DEFCON 1', 14, 22);
+
+    // Blinking warning
+    ctx.fillStyle = 'rgba(255,68,68,0.5)';
+    ctx.font = 'bold 9px monospace';
+    ctx.fillText('LAUNCH DETECTED', W*0.55, H*0.15);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
     drawWarzoneScene(document.getElementById('canvas-warzone'));
     drawDinoScene(document.getElementById('canvas-dino'));
+    drawNukeScene(document.getElementById('canvas-nuke'));
 });
 
 window.addEventListener('resize', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
     drawWarzoneScene(document.getElementById('canvas-warzone'));
     drawDinoScene(document.getElementById('canvas-dino'));
+    drawNukeScene(document.getElementById('canvas-nuke'));
 });
 </script>
 
