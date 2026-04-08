@@ -466,6 +466,41 @@
             border-color: rgba(170, 102, 255, 0.5);
         }
 
+        .card-shard .card-bg {
+            background: linear-gradient(135deg, #0a1a2a 0%, #051525 100%);
+        }
+        .card-shard .card-art::after {
+            background: linear-gradient(to top, #0a1a2a, transparent);
+        }
+        .card-shard .card-genre { color: #00ddff; }
+        .card-shard .card-title { color: #55eeff; }
+        .card-shard .feature-tag {
+            background: rgba(0, 221, 255, 0.15);
+            color: #00ddff;
+            border: 1px solid rgba(0, 221, 255, 0.3);
+        }
+        .card-shard .play-btn {
+            background: linear-gradient(135deg, #0088aa, #00bbdd);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 221, 255, 0.4);
+        }
+        .card-shard:hover {
+            box-shadow: 0 30px 60px rgba(0, 221, 255, 0.2);
+        }
+        .card-shard .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 221, 255, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-shard:hover .glow-border {
+            border-color: rgba(0, 221, 255, 0.5);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -518,7 +553,7 @@
     <div class="studio-badge">AI Slop Games Incorporated</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>5</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>6</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -656,6 +691,34 @@
                     <span class="feature-tag">Shooter</span>
                     <span class="feature-tag">Sci-Fi</span>
                     <span class="feature-tag">Wave-Based</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Shard Shooter -->
+    <a href="https://shardshooter.onrender.com" target="_blank" rel="noopener" class="game-card card-shard">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-shard"></canvas>
+                <div class="game-icon">&#x1F48E;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Action / Shoot &apos;em Up</div>
+                <div class="card-title">Shard Shooter</div>
+                <p class="card-desc">
+                    Crystals are falling from the sky and it's your job to blast them into oblivion. Shatter shards into smaller fragments, dodge the debris, and chain combos for maximum destruction. It's like Asteroids met a disco ball &mdash; and they both chose violence.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Shooter</span>
+                    <span class="feature-tag">Action</span>
+                    <span class="feature-tag">Combo System</span>
+                    <span class="feature-tag">Fast-Paced</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -1189,6 +1252,136 @@ function drawUfoScene(canvas) {
     ctx.fillText('SCORE 4200', W-74, 22);
 }
 
+function drawShardScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Deep space background
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#020a18');
+    sky.addColorStop(1, '#0a1a2a');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // Stars
+    for (let i = 0; i < 50; i++) {
+        ctx.fillStyle = `rgba(180,220,255,${Math.random()*0.6+0.2})`;
+        ctx.beginPath();
+        ctx.arc(Math.random()*W, Math.random()*H, Math.random()*1.2+0.3, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    // Crystal shards
+    function drawShard(x, y, size, angle, color, glowColor) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+
+        // Glow
+        const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, size*2);
+        glow.addColorStop(0, glowColor);
+        glow.addColorStop(1, 'transparent');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(0, 0, size*2, 0, Math.PI*2);
+        ctx.fill();
+
+        // Main crystal shape
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0, -size*1.4);
+        ctx.lineTo(size*0.6, -size*0.3);
+        ctx.lineTo(size*0.4, size*0.8);
+        ctx.lineTo(-size*0.4, size*0.8);
+        ctx.lineTo(-size*0.6, -size*0.3);
+        ctx.closePath();
+        ctx.fill();
+
+        // Highlight facet
+        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+        ctx.beginPath();
+        ctx.moveTo(0, -size*1.4);
+        ctx.lineTo(size*0.6, -size*0.3);
+        ctx.lineTo(0, 0);
+        ctx.lineTo(-size*0.2, -size*0.5);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    drawShard(W*0.2, H*0.3, 18, 0.3, 'rgba(0,200,255,0.7)', 'rgba(0,200,255,0.15)');
+    drawShard(W*0.5, H*0.2, 24, -0.5, 'rgba(0,255,200,0.6)', 'rgba(0,255,200,0.12)');
+    drawShard(W*0.75, H*0.35, 15, 0.8, 'rgba(100,180,255,0.7)', 'rgba(100,180,255,0.15)');
+    drawShard(W*0.35, H*0.55, 12, -1.2, 'rgba(0,220,255,0.5)', 'rgba(0,220,255,0.1)');
+    drawShard(W*0.85, H*0.6, 10, 2.0, 'rgba(50,255,220,0.6)', 'rgba(50,255,220,0.1)');
+
+    // Shatter fragments (small triangles)
+    for (let i = 0; i < 12; i++) {
+        const fx = W*0.15 + Math.random()*W*0.7;
+        const fy = H*0.15 + Math.random()*H*0.6;
+        const fs = Math.random()*5+2;
+        const fa = Math.random()*Math.PI*2;
+        ctx.save();
+        ctx.translate(fx, fy);
+        ctx.rotate(fa);
+        ctx.fillStyle = `rgba(0,${180+Math.random()*75},255,${0.3+Math.random()*0.4})`;
+        ctx.beginPath();
+        ctx.moveTo(0, -fs);
+        ctx.lineTo(fs*0.7, fs*0.5);
+        ctx.lineTo(-fs*0.7, fs*0.5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+
+    // Player ship at bottom
+    const px = W*0.5, py = H*0.85;
+    ctx.fillStyle = '#00ddff';
+    ctx.beginPath();
+    ctx.moveTo(px, py-10);
+    ctx.lineTo(px+8, py+5);
+    ctx.lineTo(px+3, py+3);
+    ctx.lineTo(px, py+8);
+    ctx.lineTo(px-3, py+3);
+    ctx.lineTo(px-8, py+5);
+    ctx.closePath();
+    ctx.fill();
+
+    // Laser shots from ship
+    ctx.strokeStyle = '#00ffdd';
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = '#00ffdd';
+    ctx.shadowBlur = 6;
+    ctx.beginPath(); ctx.moveTo(px, py-10); ctx.lineTo(px-15, H*0.25); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px, py-10); ctx.lineTo(px+20, H*0.35); ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Impact sparks on shards
+    for (let i = 0; i < 5; i++) {
+        const sx = W*0.3 + Math.random()*W*0.4;
+        const sy = H*0.15 + Math.random()*H*0.35;
+        const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, 8);
+        grad.addColorStop(0, 'rgba(255,255,255,0.7)');
+        grad.addColorStop(0.3, 'rgba(0,255,220,0.4)');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 8, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    // HUD
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(8, 8, 80, 22);
+    ctx.fillStyle = '#00ddff';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText('COMBO x12', 12, 22);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -1196,6 +1389,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawDinoScene(document.getElementById('canvas-dino'));
     drawNukeScene(document.getElementById('canvas-nuke'));
     drawUfoScene(document.getElementById('canvas-ufo'));
+    drawShardScene(document.getElementById('canvas-shard'));
 });
 
 window.addEventListener('resize', () => {
@@ -1204,6 +1398,7 @@ window.addEventListener('resize', () => {
     drawDinoScene(document.getElementById('canvas-dino'));
     drawNukeScene(document.getElementById('canvas-nuke'));
     drawUfoScene(document.getElementById('canvas-ufo'));
+    drawShardScene(document.getElementById('canvas-shard'));
 });
 </script>
 
