@@ -501,6 +501,41 @@
             border-color: rgba(0, 221, 255, 0.5);
         }
 
+        .card-color .card-bg {
+            background: linear-gradient(135deg, #1a0a28 0%, #0f0520 100%);
+        }
+        .card-color .card-art::after {
+            background: linear-gradient(to top, #1a0a28, transparent);
+        }
+        .card-color .card-genre { color: #ff66aa; }
+        .card-color .card-title { color: #ff88cc; }
+        .card-color .feature-tag {
+            background: rgba(255, 102, 170, 0.15);
+            color: #ff66aa;
+            border: 1px solid rgba(255, 102, 170, 0.3);
+        }
+        .card-color .play-btn {
+            background: linear-gradient(135deg, #aa2266, #cc4488);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 102, 170, 0.4);
+        }
+        .card-color:hover {
+            box-shadow: 0 30px 60px rgba(255, 102, 170, 0.2);
+        }
+        .card-color .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 102, 170, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-color:hover .glow-border {
+            border-color: rgba(255, 102, 170, 0.5);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -553,7 +588,7 @@
     <div class="studio-badge">AI Slop Games Incorporated</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>6</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>7</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -719,6 +754,34 @@
                     <span class="feature-tag">Action</span>
                     <span class="feature-tag">Combo System</span>
                     <span class="feature-tag">Fast-Paced</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Color Puzzler -->
+    <a href="https://colorpuzzler.onrender.com/" target="_blank" rel="noopener" class="game-card card-color">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-color"></canvas>
+                <div class="game-icon">&#x1F3A8;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Puzzle / Brain Teaser</div>
+                <div class="card-title">Color Puzzler</div>
+                <p class="card-desc">
+                    We told Claude to make a "simple color matching game" and it came back with something that makes our brains hurt. Match, swap, and chain colors before the board fills up. Sounds easy &mdash; you'll be wrong. Our QA tester (a cat) gave up on level 3.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Puzzle</span>
+                    <span class="feature-tag">Color Match</span>
+                    <span class="feature-tag">Brain Teaser</span>
+                    <span class="feature-tag">Addictive</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -1382,6 +1445,105 @@ function drawShardScene(canvas) {
     ctx.fillText('COMBO x12', 12, 22);
 }
 
+function drawColorScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Background
+    ctx.fillStyle = '#12071e';
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle grid
+    ctx.strokeStyle = 'rgba(255,102,170,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x < W; x += 25) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y < H; y += 25) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // Color puzzle grid
+    const colors = ['#ff4488','#44bbff','#ffcc22','#44ff88','#aa66ff','#ff6644'];
+    const gridCols = 6, gridRows = 5;
+    const cellSize = Math.min((W - 60) / gridCols, (H - 40) / gridRows);
+    const offsetX = (W - gridCols * cellSize) / 2;
+    const offsetY = (H - gridRows * cellSize) / 2;
+
+    for (let r = 0; r < gridRows; r++) {
+        for (let c = 0; c < gridCols; c++) {
+            const x = offsetX + c * cellSize;
+            const y = offsetY + r * cellSize;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const padding = 3;
+
+            // Cell glow
+            const glow = ctx.createRadialGradient(
+                x + cellSize/2, y + cellSize/2, 0,
+                x + cellSize/2, y + cellSize/2, cellSize*0.6
+            );
+            glow.addColorStop(0, color + '30');
+            glow.addColorStop(1, 'transparent');
+            ctx.fillStyle = glow;
+            ctx.fillRect(x, y, cellSize, cellSize);
+
+            // Cell
+            ctx.fillStyle = color + 'cc';
+            ctx.beginPath();
+            ctx.roundRect(x + padding, y + padding, cellSize - padding*2, cellSize - padding*2, 4);
+            ctx.fill();
+
+            // Shine
+            ctx.fillStyle = 'rgba(255,255,255,0.15)';
+            ctx.beginPath();
+            ctx.roundRect(x + padding, y + padding, cellSize - padding*2, (cellSize - padding*2)*0.4, [4, 4, 0, 0]);
+            ctx.fill();
+        }
+    }
+
+    // "Selected" highlight on a couple cells
+    const highlights = [[1,2],[1,3],[2,3]];
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2;
+    ctx.shadowColor = '#ffffff';
+    ctx.shadowBlur = 8;
+    highlights.forEach(([r,c]) => {
+        const x = offsetX + c * cellSize + 3;
+        const y = offsetY + r * cellSize + 3;
+        ctx.beginPath();
+        ctx.roundRect(x, y, cellSize - 6, cellSize - 6, 4);
+        ctx.stroke();
+    });
+    ctx.shadowBlur = 0;
+
+    // Chain line between selected
+    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(offsetX + 2*cellSize + cellSize/2, offsetY + 1*cellSize + cellSize/2);
+    ctx.lineTo(offsetX + 3*cellSize + cellSize/2, offsetY + 1*cellSize + cellSize/2);
+    ctx.lineTo(offsetX + 3*cellSize + cellSize/2, offsetY + 2*cellSize + cellSize/2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Score sparkles
+    for (let i = 0; i < 8; i++) {
+        const sx = Math.random() * W;
+        const sy = Math.random() * H;
+        const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, 5);
+        grad.addColorStop(0, 'rgba(255,255,255,0.5)');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(sx, sy, 5, 0, Math.PI*2);
+        ctx.fill();
+    }
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -1390,6 +1552,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawNukeScene(document.getElementById('canvas-nuke'));
     drawUfoScene(document.getElementById('canvas-ufo'));
     drawShardScene(document.getElementById('canvas-shard'));
+    drawColorScene(document.getElementById('canvas-color'));
 });
 
 window.addEventListener('resize', () => {
@@ -1399,6 +1562,7 @@ window.addEventListener('resize', () => {
     drawNukeScene(document.getElementById('canvas-nuke'));
     drawUfoScene(document.getElementById('canvas-ufo'));
     drawShardScene(document.getElementById('canvas-shard'));
+    drawColorScene(document.getElementById('canvas-color'));
 });
 </script>
 
