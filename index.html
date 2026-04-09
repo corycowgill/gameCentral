@@ -54,7 +54,7 @@
             {"@type": "ListItem", "position": 4, "name": "Thermonuclear War", "url": "https://thermonuclearwargame.onrender.com"},
             {"@type": "ListItem", "position": 5, "name": "UFO Shooter", "url": "https://ufoshooter.onrender.com"},
             {"@type": "ListItem", "position": 6, "name": "Shard Shooter", "url": "https://shardshooter.onrender.com"},
-            {"@type": "ListItem", "position": 7, "name": "Color Puzzler", "url": "https://colorpuzzler.onrender.com"},
+            {"@type": "ListItem", "position": 7, "name": "Reef Rescue", "url": "https://colorpuzzler.onrender.com"},
             {"@type": "ListItem", "position": 8, "name": "Cowgill Bowl", "url": "https://cowgillbowl.onrender.com"}
         ]
     }
@@ -557,38 +557,38 @@
         }
 
         .card-color .card-bg {
-            background: linear-gradient(135deg, #1a0a28 0%, #0f0520 100%);
+            background: linear-gradient(135deg, #042a30 0%, #031820 100%);
         }
         .card-color .card-art::after {
-            background: linear-gradient(to top, #1a0a28, transparent);
+            background: linear-gradient(to top, #042a30, transparent);
         }
-        .card-color .card-genre { color: #ff66aa; }
-        .card-color .card-title { color: #ff88cc; }
+        .card-color .card-genre { color: #22ddaa; }
+        .card-color .card-title { color: #44eebb; }
         .card-color .feature-tag {
-            background: rgba(255, 102, 170, 0.15);
-            color: #ff66aa;
-            border: 1px solid rgba(255, 102, 170, 0.3);
+            background: rgba(34, 221, 170, 0.15);
+            color: #22ddaa;
+            border: 1px solid rgba(34, 221, 170, 0.3);
         }
         .card-color .play-btn {
-            background: linear-gradient(135deg, #aa2266, #cc4488);
+            background: linear-gradient(135deg, #118866, #22aa88);
             color: #fff;
-            box-shadow: 0 4px 20px rgba(255, 102, 170, 0.4);
+            box-shadow: 0 4px 20px rgba(34, 221, 170, 0.4);
         }
         .card-color:hover {
-            box-shadow: 0 30px 60px rgba(255, 102, 170, 0.2);
+            box-shadow: 0 30px 60px rgba(34, 221, 170, 0.2);
         }
         .card-color .glow-border {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             border-radius: 20px;
-            border: 1px solid rgba(255, 102, 170, 0.2);
+            border: 1px solid rgba(34, 221, 170, 0.2);
             z-index: 3;
             pointer-events: none;
             transition: border-color 0.3s ease;
         }
         .card-color:hover .glow-border {
-            border-color: rgba(255, 102, 170, 0.5);
+            border-color: rgba(34, 221, 170, 0.5);
         }
 
         .card-bowl .card-bg {
@@ -852,26 +852,26 @@
         </div>
     </a>
 
-    <!-- Color Puzzler -->
+    <!-- Reef Rescue -->
     <a href="https://colorpuzzler.onrender.com/" target="_blank" rel="noopener" class="game-card card-color">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
             <div class="card-art">
                 <canvas id="canvas-color"></canvas>
-                <div class="game-icon">&#x1F3A8;</div>
+                <div class="game-icon">&#x1F9EA;</div>
             </div>
             <div class="card-info">
-                <div class="card-genre">Puzzle / Brain Teaser</div>
-                <div class="card-title">Color Puzzler</div>
+                <div class="card-genre">Eco Puzzle / Strategy</div>
+                <div class="card-title">Reef Rescue</div>
                 <p class="card-desc">
-                    We told Claude to make a "simple color matching game" and it came back with something that makes our brains hurt. Match, swap, and chain colors before the board fills up. Sounds easy &mdash; you'll be wrong. Our QA tester (a cat) gave up on level 3.
+                    Deploy cleanup drones and drop color-coded neutralizing agents onto a dying coral reef. Match the right chemical to the right toxin before the ecosystem collapses. We asked Claude to save the ocean and it built a puzzle game &mdash; honestly, closer than most startups get.
                 </p>
                 <div class="card-features">
+                    <span class="feature-tag">Eco-Friendly</span>
                     <span class="feature-tag">Puzzle</span>
-                    <span class="feature-tag">Color Match</span>
-                    <span class="feature-tag">Brain Teaser</span>
-                    <span class="feature-tag">Addictive</span>
+                    <span class="feature-tag">Save the Reef</span>
+                    <span class="feature-tag">Satisfying</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -1571,96 +1571,166 @@ function drawColorScene(canvas) {
     ctx.scale(2, 2);
     const W = w/2, H = h/2;
 
-    // Background
-    ctx.fillStyle = '#12071e';
+    // Ocean gradient
+    const ocean = ctx.createLinearGradient(0, 0, 0, H);
+    ocean.addColorStop(0, '#043040');
+    ocean.addColorStop(0.5, '#054050');
+    ocean.addColorStop(1, '#032028');
+    ctx.fillStyle = ocean;
     ctx.fillRect(0, 0, W, H);
 
-    // Subtle grid
-    ctx.strokeStyle = 'rgba(255,102,170,0.04)';
-    ctx.lineWidth = 0.5;
-    for (let x = 0; x < W; x += 25) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    // Light rays from surface
+    for (let i = 0; i < 5; i++) {
+        const x = W*0.15 + i*(W*0.18);
+        ctx.fillStyle = 'rgba(100,220,255,0.03)';
+        ctx.beginPath();
+        ctx.moveTo(x-5, 0);
+        ctx.lineTo(x-30-i*5, H);
+        ctx.lineTo(x+30+i*5, H);
+        ctx.lineTo(x+5, 0);
+        ctx.fill();
     }
-    for (let y = 0; y < H; y += 25) {
-        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+
+    // Sandy ocean floor
+    ctx.fillStyle = '#1a3530';
+    ctx.beginPath();
+    ctx.moveTo(0, H*0.82);
+    for (let x = 0; x <= W; x += 15) {
+        ctx.lineTo(x, H*0.8 + Math.sin(x*0.04)*6 + Math.sin(x*0.09)*3);
     }
+    ctx.lineTo(W, H); ctx.lineTo(0, H);
+    ctx.fill();
 
-    // Color puzzle grid
-    const colors = ['#ff4488','#44bbff','#ffcc22','#44ff88','#aa66ff','#ff6644'];
-    const gridCols = 6, gridRows = 5;
-    const cellSize = Math.min((W - 60) / gridCols, (H - 40) / gridRows);
-    const offsetX = (W - gridCols * cellSize) / 2;
-    const offsetY = (H - gridRows * cellSize) / 2;
-
-    for (let r = 0; r < gridRows; r++) {
-        for (let c = 0; c < gridCols; c++) {
-            const x = offsetX + c * cellSize;
-            const y = offsetY + r * cellSize;
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const padding = 3;
-
-            // Cell glow
-            const glow = ctx.createRadialGradient(
-                x + cellSize/2, y + cellSize/2, 0,
-                x + cellSize/2, y + cellSize/2, cellSize*0.6
-            );
-            glow.addColorStop(0, color + '30');
-            glow.addColorStop(1, 'transparent');
-            ctx.fillStyle = glow;
-            ctx.fillRect(x, y, cellSize, cellSize);
-
-            // Cell
-            ctx.fillStyle = color + 'cc';
+    // Coral formations
+    function drawCoral(x, y, h, color) {
+        // Branches
+        for (let b = 0; b < 4; b++) {
+            const bx = x + (Math.random()-0.5)*h*0.8;
+            const by = y;
+            const bh = h*(0.5+Math.random()*0.5);
+            ctx.fillStyle = color;
             ctx.beginPath();
-            ctx.roundRect(x + padding, y + padding, cellSize - padding*2, cellSize - padding*2, 4);
-            ctx.fill();
-
-            // Shine
-            ctx.fillStyle = 'rgba(255,255,255,0.15)';
-            ctx.beginPath();
-            ctx.roundRect(x + padding, y + padding, cellSize - padding*2, (cellSize - padding*2)*0.4, [4, 4, 0, 0]);
+            ctx.moveTo(bx-3, by);
+            ctx.quadraticCurveTo(bx-5+Math.random()*4, by-bh*0.6, bx-2, by-bh);
+            ctx.quadraticCurveTo(bx, by-bh-4, bx+2, by-bh);
+            ctx.quadraticCurveTo(bx+5-Math.random()*4, by-bh*0.6, bx+3, by);
             ctx.fill();
         }
+        // Base
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.ellipse(x, y, h*0.4, 4, 0, 0, Math.PI*2);
+        ctx.fill();
     }
 
-    // "Selected" highlight on a couple cells
-    const highlights = [[1,2],[1,3],[2,3]];
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 2;
-    ctx.shadowColor = '#ffffff';
-    ctx.shadowBlur = 8;
-    highlights.forEach(([r,c]) => {
-        const x = offsetX + c * cellSize + 3;
-        const y = offsetY + r * cellSize + 3;
-        ctx.beginPath();
-        ctx.roundRect(x, y, cellSize - 6, cellSize - 6, 4);
-        ctx.stroke();
-    });
-    ctx.shadowBlur = 0;
+    drawCoral(W*0.12, H*0.82, 30, '#ff4466');
+    drawCoral(W*0.35, H*0.84, 22, '#ff8844');
+    drawCoral(W*0.55, H*0.81, 35, '#ee55aa');
+    drawCoral(W*0.78, H*0.83, 25, '#ff6644');
+    drawCoral(W*0.92, H*0.85, 18, '#ffaa33');
 
-    // Chain line between selected
-    ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-    ctx.lineWidth = 2;
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath();
-    ctx.moveTo(offsetX + 2*cellSize + cellSize/2, offsetY + 1*cellSize + cellSize/2);
-    ctx.lineTo(offsetX + 3*cellSize + cellSize/2, offsetY + 1*cellSize + cellSize/2);
-    ctx.lineTo(offsetX + 3*cellSize + cellSize/2, offsetY + 2*cellSize + cellSize/2);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    // Healthy coral (green/teal — already cleaned)
+    drawCoral(W*0.25, H*0.83, 20, '#22dd88');
+    drawCoral(W*0.65, H*0.82, 28, '#33ccaa');
 
-    // Score sparkles
-    for (let i = 0; i < 8; i++) {
-        const sx = Math.random() * W;
-        const sy = Math.random() * H;
-        const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, 5);
-        grad.addColorStop(0, 'rgba(255,255,255,0.5)');
+    // Toxin patches (colored blobs on reef)
+    const toxins = [
+        {x:W*0.18, y:H*0.7, color:'rgba(200,50,50,0.25)', r:18},
+        {x:W*0.5, y:H*0.65, color:'rgba(180,80,200,0.2)', r:22},
+        {x:W*0.8, y:H*0.72, color:'rgba(200,150,30,0.2)', r:15},
+    ];
+    toxins.forEach(t => {
+        const grad = ctx.createRadialGradient(t.x, t.y, 0, t.x, t.y, t.r);
+        grad.addColorStop(0, t.color);
         grad.addColorStop(1, 'transparent');
         ctx.fillStyle = grad;
         ctx.beginPath();
-        ctx.arc(sx, sy, 5, 0, Math.PI*2);
+        ctx.arc(t.x, t.y, t.r, 0, Math.PI*2);
+        ctx.fill();
+    });
+
+    // Neutralizing drops falling
+    const drops = [
+        {x:W*0.2, y:H*0.35, color:'#44ff88'},
+        {x:W*0.5, y:H*0.25, color:'#aa66ff'},
+        {x:W*0.78, y:H*0.4, color:'#ffcc22'},
+    ];
+    drops.forEach(d => {
+        // Trail
+        ctx.strokeStyle = d.color + '40';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([3,3]);
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y-30);
+        ctx.lineTo(d.x, d.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Drop
+        const dg = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, 6);
+        dg.addColorStop(0, d.color);
+        dg.addColorStop(1, d.color + '00');
+        ctx.fillStyle = dg;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, 6, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = d.color;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, 3, 0, Math.PI*2);
+        ctx.fill();
+    });
+
+    // Drone at top
+    const dx = W*0.5, dy = H*0.1;
+    ctx.fillStyle = '#aabbcc';
+    ctx.fillRect(dx-10, dy-2, 20, 5);
+    ctx.fillStyle = '#88aacc';
+    ctx.fillRect(dx-3, dy-5, 6, 4);
+    // Rotors
+    ctx.strokeStyle = 'rgba(200,230,255,0.5)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(dx-14, dy-2); ctx.lineTo(dx-6, dy-2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(dx+6, dy-2); ctx.lineTo(dx+14, dy-2); ctx.stroke();
+    // Rotor blur
+    ctx.fillStyle = 'rgba(200,230,255,0.15)';
+    ctx.beginPath(); ctx.ellipse(dx-10, dy-3, 8, 2, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(dx+10, dy-3, 8, 2, 0, 0, Math.PI*2); ctx.fill();
+
+    // Bubbles
+    for (let i = 0; i < 12; i++) {
+        const bx = Math.random()*W;
+        const by = H*0.3 + Math.random()*H*0.5;
+        const br = Math.random()*3+1;
+        ctx.strokeStyle = `rgba(100,220,255,${0.2+Math.random()*0.3})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.arc(bx, by, br, 0, Math.PI*2);
+        ctx.stroke();
+    }
+
+    // Fish silhouettes
+    function drawFish(x, y, size, color) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.ellipse(x, y, size, size*0.4, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x-size, y);
+        ctx.lineTo(x-size*1.5, y-size*0.4);
+        ctx.lineTo(x-size*1.5, y+size*0.4);
+        ctx.closePath();
         ctx.fill();
     }
+    drawFish(W*0.15, H*0.45, 8, 'rgba(100,200,255,0.4)');
+    drawFish(W*0.7, H*0.5, 6, 'rgba(255,180,80,0.35)');
+    drawFish(W*0.45, H*0.6, 5, 'rgba(80,255,180,0.3)');
+
+    // HUD
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(8, 8, 90, 22);
+    ctx.fillStyle = '#22ddaa';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText('REEF: 64% ', 12, 22);
 }
 
 function drawBowlScene(canvas) {
