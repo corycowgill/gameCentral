@@ -46,7 +46,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 8,
+        "numberOfItems": 9,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Castle Siege 3D", "url": "https://castlesiege.onrender.com/index_3d.html"},
             {"@type": "ListItem", "position": 2, "name": "Warzone", "url": "https://warzone-y0ln.onrender.com"},
@@ -55,7 +55,8 @@
             {"@type": "ListItem", "position": 5, "name": "UFO Shooter", "url": "https://ufoshooter.onrender.com"},
             {"@type": "ListItem", "position": 6, "name": "Shard Shooter", "url": "https://shardshooter.onrender.com"},
             {"@type": "ListItem", "position": 7, "name": "Reef Rescue", "url": "https://colorpuzzler.onrender.com"},
-            {"@type": "ListItem", "position": 8, "name": "Cowgill Bowl", "url": "https://cowgillbowl.onrender.com"}
+            {"@type": "ListItem", "position": 8, "name": "Cowgill Bowl", "url": "https://cowgillbowl.onrender.com"},
+            {"@type": "ListItem", "position": 9, "name": "Robot Attack 2026", "url": "https://robotattack.onrender.com"}
         ]
     }
     </script>
@@ -626,6 +627,41 @@
             border-color: rgba(85, 187, 68, 0.5);
         }
 
+        .card-robot .card-bg {
+            background: linear-gradient(135deg, #1a1500 0%, #0f0e00 100%);
+        }
+        .card-robot .card-art::after {
+            background: linear-gradient(to top, #1a1500, transparent);
+        }
+        .card-robot .card-genre { color: #ffaa00; }
+        .card-robot .card-title { color: #ffcc33; }
+        .card-robot .feature-tag {
+            background: rgba(255, 170, 0, 0.15);
+            color: #ffaa00;
+            border: 1px solid rgba(255, 170, 0, 0.3);
+        }
+        .card-robot .play-btn {
+            background: linear-gradient(135deg, #aa7700, #cc9922);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 170, 0, 0.4);
+        }
+        .card-robot:hover {
+            box-shadow: 0 30px 60px rgba(255, 170, 0, 0.2);
+        }
+        .card-robot .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 170, 0, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-robot:hover .glow-border {
+            border-color: rgba(255, 170, 0, 0.5);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -678,7 +714,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>8</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>9</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -900,6 +936,34 @@
                     <span class="feature-tag">Sports</span>
                     <span class="feature-tag">Retro Vibes</span>
                     <span class="feature-tag">Chaos</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Robot Attack 2026 -->
+    <a href="https://robotattack.onrender.com" target="_blank" rel="noopener" class="game-card card-robot">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-robot"></canvas>
+                <div class="game-icon">&#x1F916;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Base Strategy / Mech Combat</div>
+                <div class="card-title">Robot Attack 2026</div>
+                <p class="card-desc">
+                    Vibe-coded with an AI copilot after the kids went to bed and zero regrets. Command a base, launch missiles, and send giant disposable mechs to punch your enemy's headquarters into a crater &mdash; all wrapped in an amber CRT glow that screams "what if a Game Boy ran a war room." Strategy optional, explosions mandatory.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Strategy</span>
+                    <span class="feature-tag">Mechs</span>
+                    <span class="feature-tag">Base Building</span>
+                    <span class="feature-tag">Retro CRT</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -1870,6 +1934,154 @@ function drawBowlScene(canvas) {
     ctx.fillText('HOME 14  AWAY 7', 12, 22);
 }
 
+function drawRobotScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Amber CRT background
+    ctx.fillStyle = '#0a0800';
+    ctx.fillRect(0, 0, W, H);
+
+    // CRT scanlines
+    ctx.fillStyle = 'rgba(255,170,0,0.02)';
+    for (let y = 0; y < H; y += 3) {
+        ctx.fillRect(0, y, W, 1);
+    }
+
+    // Ground terrain
+    ctx.fillStyle = '#1a1200';
+    ctx.fillRect(0, H*0.7, W, H*0.3);
+    ctx.strokeStyle = 'rgba(255,170,0,0.1)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x < W; x += 20) {
+        ctx.beginPath(); ctx.moveTo(x, H*0.7); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = H*0.7; y < H; y += 10) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // Player base (left)
+    ctx.fillStyle = '#ffaa00';
+    ctx.globalAlpha = 0.7;
+    // Command center
+    ctx.fillRect(W*0.05, H*0.55, 25, 20);
+    ctx.fillRect(W*0.05+5, H*0.48, 15, 10);
+    // Antenna
+    ctx.fillRect(W*0.05+11, H*0.38, 2, 12);
+    ctx.fillRect(W*0.05+7, H*0.38, 10, 2);
+    // Silo
+    ctx.fillRect(W*0.15, H*0.58, 12, 16);
+    ctx.fillRect(W*0.15+3, H*0.52, 6, 8);
+
+    // Enemy base (right)
+    ctx.fillStyle = '#ff4444';
+    ctx.fillRect(W*0.82, H*0.55, 25, 20);
+    ctx.fillRect(W*0.82+5, H*0.48, 15, 10);
+    ctx.fillRect(W*0.82+11, H*0.38, 2, 12);
+    ctx.fillRect(W*0.82+7, H*0.38, 10, 2);
+    ctx.fillRect(W*0.72, H*0.58, 12, 16);
+    ctx.fillRect(W*0.72+3, H*0.52, 6, 8);
+    ctx.globalAlpha = 1;
+
+    // Mech robot (player side, walking right)
+    function drawMech(x, y, color) {
+        ctx.fillStyle = color;
+        // Torso
+        ctx.fillRect(x-6, y-16, 12, 14);
+        // Head
+        ctx.fillRect(x-4, y-22, 8, 6);
+        // Eye
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(x+1, y-20, 3, 2);
+        ctx.fillStyle = color;
+        // Arms
+        ctx.fillRect(x-11, y-14, 5, 10);
+        ctx.fillRect(x+6, y-14, 5, 10);
+        // Fist (punching arm)
+        ctx.fillRect(x+10, y-16, 6, 5);
+        // Legs
+        ctx.fillRect(x-5, y-2, 4, 10);
+        ctx.fillRect(x+1, y-2, 4, 10);
+        // Feet
+        ctx.fillRect(x-6, y+7, 6, 3);
+        ctx.fillRect(x, y+7, 6, 3);
+    }
+
+    drawMech(W*0.32, H*0.68, '#ffaa00');
+    drawMech(W*0.45, H*0.66, '#ffcc33');
+
+    // Enemy mech
+    drawMech(W*0.62, H*0.67, '#ff4444');
+
+    // Missiles in flight
+    ctx.strokeStyle = '#ffaa00';
+    ctx.lineWidth = 2;
+    ctx.shadowColor = '#ffaa00';
+    ctx.shadowBlur = 4;
+    // Player missile arc
+    ctx.beginPath();
+    ctx.moveTo(W*0.17, H*0.52);
+    ctx.quadraticCurveTo(W*0.45, H*0.15, W*0.75, H*0.55);
+    ctx.stroke();
+    // Missile head
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(W*0.75, H*0.55, 3, 0, Math.PI*2);
+    ctx.fill();
+
+    // Enemy missile arc
+    ctx.strokeStyle = '#ff4444';
+    ctx.beginPath();
+    ctx.moveTo(W*0.74, H*0.52);
+    ctx.quadraticCurveTo(W*0.5, H*0.1, W*0.2, H*0.58);
+    ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.arc(W*0.2, H*0.58, 3, 0, Math.PI*2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Explosions
+    const explosions = [[W*0.73, H*0.58], [W*0.22, H*0.6]];
+    explosions.forEach(([ex, ey]) => {
+        for (let r = 12; r > 0; r -= 3) {
+            const grad = ctx.createRadialGradient(ex, ey, 0, ex, ey, r);
+            grad.addColorStop(0, `rgba(255,${150+r*5},0,${0.4-r*0.02})`);
+            grad.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(ex, ey, r, 0, Math.PI*2);
+            ctx.fill();
+        }
+    });
+
+    // Shield bubble on player base
+    ctx.strokeStyle = 'rgba(255,200,50,0.25)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath();
+    ctx.arc(W*0.1, H*0.58, 28, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // CRT vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.3, W/2, H/2, W*0.7);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.4)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+
+    // HUD
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(8, 8, 95, 22);
+    ctx.fillStyle = '#ffaa00';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText('TURN 7  E:12', 12, 22);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -1880,6 +2092,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawShardScene(document.getElementById('canvas-shard'));
     drawColorScene(document.getElementById('canvas-color'));
     drawBowlScene(document.getElementById('canvas-bowl'));
+    drawRobotScene(document.getElementById('canvas-robot'));
 });
 
 window.addEventListener('resize', () => {
@@ -1891,6 +2104,7 @@ window.addEventListener('resize', () => {
     drawShardScene(document.getElementById('canvas-shard'));
     drawColorScene(document.getElementById('canvas-color'));
     drawBowlScene(document.getElementById('canvas-bowl'));
+    drawRobotScene(document.getElementById('canvas-robot'));
 });
 </script>
 
