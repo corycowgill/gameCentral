@@ -536,6 +536,41 @@
             border-color: rgba(255, 102, 170, 0.5);
         }
 
+        .card-bowl .card-bg {
+            background: linear-gradient(135deg, #0a200a 0%, #0d2a0d 100%);
+        }
+        .card-bowl .card-art::after {
+            background: linear-gradient(to top, #0a200a, transparent);
+        }
+        .card-bowl .card-genre { color: #55bb44; }
+        .card-bowl .card-title { color: #77dd66; }
+        .card-bowl .feature-tag {
+            background: rgba(85, 187, 68, 0.15);
+            color: #55bb44;
+            border: 1px solid rgba(85, 187, 68, 0.3);
+        }
+        .card-bowl .play-btn {
+            background: linear-gradient(135deg, #337722, #55aa44);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(85, 187, 68, 0.4);
+        }
+        .card-bowl:hover {
+            box-shadow: 0 30px 60px rgba(85, 187, 68, 0.2);
+        }
+        .card-bowl .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(85, 187, 68, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-bowl:hover .glow-border {
+            border-color: rgba(85, 187, 68, 0.5);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -588,7 +623,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>7</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>8</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -782,6 +817,34 @@
                     <span class="feature-tag">Color Match</span>
                     <span class="feature-tag">Brain Teaser</span>
                     <span class="feature-tag">Addictive</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Cowgill Bowl -->
+    <a href="https://cowgillbowl.onrender.com" target="_blank" rel="noopener" class="game-card card-bowl">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-bowl"></canvas>
+                <div class="game-icon">&#x1F3C8;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Sports / Football</div>
+                <div class="card-title">Cowgill Bowl</div>
+                <p class="card-desc">
+                    Who needs Madden when you can play a football game barely more stable than those tabletop electric football games from the 70's? The players vibrate, the physics are questionable, and the AI offensive coordinator may have been hallucinated. Touchdown optional.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Football</span>
+                    <span class="feature-tag">Sports</span>
+                    <span class="feature-tag">Retro Vibes</span>
+                    <span class="feature-tag">Chaos</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -1545,6 +1608,143 @@ function drawColorScene(canvas) {
     }
 }
 
+function drawBowlScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Field background
+    ctx.fillStyle = '#1a5c1a';
+    ctx.fillRect(0, 0, W, H);
+
+    // Field stripes (darker green bands)
+    for (let i = 0; i < 12; i++) {
+        if (i % 2 === 0) {
+            ctx.fillStyle = 'rgba(0,0,0,0.06)';
+            ctx.fillRect(0, i * (H/12), W, H/12);
+        }
+    }
+
+    // Yard lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1;
+    for (let i = 1; i < 10; i++) {
+        const y = i * (H / 10);
+        ctx.beginPath();
+        ctx.moveTo(W*0.08, y);
+        ctx.lineTo(W*0.92, y);
+        ctx.stroke();
+    }
+
+    // Hash marks
+    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < 10; i++) {
+        const y = i * (H / 10);
+        for (let s = 0; s < 2; s++) {
+            const x = s === 0 ? W*0.35 : W*0.65;
+            ctx.beginPath(); ctx.moveTo(x, y-3); ctx.lineTo(x, y+3); ctx.stroke();
+        }
+    }
+
+    // End zones
+    ctx.fillStyle = 'rgba(85,187,68,0.3)';
+    ctx.fillRect(0, 0, W, H*0.08);
+    ctx.fillRect(0, H*0.92, W, H*0.08);
+
+    // Sidelines
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(W*0.06, H*0.04, W*0.88, H*0.92);
+
+    // Yard numbers
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.font = 'bold 14px monospace';
+    const yards = ['10','20','30','40','50','40','30','20','10'];
+    for (let i = 0; i < yards.length; i++) {
+        const y = (i+1) * (H/10) + 5;
+        ctx.fillText(yards[i], W*0.1, y);
+        ctx.fillText(yards[i], W*0.82, y);
+    }
+
+    // Players - offense (green jerseys going up)
+    function drawPlayer(x, y, color, direction) {
+        // Jersey
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI*2);
+        ctx.fill();
+        // Helmet
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(x, y - 3, 2.5, 0, Math.PI*2);
+        ctx.fill();
+        // Direction indicator
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(x, y + direction*8);
+        ctx.lineTo(x-3, y + direction*4);
+        ctx.lineTo(x+3, y + direction*4);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    // Offense formation
+    const offX = W*0.5, offY = H*0.55;
+    drawPlayer(offX, offY, '#2266cc', -1);         // QB
+    drawPlayer(offX, offY+15, '#2266cc', -1);       // RB
+    drawPlayer(offX-30, offY-8, '#2266cc', -1);     // WR
+    drawPlayer(offX+30, offY-8, '#2266cc', -1);     // WR
+    drawPlayer(offX-12, offY+2, '#2266cc', -1);     // OL
+    drawPlayer(offX+12, offY+2, '#2266cc', -1);     // OL
+
+    // Defense formation
+    const defY = H*0.42;
+    drawPlayer(offX, defY, '#cc2222', 1);           // MLB
+    drawPlayer(offX-15, defY+5, '#cc2222', 1);      // DL
+    drawPlayer(offX+15, defY+5, '#cc2222', 1);      // DL
+    drawPlayer(offX-30, defY-5, '#cc2222', 1);      // CB
+    drawPlayer(offX+30, defY-5, '#cc2222', 1);      // CB
+    drawPlayer(offX, defY-14, '#cc2222', 1);         // S
+
+    // Football
+    ctx.fillStyle = '#8B4513';
+    ctx.beginPath();
+    ctx.ellipse(offX+2, offY-2, 4, 2.5, -0.3, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(offX, offY-3);
+    ctx.lineTo(offX+4, offY-1);
+    ctx.stroke();
+
+    // Play arrow (route)
+    ctx.strokeStyle = 'rgba(255,255,50,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4,3]);
+    ctx.beginPath();
+    ctx.moveTo(offX-30, offY-8);
+    ctx.lineTo(offX-30, offY-30);
+    ctx.lineTo(offX-15, offY-38);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(offX+30, offY-8);
+    ctx.lineTo(offX+30, offY-25);
+    ctx.lineTo(offX+15, offY-35);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Scoreboard
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(8, 8, 110, 22);
+    ctx.fillStyle = '#55bb44';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText('HOME 14  AWAY 7', 12, 22);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -1554,6 +1754,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawUfoScene(document.getElementById('canvas-ufo'));
     drawShardScene(document.getElementById('canvas-shard'));
     drawColorScene(document.getElementById('canvas-color'));
+    drawBowlScene(document.getElementById('canvas-bowl'));
 });
 
 window.addEventListener('resize', () => {
@@ -1564,6 +1765,7 @@ window.addEventListener('resize', () => {
     drawUfoScene(document.getElementById('canvas-ufo'));
     drawShardScene(document.getElementById('canvas-shard'));
     drawColorScene(document.getElementById('canvas-color'));
+    drawBowlScene(document.getElementById('canvas-bowl'));
 });
 </script>
 
