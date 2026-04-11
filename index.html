@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
-    <meta name="description" content="Play 10 free browser games built entirely by AI. From tower defense and RTS to football, shooters, space shmups, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
+    <meta name="description" content="Play 11 free browser games built entirely by AI. From tower defense and RTS to football, shooters, space shmups, sliding puzzles, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
     <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, UFO shooter, puzzle game, nuclear war game, hallucinated games">
     <meta name="author" content="Hallucinated Games">
     <meta name="robots" content="index, follow">
@@ -14,13 +14,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.hallucinatedgames.com/">
     <meta property="og:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta property="og:description" content="10 free browser games built entirely by AI. Tower defense, RTS, shooters, football, puzzles and more. 100% vibe coded, 0% unit tested.">
+    <meta property="og:description" content="11 free browser games built entirely by AI. Tower defense, RTS, shooters, football, puzzles and more. 100% vibe coded, 0% unit tested.">
     <meta property="og:site_name" content="Hallucinated Games">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta name="twitter:description" content="10 free browser games built entirely by AI. Tower defense, RTS, shooters, football, puzzles and more. 100% vibe coded, 0% unit tested.">
+    <meta name="twitter:description" content="11 free browser games built entirely by AI. Tower defense, RTS, shooters, football, puzzles and more. 100% vibe coded, 0% unit tested.">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -46,7 +46,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 10,
+        "numberOfItems": 11,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Castle Siege 3D", "url": "https://castlesiege.onrender.com/index_3d.html"},
             {"@type": "ListItem", "position": 2, "name": "Warzone", "url": "https://warzone-y0ln.onrender.com"},
@@ -57,7 +57,8 @@
             {"@type": "ListItem", "position": 7, "name": "Reef Rescue", "url": "https://colorpuzzler.onrender.com"},
             {"@type": "ListItem", "position": 8, "name": "Cowgill Bowl", "url": "https://cowgillbowl.onrender.com"},
             {"@type": "ListItem", "position": 9, "name": "Robot Attack 2026", "url": "https://robotattack.onrender.com"},
-            {"@type": "ListItem", "position": 10, "name": "Void Striker", "url": "https://spaceshipgame.onrender.com"}
+            {"@type": "ListItem", "position": 10, "name": "Void Striker", "url": "https://spaceshipgame.onrender.com"},
+            {"@type": "ListItem", "position": 11, "name": "PicPuzzle", "url": "https://picpuzzle.onrender.com"}
         ]
     }
     </script>
@@ -698,6 +699,41 @@
             border-color: rgba(0, 255, 238, 0.55);
         }
 
+        .card-puzzle .card-bg {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        .card-puzzle .card-art::after {
+            background: linear-gradient(to top, #1a1a2e, transparent);
+        }
+        .card-puzzle .card-genre { color: #ffd369; }
+        .card-puzzle .card-title { color: #ffe4a0; }
+        .card-puzzle .feature-tag {
+            background: rgba(233, 69, 96, 0.15);
+            color: #e94560;
+            border: 1px solid rgba(233, 69, 96, 0.3);
+        }
+        .card-puzzle .play-btn {
+            background: linear-gradient(135deg, #e94560, #d63384);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
+        }
+        .card-puzzle:hover {
+            box-shadow: 0 30px 60px rgba(233, 69, 96, 0.2);
+        }
+        .card-puzzle .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-puzzle:hover .glow-border {
+            border-color: rgba(233, 69, 96, 0.55);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -818,7 +854,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>10</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>11</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -1096,6 +1132,34 @@
                     <span class="feature-tag">5 Stages</span>
                     <span class="feature-tag">6 Weapons</span>
                     <span class="feature-tag">Boss Fights</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- PicPuzzle -->
+    <a href="https://picpuzzle.onrender.com" target="_blank" rel="noopener" class="game-card card-puzzle">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-puzzle"></canvas>
+                <div class="game-icon">&#x1F9E9;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Sliding Puzzle / Photo</div>
+                <div class="card-title">PicPuzzle</div>
+                <p class="card-desc">
+                    Upload literally any photo and watch an AI-generated algorithm scramble it into a sliding tile nightmare. Choose your own suffering &mdash; 3x3 for tourists, 4x4 for the mildly unhinged, 5x5 for people who enjoy pain. Comes with a peek button because even the AI knows you'll need it. Chiptune soundtrack included at no extra charge or consent.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Photo Upload</span>
+                    <span class="feature-tag">3 Difficulties</span>
+                    <span class="feature-tag">Sliding Tiles</span>
+                    <span class="feature-tag">Touch/Swipe</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -2401,6 +2465,135 @@ function drawVoidScene(canvas) {
     ctx.fillText('SCORE 42700', 12, 22);
 }
 
+function drawPuzzleScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Dark indigo background
+    const bg = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W*0.8);
+    bg.addColorStop(0, '#1e2040');
+    bg.addColorStop(1, '#12132a');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle grid pattern
+    ctx.strokeStyle = 'rgba(255,211,105,0.04)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x < W; x += 25) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y < H; y += 25) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // 4x4 sliding puzzle board
+    const boardX = W*0.14, boardY = H*0.12;
+    const boardW = W*0.72, boardH = H*0.72;
+    const tileGap = 3;
+    const cols = 4, rows = 4;
+    const tileW = (boardW - tileGap*(cols+1)) / cols;
+    const tileH = (boardH - tileGap*(rows+1)) / rows;
+
+    // Board background
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    const brdR = 6;
+    ctx.beginPath();
+    ctx.moveTo(boardX+brdR, boardY);
+    ctx.arcTo(boardX+boardW, boardY, boardX+boardW, boardY+boardH, brdR);
+    ctx.arcTo(boardX+boardW, boardY+boardH, boardX, boardY+boardH, brdR);
+    ctx.arcTo(boardX, boardY+boardH, boardX, boardY, brdR);
+    ctx.arcTo(boardX, boardY, boardX+boardW, boardY, brdR);
+    ctx.fill();
+
+    // Image-like gradient tiles (simulating a scrambled photo)
+    const tileColors = [
+        '#e94560','#d63384','#c92a8e','#b32d7f',
+        '#ffd369','#f5c040','#e9ac32','#d19425',
+        '#2a6b9c','#3d8cc4','#58a4db','#72b6e5',
+        '#4a6741','#5d8254','#709c67', null // last = empty slot
+    ];
+    // Scrambled positions (puzzle feel)
+    const scrambled = [5,0,9,2, 7,14,3,10, 1,12,6,11, 8,4,13,15];
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            const idx = scrambled[r*cols + c];
+            if (idx === 15) continue; // empty slot
+            const tx = boardX + tileGap + c*(tileW+tileGap);
+            const ty = boardY + tileGap + r*(tileH+tileGap);
+            const color = tileColors[idx];
+            // Tile
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(tx+3, ty);
+            ctx.arcTo(tx+tileW, ty, tx+tileW, ty+tileH, 3);
+            ctx.arcTo(tx+tileW, ty+tileH, tx, ty+tileH, 3);
+            ctx.arcTo(tx, ty+tileH, tx, ty, 3);
+            ctx.arcTo(tx, ty, tx+tileW, ty, 3);
+            ctx.fill();
+            // Light bevel
+            ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(tx+3, ty+0.5);
+            ctx.lineTo(tx+tileW-3, ty+0.5);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(tx+0.5, ty+3);
+            ctx.lineTo(tx+0.5, ty+tileH-3);
+            ctx.stroke();
+        }
+    }
+
+    // Empty slot indicator
+    const emptyC = 3, emptyR = 3; // bottom-right
+    const ex = boardX + tileGap + emptyC*(tileW+tileGap) + tileW/2;
+    const ey = boardY + tileGap + emptyR*(tileH+tileGap) + tileH/2;
+    ctx.strokeStyle = 'rgba(255,211,105,0.15)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3,3]);
+    ctx.strokeRect(boardX + tileGap + emptyC*(tileW+tileGap)+2, boardY + tileGap + emptyR*(tileH+tileGap)+2, tileW-4, tileH-4);
+    ctx.setLineDash([]);
+
+    // Cursor hand pointing at a tile (row 2, col 1)
+    const hx = boardX + tileGap + 1*(tileW+tileGap) + tileW/2;
+    const hy = boardY + tileGap + 2*(tileH+tileGap) + tileH + 4;
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    // Simple pointer triangle
+    ctx.beginPath();
+    ctx.moveTo(hx, hy);
+    ctx.lineTo(hx+5, hy+10);
+    ctx.lineTo(hx-1, hy+8);
+    ctx.closePath();
+    ctx.fill();
+
+    // Stats bar at bottom
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(boardX, boardY+boardH+6, boardW, 16);
+    ctx.fillStyle = '#ffd369';
+    ctx.font = 'bold 8px monospace';
+    ctx.fillText('MOVES: 47', boardX+6, boardY+boardH+16);
+    ctx.fillStyle = '#e94560';
+    ctx.fillText('02:31', boardX+boardW-36, boardY+boardH+16);
+
+    // "4x4" difficulty badge
+    ctx.fillStyle = 'rgba(233,69,96,0.25)';
+    ctx.fillRect(boardX+boardW-32, boardY-14, 32, 12);
+    ctx.fillStyle = '#e94560';
+    ctx.font = 'bold 7px monospace';
+    ctx.fillText('4x4', boardX+boardW-25, boardY-5);
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.7);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.45)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -2413,6 +2606,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawBowlScene(document.getElementById('canvas-bowl'));
     drawRobotScene(document.getElementById('canvas-robot'));
     drawVoidScene(document.getElementById('canvas-void'));
+    drawPuzzleScene(document.getElementById('canvas-puzzle'));
 });
 
 window.addEventListener('resize', () => {
@@ -2426,6 +2620,7 @@ window.addEventListener('resize', () => {
     drawBowlScene(document.getElementById('canvas-bowl'));
     drawRobotScene(document.getElementById('canvas-robot'));
     drawVoidScene(document.getElementById('canvas-void'));
+    drawPuzzleScene(document.getElementById('canvas-puzzle'));
 });
 
 // ============================================================
