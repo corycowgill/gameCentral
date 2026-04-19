@@ -204,6 +204,44 @@
             margin: 30px auto 50px;
         }
 
+        /* Category filter pills */
+        .filter-bar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            padding: 0 30px;
+        }
+        .filter-pill {
+            padding: 6px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 170, 0.2);
+            background: rgba(0, 255, 170, 0.04);
+            color: #888;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .filter-pill:hover {
+            border-color: rgba(0, 255, 170, 0.5);
+            color: #ccc;
+            background: rgba(0, 255, 170, 0.08);
+        }
+        .filter-pill.active {
+            border-color: #00ffaa;
+            color: #00ffaa;
+            background: rgba(0, 255, 170, 0.12);
+            box-shadow: 0 0 12px rgba(0, 255, 170, 0.2);
+        }
+
         /* Game Grid */
         .game-grid {
             position: relative;
@@ -214,6 +252,26 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 30px 80px;
+        }
+
+        /* Featured first card */
+        .game-card.featured {
+            grid-column: 1 / -1;
+        }
+        @media (min-width: 769px) {
+            .game-card.featured .card-content {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+            .game-card.featured .card-art {
+                height: 100%;
+                min-height: 280px;
+            }
+        }
+
+        /* Card hide/show for filtering */
+        .game-card.filter-hidden {
+            display: none;
         }
 
         /* Header entrance cascade */
@@ -1007,6 +1065,67 @@
             box-shadow: 0 4px 24px rgba(0, 255, 170, 0.35);
         }
 
+        /* Animated gradient glow border on hover */
+        .glow-border {
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .game-card:hover .glow-border {
+            box-shadow: inset 0 0 20px rgba(255,255,255,0.03), 0 0 15px rgba(255,255,255,0.05);
+        }
+
+        /* Fun stats ticker */
+        .stats-ticker {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: #00ffaa;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: #555;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+            .game-card { opacity: 1; transform: none; }
+            .studio-badge, h1, .subtitle, .game-count, .divider {
+                opacity: 1; transform: none;
+            }
+        }
+
+        /* Konami easter egg confetti */
+        .konami-confetti {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .game-grid {
@@ -1025,6 +1144,19 @@
                 width: 40px;
                 height: 40px;
                 font-size: 18px;
+            }
+            .filter-bar {
+                padding: 0 16px;
+            }
+            .stats-ticker {
+                gap: 20px;
+                padding: 0 16px 30px;
+            }
+            .stat-value {
+                font-size: 22px;
+            }
+            .game-card.featured .card-content {
+                display: block;
             }
         }
 
@@ -1110,10 +1242,20 @@
     <div class="divider"></div>
 </header>
 
+<div class="filter-bar" id="filter-bar">
+    <button class="filter-pill active" data-filter="all">All Games</button>
+    <button class="filter-pill" data-filter="shooter">Shooters</button>
+    <button class="filter-pill" data-filter="strategy">Strategy</button>
+    <button class="filter-pill" data-filter="sports">Sports</button>
+    <button class="filter-pill" data-filter="puzzle">Puzzle</button>
+    <button class="filter-pill" data-filter="party">Party</button>
+    <button class="filter-pill" data-filter="card">Card</button>
+</div>
+
 <div class="game-grid">
 
     <!-- Dad Tax Attack! -->
-    <a href="https://dadtax.onrender.com" target="_blank" rel="noopener" class="game-card card-dadtax">
+    <a href="https://dadtax.onrender.com" target="_blank" rel="noopener" class="game-card card-dadtax featured" data-category="party">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1141,7 +1283,7 @@
     </a>
 
     <!-- UFO Shooter -->
-    <a href="https://ufoshooter.onrender.com" target="_blank" rel="noopener" class="game-card card-ufo">
+    <a href="https://ufoshooter.onrender.com" target="_blank" rel="noopener" class="game-card card-ufo" data-category="shooter">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1169,7 +1311,7 @@
     </a>
 
     <!-- Shard Shooter -->
-    <a href="https://shardshooter.onrender.com" target="_blank" rel="noopener" class="game-card card-shard">
+    <a href="https://shardshooter.onrender.com" target="_blank" rel="noopener" class="game-card card-shard" data-category="shooter">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1197,7 +1339,7 @@
     </a>
 
     <!-- Void Striker -->
-    <a href="https://spaceshipgame.onrender.com" target="_blank" rel="noopener" class="game-card card-void">
+    <a href="https://spaceshipgame.onrender.com" target="_blank" rel="noopener" class="game-card card-void" data-category="shooter">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1225,7 +1367,7 @@
     </a>
 
     <!-- Dinosaur Escape -->
-    <a href="https://dinosaur-escape.onrender.com" target="_blank" rel="noopener" class="game-card card-dino">
+    <a href="https://dinosaur-escape.onrender.com" target="_blank" rel="noopener" class="game-card card-dino" data-category="strategy">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1253,7 +1395,7 @@
     </a>
 
     <!-- PicPuzzle -->
-    <a href="https://picpuzzle.onrender.com" target="_blank" rel="noopener" class="game-card card-puzzle">
+    <a href="https://picpuzzle.onrender.com" target="_blank" rel="noopener" class="game-card card-puzzle" data-category="puzzle">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1281,7 +1423,7 @@
     </a>
 
     <!-- Cowgill Basketball -->
-    <a href="https://cowgillbasketball.onrender.com" target="_blank" rel="noopener" class="game-card card-bball">
+    <a href="https://cowgillbasketball.onrender.com" target="_blank" rel="noopener" class="game-card card-bball" data-category="sports">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1309,7 +1451,7 @@
     </a>
 
     <!-- Cowgill Bowl -->
-    <a href="https://cowgillbowl.onrender.com" target="_blank" rel="noopener" class="game-card card-bowl">
+    <a href="https://cowgillbowl.onrender.com" target="_blank" rel="noopener" class="game-card card-bowl" data-category="sports">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1337,7 +1479,7 @@
     </a>
 
     <!-- Warzone -->
-    <a href="https://warzone-y0ln.onrender.com" target="_blank" rel="noopener" class="game-card card-warzone">
+    <a href="https://warzone-y0ln.onrender.com" target="_blank" rel="noopener" class="game-card card-warzone" data-category="strategy">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1365,7 +1507,7 @@
     </a>
 
     <!-- Thermonuclear War Game -->
-    <a href="https://thermonuclearwargame.onrender.com" target="_blank" rel="noopener" class="game-card card-nuke">
+    <a href="https://thermonuclearwargame.onrender.com" target="_blank" rel="noopener" class="game-card card-nuke" data-category="strategy">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1393,7 +1535,7 @@
     </a>
 
     <!-- Castle Siege -->
-    <a href="https://castlesiege.onrender.com/index_3d.html" target="_blank" rel="noopener" class="game-card card-castle">
+    <a href="https://castlesiege.onrender.com/index_3d.html" target="_blank" rel="noopener" class="game-card card-castle" data-category="strategy">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1421,7 +1563,7 @@
     </a>
 
     <!-- Reef Rescue -->
-    <a href="https://colorpuzzler.onrender.com/" target="_blank" rel="noopener" class="game-card card-color">
+    <a href="https://colorpuzzler.onrender.com/" target="_blank" rel="noopener" class="game-card card-color" data-category="puzzle">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1449,7 +1591,7 @@
     </a>
 
     <!-- Robot Attack 2026 -->
-    <a href="https://robotattack.onrender.com" target="_blank" rel="noopener" class="game-card card-robot">
+    <a href="https://robotattack.onrender.com" target="_blank" rel="noopener" class="game-card card-robot" data-category="strategy">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1477,7 +1619,7 @@
     </a>
 
     <!-- War - The Card Game -->
-    <a href="https://warcardgame.onrender.com" target="_blank" rel="noopener" class="game-card card-war">
+    <a href="https://warcardgame.onrender.com" target="_blank" rel="noopener" class="game-card card-war" data-category="card">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1505,7 +1647,7 @@
     </a>
 
     <!-- Parker's Birthday Stuffie Adventure -->
-    <a href="https://bdaystuffy.onrender.com" target="_blank" rel="noopener" class="game-card card-stuffy">
+    <a href="https://bdaystuffy.onrender.com" target="_blank" rel="noopener" class="game-card card-stuffy" data-category="party">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -1532,6 +1674,25 @@
         </div>
     </a>
 
+</div>
+
+<div class="stats-ticker">
+    <div class="stat-item">
+        <div class="stat-value" data-target="15" data-suffix="">0</div>
+        <div class="stat-label">Games Shipped</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value" data-target="0" data-suffix="">0</div>
+        <div class="stat-label">Unit Tests</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value" data-target="100" data-suffix="%">0%</div>
+        <div class="stat-label">Vibe Coded</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-value" data-target="0" data-suffix="">0</div>
+        <div class="stat-label">Regrets</div>
+    </div>
 </div>
 
 <button class="scroll-top" id="scroll-top" aria-label="Scroll to top">&#x2191;</button>
@@ -1609,6 +1770,124 @@
             card.style.transform = '';
         });
     });
+})();
+
+// Category filter
+(function() {
+    const pills = document.querySelectorAll('.filter-pill');
+    const cards = document.querySelectorAll('.game-card');
+    pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            const filter = pill.dataset.filter;
+            cards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.classList.remove('filter-hidden');
+                    card.classList.add('revealed');
+                } else {
+                    card.classList.add('filter-hidden');
+                }
+            });
+        });
+    });
+})();
+
+// Animated stat counters
+(function() {
+    const stats = document.querySelectorAll('.stat-value[data-target]');
+    let triggered = false;
+    const observer = new IntersectionObserver((entries) => {
+        if (triggered) return;
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                triggered = true;
+                stats.forEach(stat => {
+                    const target = parseInt(stat.dataset.target);
+                    const suffix = stat.dataset.suffix || '';
+                    const duration = 1200;
+                    const start = performance.now();
+                    function tick(now) {
+                        const elapsed = now - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(eased * target);
+                        stat.textContent = current + suffix;
+                        if (progress < 1) requestAnimationFrame(tick);
+                    }
+                    requestAnimationFrame(tick);
+                });
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.3 });
+    stats.forEach(s => observer.observe(s.closest('.stat-item')));
+})();
+
+// Konami code easter egg
+(function() {
+    const code = [38,38,40,40,37,39,37,39,66,65];
+    let pos = 0;
+    document.addEventListener('keydown', (e) => {
+        if (e.keyCode === code[pos]) {
+            pos++;
+            if (pos === code.length) {
+                pos = 0;
+                launchConfetti();
+            }
+        } else {
+            pos = 0;
+        }
+    });
+    function launchConfetti() {
+        const canvas = document.createElement('canvas');
+        canvas.className = 'konami-confetti';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        const pieces = [];
+        const colors = ['#00ffaa','#7b61ff','#ff6b6b','#ffd700','#5599ff','#ff88cc','#44ff88','#ff6b35'];
+        for (let i = 0; i < 200; i++) {
+            pieces.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                w: Math.random() * 8 + 4,
+                h: Math.random() * 4 + 2,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vx: (Math.random() - 0.5) * 4,
+                vy: Math.random() * 4 + 2,
+                rot: Math.random() * Math.PI * 2,
+                rv: (Math.random() - 0.5) * 0.2,
+                opacity: 1
+            });
+        }
+        let frame = 0;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pieces.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.rot += p.rv;
+                p.vy += 0.04;
+                if (frame > 120) p.opacity -= 0.015;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rot);
+                ctx.globalAlpha = Math.max(0, p.opacity);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+                ctx.restore();
+            });
+            frame++;
+            if (frame < 200) {
+                requestAnimationFrame(animate);
+            } else {
+                canvas.remove();
+            }
+        }
+        animate();
+    }
 })();
 
 // Canvas scene renderers for each card
