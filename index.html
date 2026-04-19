@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="description" content="Play 15 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
     <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, UFO shooter, puzzle game, nuclear war game, hallucinated games">
     <meta name="author" content="Hallucinated Games">
@@ -73,6 +74,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -211,7 +216,22 @@
             padding: 0 30px 80px;
         }
 
-        /* Game Card */
+        /* Header entrance cascade */
+        .studio-badge, h1, .subtitle, .game-count, .divider {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: headerFadeIn 0.6s ease forwards;
+        }
+        .studio-badge { animation-delay: 0.1s; }
+        h1 { animation-delay: 0.25s; }
+        .subtitle { animation-delay: 0.4s; }
+        .game-count { animation-delay: 0.55s; }
+        .divider { animation-delay: 0.7s; }
+        @keyframes headerFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Card scroll-reveal */
         .game-card {
             position: relative;
             border-radius: 20px;
@@ -221,11 +241,28 @@
             text-decoration: none;
             color: inherit;
             display: block;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .game-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
         .game-card:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .game-card:focus-visible {
+            outline: 2px solid #00ffaa;
+            outline-offset: 4px;
+        }
+
+        .game-card:hover .card-art canvas {
+            transform: scale(1.08);
         }
 
         .card-bg {
@@ -255,6 +292,7 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
+            transition: transform 0.6s ease;
         }
 
         .card-art .game-icon {
@@ -906,6 +944,69 @@
             color: #00ffaa;
         }
 
+        /* Feature tag hover */
+        .feature-tag {
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .feature-tag:hover {
+            transform: scale(1.08);
+        }
+
+        /* Play button ripple glow */
+        .play-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .play-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+        .game-card:hover .play-btn::after {
+            width: 200px;
+            height: 200px;
+        }
+
+        /* Scroll-to-top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            background: rgba(10, 10, 20, 0.85);
+            color: #00ffaa;
+            font-size: 20px;
+            cursor: pointer;
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, border-color 0.2s ease;
+            pointer-events: none;
+            box-shadow: 0 4px 16px rgba(0, 255, 170, 0.1);
+        }
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .scroll-top:hover {
+            background: rgba(0, 255, 170, 0.15);
+            border-color: rgba(0, 255, 170, 0.7);
+            box-shadow: 0 4px 24px rgba(0, 255, 170, 0.35);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .game-grid {
@@ -917,6 +1018,13 @@
             }
             .card-art {
                 height: 180px;
+            }
+            .scroll-top {
+                bottom: 20px;
+                right: 16px;
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
             }
         }
 
@@ -1426,6 +1534,8 @@
 
 </div>
 
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">&#x2191;</button>
+
 <footer>
     <div class="footer-logo">HALLUCINATED GAMES</div>
     <p class="footer-tagline">100% vibe coded &mdash; 0% unit tested &mdash; built with <span>&#9889;</span> and mass hallucination &mdash; &copy; 2026 &mdash; who are we kidding, AI generated content can't be copyrighted! LOL.</p>
@@ -1449,6 +1559,56 @@
         p.style.animationDelay = (Math.random() * 15) + 's';
         container.appendChild(p);
     }
+})();
+
+// Scroll-reveal for game cards (staggered entrance)
+(function() {
+    const cards = document.querySelectorAll('.game-card');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const idx = Array.from(cards).indexOf(entry.target);
+                const delay = Math.min(idx * 80, 400);
+                setTimeout(() => entry.target.classList.add('revealed'), delay);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(card => observer.observe(card));
+})();
+
+// Scroll-to-top button
+(function() {
+    const btn = document.getElementById('scroll-top');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                btn.classList.toggle('visible', window.scrollY > 400);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
+
+// Subtle card tilt on mouse move
+(function() {
+    const cards = document.querySelectorAll('.game-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `translateY(-10px) scale(1.02) perspective(600px) rotateY(${x * 6}deg) rotateX(${-y * 4}deg)`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
 })();
 
 // Canvas scene renderers for each card
