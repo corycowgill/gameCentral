@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-    <meta name="description" content="Play 15 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
+    <meta name="description" content="Play 16 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, 3D Rubik's Cube, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
     <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, UFO shooter, puzzle game, nuclear war game, hallucinated games">
     <meta name="author" content="Hallucinated Games">
     <meta name="robots" content="index, follow">
@@ -15,13 +15,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.hallucinatedgames.com/">
     <meta property="og:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta property="og:description" content="15 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles and more. 100% vibe coded, 0% unit tested.">
+    <meta property="og:description" content="16 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube and more. 100% vibe coded, 0% unit tested.">
     <meta property="og:site_name" content="Hallucinated Games">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta name="twitter:description" content="15 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles and more. 100% vibe coded, 0% unit tested.">
+    <meta name="twitter:description" content="16 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube and more. 100% vibe coded, 0% unit tested.">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -47,7 +47,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 15,
+        "numberOfItems": 16,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
             {"@type": "ListItem", "position": 2, "name": "UFO Shooter", "url": "https://ufoshooter.onrender.com"},
@@ -63,7 +63,8 @@
             {"@type": "ListItem", "position": 12, "name": "Reef Rescue", "url": "https://colorpuzzler.onrender.com"},
             {"@type": "ListItem", "position": 13, "name": "Robot Attack 2026", "url": "https://robotattack.onrender.com"},
             {"@type": "ListItem", "position": 14, "name": "War - The Card Game", "url": "https://warcardgame.onrender.com"},
-            {"@type": "ListItem", "position": 15, "name": "Parker's Birthday Stuffie Adventure", "url": "https://bdaystuffy.onrender.com"}
+            {"@type": "ListItem", "position": 15, "name": "Parker's Birthday Stuffie Adventure", "url": "https://bdaystuffy.onrender.com"},
+            {"@type": "ListItem", "position": 16, "name": "Rubik's Cube 3D", "url": "https://rubiccube3d.onrender.com"}
         ]
     }
     </script>
@@ -974,6 +975,41 @@
             border-color: rgba(255, 136, 204, 0.55);
         }
 
+        .card-rubik .card-bg {
+            background: linear-gradient(135deg, #1b0e1e 0%, #0a0a18 100%);
+        }
+        .card-rubik .card-art::after {
+            background: linear-gradient(to top, #1b0e1e, transparent);
+        }
+        .card-rubik .card-genre { color: #ff4d4d; }
+        .card-rubik .card-title { color: #ffe066; }
+        .card-rubik .feature-tag {
+            background: rgba(255, 77, 77, 0.14);
+            color: #ff7070;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+        }
+        .card-rubik .play-btn {
+            background: linear-gradient(135deg, #ff3b3b, #ffaa00);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 80, 40, 0.45);
+        }
+        .card-rubik:hover {
+            box-shadow: 0 30px 60px rgba(255, 80, 40, 0.22);
+        }
+        .card-rubik .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-rubik:hover .glow-border {
+            border-color: rgba(255, 77, 77, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -1760,11 +1796,39 @@
         </div>
     </a>
 
+    <!-- Rubik's Cube 3D -->
+    <a href="https://rubiccube3d.onrender.com" target="_blank" rel="noopener" class="game-card card-rubik" data-category="puzzle">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-rubik"></canvas>
+                <div class="game-icon">&#x1F9CA;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">3D Puzzle / Rubik's Cube</div>
+                <div class="card-title">Rubik's Cube 3D</div>
+                <p class="card-desc">
+                    The classic brain-melting plastic cube your uncle claimed he could solve in 30 seconds &mdash; now in hallucinated 3D. Rotate faces with your mouse, scramble with one click, and pretend you know what an F2L is. Six colors, countless permutations, one inevitable outcome: you give up and peel the stickers. Built by an AI that has definitely never solved one either.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">3D</span>
+                    <span class="feature-tag">Puzzle</span>
+                    <span class="feature-tag">Classic</span>
+                    <span class="feature-tag">Mouse Controls</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
 </div>
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="15" data-suffix="">0</div>
+        <div class="stat-value" data-target="16" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -4298,6 +4362,181 @@ function drawStuffyScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawRubikScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Dark radial backdrop
+    const bg = ctx.createRadialGradient(W/2, H*0.45, 20, W/2, H*0.45, W*0.85);
+    bg.addColorStop(0, '#2a1020');
+    bg.addColorStop(1, '#0a0814');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Faint grid floor
+    ctx.strokeStyle = 'rgba(255,77,77,0.06)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < 8; i++) {
+        const y = H*0.7 + i*4;
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // Isometric Rubik's cube — three visible faces (top, front-left, front-right)
+    // Classic color palette
+    const C = {
+        white:  '#f5f5f5',
+        yellow: '#ffd23f',
+        red:    '#e53935',
+        orange: '#fb8c00',
+        green:  '#2e9e4a',
+        blue:   '#1e88e5'
+    };
+
+    const cx = W*0.5, cy = H*0.52;
+    const s = Math.min(W, H) * 0.14; // sticker side length
+    // Isometric basis vectors (viewer looks slightly down at cube)
+    const ax = s,  ay = s*0.5;    // "right" axis on top face
+    const bx = -s, by = s*0.5;    // "left" axis on top face
+
+    // Face colors per sticker (3x3 grids). Lightly scrambled for visual interest.
+    const topFace = [
+        [C.white,  C.white,  C.yellow],
+        [C.white,  C.white,  C.white],
+        [C.yellow, C.white,  C.white]
+    ];
+    const leftFace = [
+        [C.red, C.red,    C.red],
+        [C.red, C.orange, C.red],
+        [C.red, C.red,    C.green]
+    ];
+    const rightFace = [
+        [C.blue,   C.blue, C.blue],
+        [C.blue,   C.green, C.blue],
+        [C.orange, C.blue, C.blue]
+    ];
+
+    function polyFill(pts, color, stroke) {
+        ctx.beginPath();
+        ctx.moveTo(pts[0][0], pts[0][1]);
+        for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+        ctx.closePath();
+        ctx.fillStyle = color;
+        ctx.fill();
+        if (stroke) {
+            ctx.strokeStyle = stroke;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+        }
+    }
+
+    // Cube origin: top-back corner where all three visible faces meet
+    const ox = cx, oy = cy - s*1.5;
+
+    // Top face diamond — c along +ax (back->right), r along +bx (back->left)
+    for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+            const p0 = [ox + c*ax + r*bx,         oy + c*ay + r*by];
+            const p1 = [ox + (c+1)*ax + r*bx,     oy + (c+1)*ay + r*by];
+            const p2 = [ox + (c+1)*ax + (r+1)*bx, oy + (c+1)*ay + (r+1)*by];
+            const p3 = [ox + c*ax + (r+1)*bx,     oy + c*ay + (r+1)*by];
+            polyFill([p0,p1,p2,p3], topFace[r][c], 'rgba(0,0,0,0.75)');
+        }
+    }
+
+    // Front-left face: hangs below the LEFT->FRONT edge of the top diamond.
+    // Top-back corner of this face is the LEFT corner of the top (ox+3bx, oy+3by).
+    // Horizontal axis runs from LEFT corner to FRONT corner = direction (+ax, +ay).
+    const leftOX = ox + 3*bx;
+    const leftOY = oy + 3*by;
+    for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+            const baseX = leftOX + c*ax;
+            const baseY = leftOY + c*ay + r*s;
+            const q0 = [baseX,          baseY];
+            const q1 = [baseX + ax,     baseY + ay];
+            const q2 = [baseX + ax,     baseY + ay + s];
+            const q3 = [baseX,          baseY + s];
+            polyFill([q0,q1,q2,q3], leftFace[r][c], 'rgba(0,0,0,0.75)');
+        }
+    }
+
+    // Front-right face: hangs below the RIGHT->FRONT edge of the top.
+    // Top-back corner is the RIGHT corner of the top (ox+3ax, oy+3ay).
+    // Horizontal axis runs from RIGHT corner to FRONT corner = direction (+bx, +by).
+    const rightOX = ox + 3*ax;
+    const rightOY = oy + 3*ay;
+    for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+            const baseX = rightOX + c*bx;
+            const baseY = rightOY + c*by + r*s;
+            const q0 = [baseX,          baseY];
+            const q1 = [baseX + bx,     baseY + by];
+            const q2 = [baseX + bx,     baseY + by + s];
+            const q3 = [baseX,          baseY + s];
+            polyFill([q0,q1,q2,q3], rightFace[r][c], 'rgba(0,0,0,0.75)');
+        }
+    }
+
+    // Subtle shading overlays for depth (left face slightly darker than right)
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    ctx.beginPath();
+    ctx.moveTo(leftOX, leftOY);
+    ctx.lineTo(leftOX + 3*ax, leftOY + 3*ay);
+    ctx.lineTo(leftOX + 3*ax, leftOY + 3*ay + 3*s);
+    ctx.lineTo(leftOX,         leftOY + 3*s);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.fillStyle = 'rgba(0,0,0,0.08)';
+    ctx.beginPath();
+    ctx.moveTo(rightOX, rightOY);
+    ctx.lineTo(rightOX + 3*bx, rightOY + 3*by);
+    ctx.lineTo(rightOX + 3*bx, rightOY + 3*by + 3*s);
+    ctx.lineTo(rightOX,         rightOY + 3*s);
+    ctx.closePath();
+    ctx.fill();
+
+    // Rotation arc arrow hinting at interactivity
+    ctx.strokeStyle = 'rgba(255,224,102,0.7)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(cx, cy + s*1.8, s*1.1, Math.PI*1.05, Math.PI*1.85);
+    ctx.stroke();
+    // arrowhead
+    const aex = cx + Math.cos(Math.PI*1.85)*s*1.1;
+    const aey = cy + s*1.8 + Math.sin(Math.PI*1.85)*s*1.1;
+    ctx.fillStyle = 'rgba(255,224,102,0.8)';
+    ctx.beginPath();
+    ctx.moveTo(aex, aey);
+    ctx.lineTo(aex - 5, aey - 4);
+    ctx.lineTo(aex - 2, aey + 4);
+    ctx.closePath();
+    ctx.fill();
+
+    // Timer HUD
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.04, 52, 14);
+    ctx.fillStyle = '#ff4d4d';
+    ctx.font = 'bold 8px monospace';
+    ctx.fillText('01:42.3', W*0.04 + 6, H*0.04 + 10);
+
+    // Moves HUD
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W - W*0.04 - 48, H*0.04, 48, 14);
+    ctx.fillStyle = '#ffd23f';
+    ctx.fillText('MOVES 63', W - W*0.04 - 42, H*0.04 + 10);
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.75);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.5)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -4315,6 +4554,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawDadtaxScene(document.getElementById('canvas-dadtax'));
     drawWarScene(document.getElementById('canvas-war'));
     drawStuffyScene(document.getElementById('canvas-stuffy'));
+    drawRubikScene(document.getElementById('canvas-rubik'));
 });
 
 window.addEventListener('resize', () => {
@@ -4333,6 +4573,7 @@ window.addEventListener('resize', () => {
     drawDadtaxScene(document.getElementById('canvas-dadtax'));
     drawWarScene(document.getElementById('canvas-war'));
     drawStuffyScene(document.getElementById('canvas-stuffy'));
+    drawRubikScene(document.getElementById('canvas-rubik'));
 });
 
 // ============================================================
