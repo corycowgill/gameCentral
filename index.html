@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-    <meta name="description" content="Play 16 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, 3D Rubik's Cube, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
+    <meta name="description" content="Play 17 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, 3D Rubik's Cube, Pass the Pigs, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
     <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, UFO shooter, puzzle game, nuclear war game, hallucinated games">
     <meta name="author" content="Hallucinated Games">
     <meta name="robots" content="index, follow">
@@ -15,13 +15,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.hallucinatedgames.com/">
     <meta property="og:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta property="og:description" content="16 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube and more. 100% vibe coded, 0% unit tested.">
+    <meta property="og:description" content="17 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs and more. 100% vibe coded, 0% unit tested.">
     <meta property="og:site_name" content="Hallucinated Games">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta name="twitter:description" content="16 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube and more. 100% vibe coded, 0% unit tested.">
+    <meta name="twitter:description" content="17 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs and more. 100% vibe coded, 0% unit tested.">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -47,7 +47,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 16,
+        "numberOfItems": 17,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
             {"@type": "ListItem", "position": 2, "name": "UFO Shooter", "url": "https://ufoshooter.onrender.com"},
@@ -64,7 +64,8 @@
             {"@type": "ListItem", "position": 13, "name": "Robot Attack 2026", "url": "https://robotattack.onrender.com"},
             {"@type": "ListItem", "position": 14, "name": "War - The Card Game", "url": "https://warcardgame.onrender.com"},
             {"@type": "ListItem", "position": 15, "name": "Parker's Birthday Stuffie Adventure", "url": "https://bdaystuffy.onrender.com"},
-            {"@type": "ListItem", "position": 16, "name": "Rubik's Cube 3D", "url": "https://rubiccube3d.onrender.com"}
+            {"@type": "ListItem", "position": 16, "name": "Rubik's Cube 3D", "url": "https://rubiccube3d.onrender.com"},
+            {"@type": "ListItem", "position": 17, "name": "Pass Da Pig 3D", "url": "https://passdapig3dcowgill2026.onrender.com"}
         ]
     }
     </script>
@@ -1010,6 +1011,41 @@
             border-color: rgba(255, 77, 77, 0.6);
         }
 
+        .card-pig .card-bg {
+            background: linear-gradient(135deg, #2a0f22 0%, #140814 100%);
+        }
+        .card-pig .card-art::after {
+            background: linear-gradient(to top, #2a0f22, transparent);
+        }
+        .card-pig .card-genre { color: #ff9ebe; }
+        .card-pig .card-title { color: #ffd1dc; }
+        .card-pig .feature-tag {
+            background: rgba(255, 158, 190, 0.14);
+            color: #ff9ebe;
+            border: 1px solid rgba(255, 158, 190, 0.3);
+        }
+        .card-pig .play-btn {
+            background: linear-gradient(135deg, #ff5c8a, #c94f8c);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 92, 138, 0.45);
+        }
+        .card-pig:hover {
+            box-shadow: 0 30px 60px rgba(255, 92, 138, 0.22);
+        }
+        .card-pig .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 158, 190, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-pig:hover .glow-border {
+            border-color: rgba(255, 158, 190, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -1824,11 +1860,39 @@
         </div>
     </a>
 
+    <!-- Pass Da Pig 3D -->
+    <a href="https://passdapig3dcowgill2026.onrender.com" target="_blank" rel="noopener" class="game-card card-pig" data-category="party">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-pig"></canvas>
+                <div class="game-icon">&#x1F437;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">3D Dice / Party</div>
+                <div class="card-title">Pass Da Pig 3D</div>
+                <p class="card-desc">
+                    Roll tiny rubber pigs, pray for a Leaning Jowler, try not to Pig Out. The classic road-trip dice game of your youth, except now the pigs are vibe-coded 3D polygonal gremlins tumbling through physics your AI only half understands. Push your luck for the 100-point win or bank early like a coward. Sider, Trotter, Razorback, Snouter &mdash; the terminology is real, the piety is optional.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">3D</span>
+                    <span class="feature-tag">Dice Game</span>
+                    <span class="feature-tag">Push Your Luck</span>
+                    <span class="feature-tag">Party</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
 </div>
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="16" data-suffix="">0</div>
+        <div class="stat-value" data-target="17" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -4537,6 +4601,189 @@ function drawRubikScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawPigScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Tabletop/felt background
+    const bg = ctx.createRadialGradient(W/2, H*0.55, 20, W/2, H*0.55, W*0.8);
+    bg.addColorStop(0, '#4a1238');
+    bg.addColorStop(1, '#1a0614');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Felt speckle texture
+    const seed = (n) => { const x = Math.sin(n*12.9898 + 78.233)*43758.5453; return x - Math.floor(x); };
+    for (let i = 0; i < 80; i++) {
+        ctx.fillStyle = `rgba(255,200,220,${0.04 + seed(i)*0.05})`;
+        ctx.fillRect(seed(i+1)*W, seed(i+2)*H, 1, 1);
+    }
+
+    // Wooden table rim at bottom
+    const rimGrad = ctx.createLinearGradient(0, H*0.85, 0, H);
+    rimGrad.addColorStop(0, '#3a1a0a');
+    rimGrad.addColorStop(1, '#1a0804');
+    ctx.fillStyle = rimGrad;
+    ctx.fillRect(0, H*0.85, W, H*0.15);
+
+    // Soft shadow on felt where pigs land
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.beginPath();
+    ctx.ellipse(W*0.38, H*0.78, W*0.11, H*0.035, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(W*0.64, H*0.72, W*0.10, H*0.032, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // ---- Pig #1: "Sider" pose (lying on its side, snout right) ----
+    function drawSiderPig(cx, cy, scale) {
+        const s = scale;
+        // Body (oblong pink)
+        const body = ctx.createRadialGradient(cx - s*4, cy - s*6, s*2, cx, cy, s*22);
+        body.addColorStop(0, '#ffc0d4');
+        body.addColorStop(1, '#e48aad');
+        ctx.fillStyle = body;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, s*22, s*13, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Belly highlight
+        ctx.fillStyle = 'rgba(255,255,255,0.18)';
+        ctx.beginPath();
+        ctx.ellipse(cx - s*3, cy - s*4, s*12, s*5, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Head bump + snout
+        ctx.fillStyle = '#e48aad';
+        ctx.beginPath();
+        ctx.ellipse(cx + s*18, cy - s*2, s*7, s*6, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Snout disc
+        ctx.fillStyle = '#c96a8f';
+        ctx.beginPath();
+        ctx.ellipse(cx + s*23, cy - s*1, s*3, s*3.5, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Nostrils
+        ctx.fillStyle = '#5a1e3a';
+        ctx.fillRect(cx + s*22.5, cy - s*2, 1.2, 1.8);
+        ctx.fillRect(cx + s*22.5, cy + s*0.3, 1.2, 1.8);
+        // Eye (closed / happy)
+        ctx.strokeStyle = '#3a0e24';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(cx + s*17, cy - s*4, 1.5, Math.PI, 0);
+        ctx.stroke();
+        // Ear
+        ctx.fillStyle = '#c96a8f';
+        ctx.beginPath();
+        ctx.moveTo(cx + s*15, cy - s*7);
+        ctx.lineTo(cx + s*18, cy - s*10);
+        ctx.lineTo(cx + s*19, cy - s*6);
+        ctx.closePath();
+        ctx.fill();
+        // Legs sticking out (sider = lying on side)
+        ctx.fillStyle = '#c96a8f';
+        ctx.fillRect(cx - s*8, cy + s*10, s*3, s*5);
+        ctx.fillRect(cx + s*5, cy + s*10, s*3, s*5);
+        // Curly tail
+        ctx.strokeStyle = '#c96a8f';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(cx - s*20, cy - s*2, s*2.5, Math.PI*0.2, Math.PI*1.6);
+        ctx.stroke();
+    }
+
+    // ---- Pig #2: "Trotter" pose (standing upright on all fours) ----
+    function drawTrotterPig(cx, cy, scale) {
+        const s = scale;
+        // Legs
+        ctx.fillStyle = '#b85a7e';
+        ctx.fillRect(cx - s*8, cy, s*3, s*8);
+        ctx.fillRect(cx - s*2, cy, s*3, s*8);
+        ctx.fillRect(cx + s*4, cy, s*3, s*8);
+        ctx.fillRect(cx + s*10, cy, s*3, s*8);
+        // Body
+        const body = ctx.createRadialGradient(cx - s*4, cy - s*6, s*2, cx, cy - s*2, s*16);
+        body.addColorStop(0, '#ffc0d4');
+        body.addColorStop(1, '#d47aa0');
+        ctx.fillStyle = body;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - s*1, s*16, s*8, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Head
+        ctx.fillStyle = '#d47aa0';
+        ctx.beginPath();
+        ctx.ellipse(cx + s*14, cy - s*4, s*6, s*5, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Snout
+        ctx.fillStyle = '#b85a7e';
+        ctx.beginPath();
+        ctx.ellipse(cx + s*19, cy - s*3, s*2.5, s*3, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Nostrils
+        ctx.fillStyle = '#3a0e24';
+        ctx.fillRect(cx + s*18.5, cy - s*4, 1.2, 1.5);
+        ctx.fillRect(cx + s*18.5, cy - s*2, 1.2, 1.5);
+        // Eye
+        ctx.fillStyle = '#1a0612';
+        ctx.beginPath(); ctx.arc(cx + s*13, cy - s*5, 1.3, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(cx + s*12.8, cy - s*5.3, 0.6, 0.6);
+        // Ears
+        ctx.fillStyle = '#b85a7e';
+        ctx.beginPath();
+        ctx.moveTo(cx + s*11, cy - s*8);
+        ctx.lineTo(cx + s*13, cy - s*11);
+        ctx.lineTo(cx + s*14, cy - s*7);
+        ctx.closePath();
+        ctx.fill();
+        // Curly tail
+        ctx.strokeStyle = '#b85a7e';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(cx - s*16, cy - s*3, s*2, Math.PI*0.2, Math.PI*1.7);
+        ctx.stroke();
+    }
+
+    drawSiderPig(W*0.38, H*0.72, 1.0);
+    drawTrotterPig(W*0.64, H*0.66, 0.95);
+
+    // Score HUD
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.04, 70, 28);
+    ctx.fillStyle = '#ff9ebe';
+    ctx.font = 'bold 8px monospace';
+    ctx.fillText('YOU   47', W*0.04 + 6, H*0.04 + 12);
+    ctx.fillStyle = '#ffd1dc';
+    ctx.fillText('AI    62', W*0.04 + 6, H*0.04 + 24);
+
+    // "TROTTER!" callout
+    ctx.fillStyle = 'rgba(255, 215, 100, 0.95)';
+    ctx.font = 'bold 11px "Orbitron", monospace';
+    ctx.save();
+    ctx.translate(W*0.5, H*0.22);
+    ctx.rotate(-0.08);
+    ctx.textAlign = 'center';
+    ctx.fillText('TROTTER! +5', 0, 0);
+    ctx.restore();
+    ctx.textAlign = 'left';
+
+    // Turn indicator
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W - W*0.04 - 58, H*0.04, 58, 14);
+    ctx.fillStyle = '#ff5c8a';
+    ctx.font = 'bold 8px monospace';
+    ctx.fillText('TURN +12', W - W*0.04 - 52, H*0.04 + 10);
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.75);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.5)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -4555,6 +4802,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawWarScene(document.getElementById('canvas-war'));
     drawStuffyScene(document.getElementById('canvas-stuffy'));
     drawRubikScene(document.getElementById('canvas-rubik'));
+    drawPigScene(document.getElementById('canvas-pig'));
 });
 
 window.addEventListener('resize', () => {
@@ -4574,6 +4822,7 @@ window.addEventListener('resize', () => {
     drawWarScene(document.getElementById('canvas-war'));
     drawStuffyScene(document.getElementById('canvas-stuffy'));
     drawRubikScene(document.getElementById('canvas-rubik'));
+    drawPigScene(document.getElementById('canvas-pig'));
 });
 
 // ============================================================
