@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-    <meta name="description" content="Play 17 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, 3D Rubik's Cube, Pass the Pigs, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
+    <meta name="description" content="Play 18 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, 3D Rubik's Cube, Pass the Pigs, kaiju rampage, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
     <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, UFO shooter, puzzle game, nuclear war game, hallucinated games">
     <meta name="author" content="Hallucinated Games">
     <meta name="robots" content="index, follow">
@@ -15,13 +15,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.hallucinatedgames.com/">
     <meta property="og:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta property="og:description" content="17 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs and more. 100% vibe coded, 0% unit tested.">
+    <meta property="og:description" content="18 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs, kaiju rampage and more. 100% vibe coded, 0% unit tested.">
     <meta property="og:site_name" content="Hallucinated Games">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta name="twitter:description" content="17 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs and more. 100% vibe coded, 0% unit tested.">
+    <meta name="twitter:description" content="18 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs, kaiju rampage and more. 100% vibe coded, 0% unit tested.">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -30,7 +30,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 17 games built entirely by AI - tower defense, RTS, shooters, football, puzzles, and more.",
+        "description": "Free AI-generated browser games. 18 games built entirely by AI - tower defense, RTS, shooters, football, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -47,7 +47,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 17,
+        "numberOfItems": 18,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
             {"@type": "ListItem", "position": 2, "name": "UFO Shooter", "url": "https://ufoshooter.onrender.com"},
@@ -65,7 +65,8 @@
             {"@type": "ListItem", "position": 14, "name": "War - The Card Game", "url": "https://warcardgame.onrender.com"},
             {"@type": "ListItem", "position": 15, "name": "Parker's Birthday Stuffie Adventure", "url": "https://bdaystuffy.onrender.com"},
             {"@type": "ListItem", "position": 16, "name": "Rubik's Cube 3D", "url": "https://rubiccube3d.onrender.com"},
-            {"@type": "ListItem", "position": 17, "name": "Pass Da Pig 3D", "url": "https://passdapig3dcowgill2026.onrender.com"}
+            {"@type": "ListItem", "position": 17, "name": "Pass Da Pig 3D", "url": "https://passdapig3dcowgill2026.onrender.com"},
+            {"@type": "ListItem", "position": 18, "name": "Kaiju Rampage", "url": "https://kaiju-am8i.onrender.com"}
         ]
     }
     </script>
@@ -1046,6 +1047,41 @@
             border-color: rgba(255, 158, 190, 0.6);
         }
 
+        .card-kaiju .card-bg {
+            background: linear-gradient(135deg, #0a1f14 0%, #050810 100%);
+        }
+        .card-kaiju .card-art::after {
+            background: linear-gradient(to top, #0a1f14, transparent);
+        }
+        .card-kaiju .card-genre { color: #66ff7a; }
+        .card-kaiju .card-title { color: #c8ffb0; }
+        .card-kaiju .feature-tag {
+            background: rgba(102, 255, 122, 0.13);
+            color: #66ff7a;
+            border: 1px solid rgba(102, 255, 122, 0.3);
+        }
+        .card-kaiju .play-btn {
+            background: linear-gradient(135deg, #2bc24a, #88ff44);
+            color: #0a1f14;
+            box-shadow: 0 4px 20px rgba(102, 255, 122, 0.45);
+        }
+        .card-kaiju:hover {
+            box-shadow: 0 30px 60px rgba(102, 255, 122, 0.22);
+        }
+        .card-kaiju .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 255, 122, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-kaiju:hover .glow-border {
+            border-color: rgba(102, 255, 122, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -1396,7 +1432,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>17</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>18</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -1888,11 +1924,39 @@
         </div>
     </a>
 
+    <!-- Kaiju Rampage -->
+    <a href="https://kaiju-am8i.onrender.com" class="game-card card-kaiju" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-kaiju"></canvas>
+                <div class="game-icon">&#x1F996;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Kaiju Rampage / Action</div>
+                <div class="card-title">Kaiju Rampage</div>
+                <p class="card-desc">
+                    You are the giant radioactive lizard your government warned you about. Stomp neighborhoods, swat helicopters, and exhale atomic breath at anything that beeps. Tiny screaming citizens flee in 4 directions because the AI only knew 4 directions. Tanks roll up, miss spectacularly, and explode in glorious pixel fire. There is no win condition, only collateral damage. Godzilla's lawyers have been notified.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Kaiju</span>
+                    <span class="feature-tag">Destruction</span>
+                    <span class="feature-tag">Atomic Breath</span>
+                    <span class="feature-tag">Mayhem</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
 </div>
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="17" data-suffix="">0</div>
+        <div class="stat-value" data-target="18" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -4784,6 +4848,266 @@ function drawPigScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawKaijuScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Toxic green night sky
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#0a1f14');
+    sky.addColorStop(0.6, '#0e2a1c');
+    sky.addColorStop(1, '#142a18');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // Radioactive moon glow
+    const moon = ctx.createRadialGradient(W*0.78, H*0.2, 2, W*0.78, H*0.2, W*0.32);
+    moon.addColorStop(0, 'rgba(180,255,140,0.55)');
+    moon.addColorStop(0.3, 'rgba(120,220,100,0.18)');
+    moon.addColorStop(1, 'transparent');
+    ctx.fillStyle = moon;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#dfffb0';
+    ctx.beginPath(); ctx.arc(W*0.78, H*0.2, 9, 0, Math.PI*2); ctx.fill();
+
+    // Distant smoke clouds
+    const seed = (n) => { const x = Math.sin(n*8.7+3.1)*43758.5; return x-Math.floor(x); };
+    for (let i = 0; i < 6; i++) {
+        ctx.fillStyle = `rgba(40,80,40,${0.25+seed(i)*0.2})`;
+        const cx = seed(i+1)*W;
+        const cy = H*0.18 + seed(i+5)*H*0.15;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, 22+seed(i+9)*14, 6+seed(i+13)*4, 0, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    // City skyline (back row, distant)
+    const skyline = '#0d2a1a';
+    ctx.fillStyle = skyline;
+    for (let x = 0; x < W; x += 12) {
+        const bh = 18 + seed(x*0.3)*22;
+        ctx.fillRect(x, H*0.55 - bh, 11, bh);
+    }
+    // Tiny windows on back skyline
+    for (let x = 0; x < W; x += 12) {
+        const bh = 18 + seed(x*0.3)*22;
+        for (let wy = 0; wy < bh-4; wy += 4) {
+            if (seed(x+wy) > 0.55) {
+                ctx.fillStyle = `rgba(255,220,80,${0.4+seed(x*wy)*0.4})`;
+                ctx.fillRect(x+2, H*0.55 - bh + wy + 1, 1.5, 1.5);
+            }
+        }
+    }
+
+    // Front buildings (closer, bigger) — some on fire
+    const buildings = [
+        {x: 0.05, w: 0.12, h: 0.34, fire: false},
+        {x: 0.18, w: 0.10, h: 0.28, fire: true},
+        {x: 0.30, w: 0.08, h: 0.22, fire: false},
+        {x: 0.62, w: 0.09, h: 0.30, fire: true},
+        {x: 0.74, w: 0.11, h: 0.36, fire: false},
+        {x: 0.87, w: 0.08, h: 0.24, fire: false},
+    ];
+    buildings.forEach((b, i) => {
+        const bx = b.x*W, by = H*0.78 - b.h*H, bw = b.w*W, bh = b.h*H;
+        // Body
+        ctx.fillStyle = '#0a1610';
+        ctx.fillRect(bx, by, bw, bh);
+        ctx.strokeStyle = 'rgba(102,255,122,0.18)';
+        ctx.lineWidth = 0.5;
+        ctx.strokeRect(bx, by, bw, bh);
+        // Windows
+        for (let wx = 2; wx < bw-3; wx += 5) {
+            for (let wy = 3; wy < bh-3; wy += 6) {
+                if (seed(i*100+wx*wy) > 0.5) {
+                    ctx.fillStyle = `rgba(255,200,80,${0.35+seed(wx+wy)*0.5})`;
+                } else {
+                    ctx.fillStyle = 'rgba(40,90,60,0.5)';
+                }
+                ctx.fillRect(bx+wx, by+wy, 2, 3);
+            }
+        }
+        // Fire / smoke
+        if (b.fire) {
+            const fy = by + 2;
+            for (let f = 0; f < 6; f++) {
+                ctx.fillStyle = ['#ff6b1a','#ffaa33','#ff3322'][f%3];
+                const fx = bx + bw*0.2 + seed(i+f)*bw*0.6;
+                ctx.beginPath();
+                ctx.ellipse(fx, fy - f*2, 3 - f*0.3, 5 - f*0.4, 0, 0, Math.PI*2);
+                ctx.fill();
+            }
+            // Smoke plume
+            for (let sm = 0; sm < 5; sm++) {
+                ctx.fillStyle = `rgba(80,80,80,${0.4 - sm*0.06})`;
+                ctx.beginPath();
+                ctx.arc(bx + bw*0.4 + sm*1.5, by - 4 - sm*5, 4 + sm*1.2, 0, Math.PI*2);
+                ctx.fill();
+            }
+        }
+    });
+
+    // Ground
+    ctx.fillStyle = '#08130c';
+    ctx.fillRect(0, H*0.78, W, H*0.22);
+    // Cracks/destruction lines
+    ctx.strokeStyle = 'rgba(102,255,122,0.25)';
+    ctx.lineWidth = 0.7;
+    [[0.1,0.85,0.25,0.95],[0.4,0.88,0.55,0.96],[0.65,0.83,0.8,0.92]].forEach(([x1,y1,x2,y2])=>{
+        ctx.beginPath();
+        ctx.moveTo(x1*W, y1*H);
+        ctx.lineTo((x1+x2)/2*W + 4, (y1+y2)/2*H - 2);
+        ctx.lineTo(x2*W, y2*H);
+        ctx.stroke();
+    });
+
+    // Tiny fleeing citizens
+    ctx.fillStyle = '#ffe070';
+    [[0.36,0.92],[0.42,0.94],[0.48,0.91],[0.55,0.93]].forEach(([x,y])=>{
+        ctx.fillRect(x*W, y*H, 1.5, 3);
+        ctx.fillRect(x*W-0.5, y*H-1.5, 2.5, 1.5);
+    });
+
+    // Tank with little turret
+    const tx = W*0.22, ty = H*0.92;
+    ctx.fillStyle = '#3a5240';
+    ctx.fillRect(tx, ty, 14, 5);
+    ctx.fillRect(tx+3, ty-3, 8, 3);
+    ctx.fillRect(tx+10, ty-2, 6, 1);
+    ctx.fillStyle = '#1a2a1c';
+    ctx.fillRect(tx+1, ty+5, 3, 2);
+    ctx.fillRect(tx+10, ty+5, 3, 2);
+
+    // ---- The Kaiju ---- (center-back, towering)
+    const kx = W*0.5, kground = H*0.78;
+    const kscale = Math.min(W, H) * 0.012;
+
+    // Body silhouette
+    ctx.fillStyle = '#1d3a22';
+    // Tail
+    ctx.beginPath();
+    ctx.moveTo(kx + 18*kscale, kground);
+    ctx.quadraticCurveTo(kx + 38*kscale, kground - 6*kscale, kx + 44*kscale, kground - 22*kscale);
+    ctx.quadraticCurveTo(kx + 30*kscale, kground - 8*kscale, kx + 18*kscale, kground - 2*kscale);
+    ctx.closePath();
+    ctx.fill();
+    // Legs
+    ctx.fillRect(kx - 10*kscale, kground - 18*kscale, 7*kscale, 18*kscale);
+    ctx.fillRect(kx + 3*kscale, kground - 18*kscale, 7*kscale, 18*kscale);
+    // Body torso
+    ctx.beginPath();
+    ctx.ellipse(kx, kground - 30*kscale, 14*kscale, 16*kscale, 0, 0, Math.PI*2);
+    ctx.fill();
+    // Belly highlight
+    ctx.fillStyle = '#2e5a36';
+    ctx.beginPath();
+    ctx.ellipse(kx - 1*kscale, kground - 26*kscale, 8*kscale, 11*kscale, 0, 0, Math.PI*2);
+    ctx.fill();
+    // Arms
+    ctx.fillStyle = '#1d3a22';
+    ctx.fillRect(kx - 18*kscale, kground - 38*kscale, 6*kscale, 16*kscale);
+    ctx.fillRect(kx + 12*kscale, kground - 38*kscale, 6*kscale, 16*kscale);
+    // Tiny claws
+    ctx.fillStyle = '#0a1810';
+    ctx.fillRect(kx - 19*kscale, kground - 22*kscale, 2*kscale, 2*kscale);
+    ctx.fillRect(kx + 17*kscale, kground - 22*kscale, 2*kscale, 2*kscale);
+    // Head
+    ctx.fillStyle = '#1d3a22';
+    ctx.beginPath();
+    ctx.ellipse(kx - 2*kscale, kground - 50*kscale, 11*kscale, 9*kscale, -0.1, 0, Math.PI*2);
+    ctx.fill();
+    // Snout
+    ctx.beginPath();
+    ctx.ellipse(kx - 11*kscale, kground - 49*kscale, 6*kscale, 4*kscale, 0, 0, Math.PI*2);
+    ctx.fill();
+    // Glowing eye
+    ctx.fillStyle = '#ff3322';
+    ctx.beginPath(); ctx.arc(kx - 2*kscale, kground - 52*kscale, 1.6*kscale, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#ffdd55';
+    ctx.beginPath(); ctx.arc(kx - 2.3*kscale, kground - 52.2*kscale, 0.6*kscale, 0, Math.PI*2); ctx.fill();
+    // Spine plates
+    ctx.fillStyle = '#88ff88';
+    [[0,-42],[6,-38],[12,-32],[18,-24],[24,-16],[30,-10]].forEach(([dx,dy])=>{
+        ctx.beginPath();
+        ctx.moveTo(kx+dx*kscale, kground+dy*kscale);
+        ctx.lineTo(kx+(dx+2)*kscale, kground+(dy-5)*kscale);
+        ctx.lineTo(kx+(dx+4)*kscale, kground+dy*kscale);
+        ctx.closePath();
+        ctx.fill();
+    });
+
+    // Atomic breath beam
+    const beamGrad = ctx.createLinearGradient(kx - 13*kscale, kground - 49*kscale, kx - 60*kscale, kground - 55*kscale);
+    beamGrad.addColorStop(0, 'rgba(255,255,255,0.95)');
+    beamGrad.addColorStop(0.3, 'rgba(180,255,140,0.85)');
+    beamGrad.addColorStop(1, 'rgba(80,255,80,0)');
+    ctx.fillStyle = beamGrad;
+    ctx.beginPath();
+    ctx.moveTo(kx - 13*kscale, kground - 50*kscale);
+    ctx.lineTo(kx - 60*kscale, kground - 58*kscale);
+    ctx.lineTo(kx - 60*kscale, kground - 52*kscale);
+    ctx.lineTo(kx - 13*kscale, kground - 47*kscale);
+    ctx.closePath();
+    ctx.fill();
+    // Beam glow
+    ctx.fillStyle = 'rgba(180,255,140,0.25)';
+    ctx.beginPath();
+    ctx.ellipse(kx - 35*kscale, kground - 51*kscale, 30*kscale, 6*kscale, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // Helicopters
+    [[0.15,0.18],[0.55,0.22]].forEach(([hx,hy])=>{
+        const px = hx*W, py = hy*H;
+        ctx.fillStyle = '#444';
+        ctx.fillRect(px, py, 8, 2);
+        ctx.fillRect(px+3, py-1, 2, 1);
+        ctx.fillStyle = '#88ff88';
+        ctx.fillRect(px+8, py, 1.5, 1);
+        // rotor blur
+        ctx.strokeStyle = 'rgba(180,255,140,0.4)';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(px-3, py-2);
+        ctx.lineTo(px+11, py-2);
+        ctx.stroke();
+    });
+
+    // HUD: damage / score
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.04, 70, 28);
+    ctx.fillStyle = '#66ff7a';
+    ctx.font = 'bold 8px monospace';
+    ctx.fillText('DAMAGE', W*0.04 + 6, H*0.04 + 11);
+    // Damage bar
+    ctx.fillStyle = 'rgba(102,255,122,0.2)';
+    ctx.fillRect(W*0.04 + 6, H*0.04 + 14, 58, 4);
+    ctx.fillStyle = '#88ff44';
+    ctx.fillRect(W*0.04 + 6, H*0.04 + 14, 58*0.78, 4);
+    ctx.fillStyle = '#c8ffb0';
+    ctx.fillText('$2.4B', W*0.04 + 6, H*0.04 + 26);
+
+    // Big "RAMPAGE!" callout
+    ctx.fillStyle = 'rgba(255, 60, 40, 0.95)';
+    ctx.font = 'bold 12px "Orbitron", monospace';
+    ctx.save();
+    ctx.translate(W*0.78, H*0.55);
+    ctx.rotate(-0.06);
+    ctx.textAlign = 'center';
+    ctx.fillText('RAMPAGE!', 0, 0);
+    ctx.restore();
+    ctx.textAlign = 'left';
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.78);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.55)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 // Initialize canvases
 window.addEventListener('DOMContentLoaded', () => {
     drawCastleScene(document.getElementById('canvas-castle'));
@@ -4803,6 +5127,7 @@ window.addEventListener('DOMContentLoaded', () => {
     drawStuffyScene(document.getElementById('canvas-stuffy'));
     drawRubikScene(document.getElementById('canvas-rubik'));
     drawPigScene(document.getElementById('canvas-pig'));
+    drawKaijuScene(document.getElementById('canvas-kaiju'));
 });
 
 window.addEventListener('resize', () => {
@@ -4823,6 +5148,7 @@ window.addEventListener('resize', () => {
     drawStuffyScene(document.getElementById('canvas-stuffy'));
     drawRubikScene(document.getElementById('canvas-rubik'));
     drawPigScene(document.getElementById('canvas-pig'));
+    drawKaijuScene(document.getElementById('canvas-kaiju'));
 });
 
 // ============================================================
