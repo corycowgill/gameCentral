@@ -67,7 +67,7 @@
             {"@type": "ListItem", "position": 16, "name": "Parker's Birthday Stuffie Adventure", "url": "https://bdaystuffy.onrender.com"},
             {"@type": "ListItem", "position": 17, "name": "Rubik's Cube 3D", "url": "https://rubiccube3d.onrender.com"},
             {"@type": "ListItem", "position": 18, "name": "Pass Da Pig 3D", "url": "https://passdapig3dcowgill2026.onrender.com"},
-            {"@type": "ListItem", "position": 19, "name": "Text Game 2000", "url": "https://textgame2000.onrender.com"}
+            {"@type": "ListItem", "position": 19, "name": "The Last Will of Ashvale", "url": "https://textgame2000.onrender.com"}
         ]
     }
     </script>
@@ -1084,44 +1084,44 @@
         }
 
         .card-textgame .card-bg {
-            background: linear-gradient(135deg, #0a160a 0%, #050a04 100%);
+            background: linear-gradient(135deg, #1a0e08 0%, #0a0604 100%);
         }
         .card-textgame .card-art::after {
-            background: linear-gradient(to top, #0a160a, transparent);
+            background: linear-gradient(to top, #1a0e08, transparent);
         }
-        .card-textgame .card-genre { color: #00cc66; }
+        .card-textgame .card-genre { color: #d99450; }
         .card-textgame .card-title {
-            color: #aaffaa;
+            color: #f4d8a8;
             font-family: 'Courier New', monospace;
         }
         .card-textgame .feature-tag {
-            background: rgba(0, 204, 102, 0.12);
-            color: #66ff99;
-            border: 1px solid rgba(0, 204, 102, 0.3);
+            background: rgba(217, 148, 80, 0.12);
+            color: #e8b56a;
+            border: 1px solid rgba(217, 148, 80, 0.3);
             font-family: 'Courier New', monospace;
         }
         .card-textgame .play-btn {
-            background: linear-gradient(135deg, #00aa55, #00cc66);
-            color: #061a0a;
-            box-shadow: 0 4px 20px rgba(0, 204, 102, 0.4);
+            background: linear-gradient(135deg, #8a5a2a, #d99450);
+            color: #1a0e08;
+            box-shadow: 0 4px 20px rgba(217, 148, 80, 0.4);
             font-family: 'Courier New', monospace;
             letter-spacing: 1px;
         }
         .card-textgame:hover {
-            box-shadow: 0 30px 60px rgba(0, 204, 102, 0.22);
+            box-shadow: 0 30px 60px rgba(217, 148, 80, 0.22);
         }
         .card-textgame .glow-border {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             border-radius: 20px;
-            border: 1px solid rgba(0, 204, 102, 0.2);
+            border: 1px solid rgba(217, 148, 80, 0.2);
             z-index: 3;
             pointer-events: none;
             transition: border-color 0.3s ease;
         }
         .card-textgame:hover .glow-border {
-            border-color: rgba(0, 204, 102, 0.6);
+            border-color: rgba(217, 148, 80, 0.6);
         }
 
         /* Footer */
@@ -1994,26 +1994,26 @@
         </div>
     </a>
 
-    <!-- Text Game 2000 -->
+    <!-- The Last Will of Ashvale -->
     <a href="https://textgame2000.onrender.com" class="game-card card-textgame" data-category="puzzle">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
             <div class="card-art">
                 <canvas id="canvas-textgame"></canvas>
-                <div class="game-icon">&#x1F4BE;</div>
+                <div class="game-icon">&#x1F56F;</div>
             </div>
             <div class="card-info">
-                <div class="card-genre">Text Adventure / Retro</div>
-                <div class="card-title">Text Game 2000</div>
+                <div class="card-genre">Gothic Parser Adventure</div>
+                <div class="card-title">The Last Will of Ashvale</div>
                 <p class="card-desc">
-                    A Y2K-flavored interactive fiction experience where the only graphics are blinking ASCII and the only soundtrack is your own keyboard. Type GO NORTH, EXAMINE LAMP, and TAKE EVERYTHING NOT NAILED DOWN like it's 1985 again. The parser is forgiving, the AI dungeon master is unhinged, and somewhere in this hallucinated cave system there is allegedly a goal. You will probably die first.
+                    Autumn, 1888. The coachman drops you at the gates of Ashvale Manor and bolts at unwholesome speed, leaving you with a telegram, a fog, and the sound of your own breathing. You are Dr. Alistair Vance, paranormal investigator. Lord Edmund lies dead inside, his will contested, the household scattered &mdash; and you have until the manor's clock strikes thirteen. A five-haunting parser adventure where typing EXAMINE PORTRAIT may be the bravest thing you do all night.
                 </p>
                 <div class="card-features">
-                    <span class="feature-tag">Text Adventure</span>
-                    <span class="feature-tag">Retro</span>
-                    <span class="feature-tag">CRT Vibes</span>
+                    <span class="feature-tag">Gothic</span>
                     <span class="feature-tag">Parser</span>
+                    <span class="feature-tag">1888</span>
+                    <span class="feature-tag">Paranormal</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -5185,100 +5185,124 @@ function drawTextgameScene(canvas) {
     ctx.scale(2, 2);
     const W = w/2, H = h/2;
 
-    // Pure black CRT background
-    ctx.fillStyle = '#020803';
+    // Inky parchment-black background
+    ctx.fillStyle = '#0a0604';
     ctx.fillRect(0, 0, W, H);
 
-    // CRT scanline overlay
-    ctx.fillStyle = 'rgba(0,255,90,0.04)';
+    // Subtle scanlines (faint, gas-flicker)
+    ctx.fillStyle = 'rgba(220,160,80,0.035)';
     for (let y = 0; y < H; y += 2) {
         ctx.fillRect(0, y, W, 1);
     }
 
-    // Subtle CRT bulge gradient
-    const bulge = ctx.createRadialGradient(W/2, H/2, 10, W/2, H/2, W*0.7);
-    bulge.addColorStop(0, 'rgba(0,255,120,0.06)');
-    bulge.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = bulge;
+    // Gaslight pool from above-left (as if a candelabra is just off-screen)
+    const lamp = ctx.createRadialGradient(W*0.25, H*0.15, 5, W*0.25, H*0.15, W*0.85);
+    lamp.addColorStop(0, 'rgba(255,180,90,0.10)');
+    lamp.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = lamp;
     ctx.fillRect(0, 0, W, H);
 
-    // Phosphor green text
-    const green = '#33ff66';
-    const greenDim = '#22aa44';
+    // Amber phosphor palette
+    const amber = '#e8b56a';
+    const amberDim = '#a87440';
+    const amberBright = '#fff0c8';
     ctx.font = 'bold 8px "Courier New", monospace';
-    ctx.fillStyle = green;
     ctx.textBaseline = 'top';
 
-    const lineH = 10;
+    // Top status bar — "The Iron Gate · turn 0 · lamp: unlit"
+    const tbY = 0;
+    ctx.fillStyle = '#1a0e08';
+    ctx.fillRect(0, tbY, W, 14);
+    ctx.strokeStyle = amberDim;
+    ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(0, 14); ctx.lineTo(W, 14); ctx.stroke();
+    ctx.fillStyle = amber;
+    ctx.font = 'bold 7px "Courier New", monospace';
+    ctx.fillText('The Iron Gate', 6, 4);
+    ctx.fillStyle = amberDim;
+    ctx.fillText('turn 0', W*0.46, 4);
+    ctx.fillText('lamp: unlit', W - 70, 4);
+
+    const lineH = 9;
     const padX = W*0.06;
-    let y = H*0.06;
+    let y = 22;
 
-    // ASCII title bar
-    ctx.fillStyle = greenDim;
-    const banner = '+' + '-'.repeat(34) + '+';
-    ctx.fillText(banner, padX, y); y += lineH;
-    ctx.fillStyle = green;
-    ctx.fillText('|     TEXT GAME 2000  v1.04     |', padX, y); y += lineH;
-    ctx.fillStyle = greenDim;
-    ctx.fillText(banner, padX, y); y += lineH + 4;
+    // Title block (centered, bright)
+    ctx.font = 'bold 10px "Courier New", monospace';
+    ctx.fillStyle = amberBright;
+    ctx.textAlign = 'center';
+    ctx.fillText('THE LAST WILL', W/2, y); y += 11;
+    ctx.fillText('OF ASHVALE', W/2, y); y += 11;
+    ctx.font = 'italic 7px "Courier New", monospace';
+    ctx.fillStyle = amberDim;
+    ctx.fillText('A Gothic Parser Adventure', W/2, y); y += 8;
+    ctx.fillText('in Five Hauntings', W/2, y); y += 12;
+    ctx.textAlign = 'left';
 
-    // Game body
-    ctx.fillStyle = green;
+    // Decorative rule
+    ctx.strokeStyle = amberDim;
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(W*0.2, y); ctx.lineTo(W*0.8, y);
+    ctx.stroke();
+    y += 6;
+
+    // Body text excerpt
+    ctx.font = 'bold 7px "Courier New", monospace';
+    ctx.fillStyle = amber;
     const lines = [
-        '> You are in a damp cave.',
-        '  An exit lies to the NORTH.',
-        '  A rusted lamp sits on the',
-        '  floor.',
+        'Autumn, 1888. The coachman has',
+        'set you down at the gates and',
+        'departed at unwholesome speed.',
+        'Fog. A telegram. Your breathing.',
         '',
-        '> EXAMINE LAMP',
-        '  It looks ancient. Possibly',
-        '  haunted. Probably useful.',
-        '',
-        '> TAKE LAMP',
-        '  Taken.',
+        '> EXAMINE GATES',
+        ' Wrought iron, twisted into',
+        ' serpents. Locked.',
         '',
         '> _'
     ];
     lines.forEach(l => {
         if (l.startsWith('>')) {
-            ctx.fillStyle = '#aaffaa';
+            ctx.fillStyle = amberBright;
         } else {
-            ctx.fillStyle = green;
+            ctx.fillStyle = amber;
         }
         ctx.fillText(l, padX, y);
         y += lineH;
     });
 
-    // Blinking caret block (drawn as solid block at end of last "> _" line)
-    // Already drawn via "_" but let's add a bright cursor block
-    ctx.fillStyle = '#aaffaa';
-    ctx.fillRect(padX + 14, y - lineH + 1, 4, 7);
+    // Blinking cursor block at end of "> _"
+    ctx.fillStyle = amberBright;
+    ctx.fillRect(padX + 12, y - lineH + 1, 4, 6);
 
-    // Status bar at bottom
-    const sbY = H*0.84;
-    ctx.fillStyle = '#0a2a0e';
-    ctx.fillRect(0, sbY, W, H - sbY);
-    ctx.strokeStyle = greenDim;
-    ctx.lineWidth = 0.5;
+    // Bottom status bar
+    const sbY = H - 14;
+    ctx.fillStyle = '#1a0e08';
+    ctx.fillRect(0, sbY, W, 14);
+    ctx.strokeStyle = amberDim;
     ctx.beginPath(); ctx.moveTo(0, sbY); ctx.lineTo(W, sbY); ctx.stroke();
-    ctx.fillStyle = green;
+    ctx.fillStyle = amber;
     ctx.font = 'bold 7px "Courier New", monospace';
-    ctx.fillText('SCORE: 47', padX, sbY + 4);
-    ctx.fillText('TURNS: 23', padX + 70, sbY + 4);
-    ctx.fillText('CAVE', W - padX - 26, sbY + 4);
+    ctx.fillText('Dr. A. VANCE', 6, sbY + 4);
+    ctx.fillStyle = amberDim;
+    ctx.fillText('CLOCK XII:47', W*0.42, sbY + 4);
+    ctx.fillStyle = '#d4783a';
+    ctx.fillText('HAUNTING I/V', W - 78, sbY + 4);
 
-    // CRT corner glow
-    const cornerVig = ctx.createRadialGradient(W/2, H*0.45, W*0.3, W/2, H*0.45, W*0.85);
-    cornerVig.addColorStop(0, 'transparent');
-    cornerVig.addColorStop(1, 'rgba(0,0,0,0.6)');
-    ctx.fillStyle = cornerVig;
+    // Vignette — gothic darkness creeping in
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.2, W/2, H/2, W*0.85);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.7)');
+    ctx.fillStyle = vig;
     ctx.fillRect(0, 0, W, H);
 
-    // Faint horizontal flicker line
-    ctx.fillStyle = 'rgba(120,255,160,0.08)';
-    ctx.fillRect(0, H*0.42, W, 1.5);
+    // Faint flicker line (gaslight unsteady)
+    ctx.fillStyle = 'rgba(255,200,120,0.06)';
+    ctx.fillRect(0, H*0.55, W, 1);
 
     ctx.textBaseline = 'alphabetic';
+    ctx.textAlign = 'left';
 }
 
 // Initialize canvases
