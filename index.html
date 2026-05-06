@@ -6223,55 +6223,100 @@ function drawGravityScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
-// Initialize canvases
-window.addEventListener('DOMContentLoaded', () => {
-    drawCastleScene(document.getElementById('canvas-castle'));
-    drawWarzoneScene(document.getElementById('canvas-warzone'));
-    drawDinoScene(document.getElementById('canvas-dino'));
-    drawNukeScene(document.getElementById('canvas-nuke'));
-    drawUfoScene(document.getElementById('canvas-ufo'));
-    drawShardScene(document.getElementById('canvas-shard'));
-    drawColorScene(document.getElementById('canvas-color'));
-    drawBowlScene(document.getElementById('canvas-bowl'));
-    drawRobotScene(document.getElementById('canvas-robot'));
-    drawVoidScene(document.getElementById('canvas-void'));
-    drawPuzzleScene(document.getElementById('canvas-puzzle'));
-    drawBballScene(document.getElementById('canvas-bball'));
-    drawDadtaxScene(document.getElementById('canvas-dadtax'));
-    drawWarScene(document.getElementById('canvas-war'));
-    drawStuffyScene(document.getElementById('canvas-stuffy'));
-    drawRubikScene(document.getElementById('canvas-rubik'));
-    drawPigScene(document.getElementById('canvas-pig'));
-    drawKaijuScene(document.getElementById('canvas-kaiju'));
-    drawTextgameScene(document.getElementById('canvas-textgame'));
-    drawCowgillmanScene(document.getElementById('canvas-cowgillman'));
-    drawRocketScene(document.getElementById('canvas-rocket'));
-    drawGravityScene(document.getElementById('canvas-gravity'));
-});
+// ============================================================
+// Tile canvas registry — each draw fn maps to its canvas id.
+// Canvases lazy-render via IntersectionObserver: tiles below the
+// fold defer their (sometimes expensive) draw until they scroll
+// into view, and resizes redraw all tiles after a short debounce.
+// ============================================================
+const tileCanvasDrawers = {
+    'canvas-castle': drawCastleScene,
+    'canvas-warzone': drawWarzoneScene,
+    'canvas-dino': drawDinoScene,
+    'canvas-nuke': drawNukeScene,
+    'canvas-ufo': drawUfoScene,
+    'canvas-shard': drawShardScene,
+    'canvas-color': drawColorScene,
+    'canvas-bowl': drawBowlScene,
+    'canvas-robot': drawRobotScene,
+    'canvas-void': drawVoidScene,
+    'canvas-puzzle': drawPuzzleScene,
+    'canvas-bball': drawBballScene,
+    'canvas-dadtax': drawDadtaxScene,
+    'canvas-war': drawWarScene,
+    'canvas-stuffy': drawStuffyScene,
+    'canvas-rubik': drawRubikScene,
+    'canvas-pig': drawPigScene,
+    'canvas-kaiju': drawKaijuScene,
+    'canvas-textgame': drawTextgameScene,
+    'canvas-cowgillman': drawCowgillmanScene,
+    'canvas-rocket': drawRocketScene,
+    'canvas-gravity': drawGravityScene
+};
 
-window.addEventListener('resize', () => {
-    drawCastleScene(document.getElementById('canvas-castle'));
-    drawWarzoneScene(document.getElementById('canvas-warzone'));
-    drawDinoScene(document.getElementById('canvas-dino'));
-    drawNukeScene(document.getElementById('canvas-nuke'));
-    drawUfoScene(document.getElementById('canvas-ufo'));
-    drawShardScene(document.getElementById('canvas-shard'));
-    drawColorScene(document.getElementById('canvas-color'));
-    drawBowlScene(document.getElementById('canvas-bowl'));
-    drawRobotScene(document.getElementById('canvas-robot'));
-    drawVoidScene(document.getElementById('canvas-void'));
-    drawPuzzleScene(document.getElementById('canvas-puzzle'));
-    drawBballScene(document.getElementById('canvas-bball'));
-    drawDadtaxScene(document.getElementById('canvas-dadtax'));
-    drawWarScene(document.getElementById('canvas-war'));
-    drawStuffyScene(document.getElementById('canvas-stuffy'));
-    drawRubikScene(document.getElementById('canvas-rubik'));
-    drawPigScene(document.getElementById('canvas-pig'));
-    drawKaijuScene(document.getElementById('canvas-kaiju'));
-    drawTextgameScene(document.getElementById('canvas-textgame'));
-    drawCowgillmanScene(document.getElementById('canvas-cowgillman'));
-    drawRocketScene(document.getElementById('canvas-rocket'));
-    drawGravityScene(document.getElementById('canvas-gravity'));
+window.addEventListener('DOMContentLoaded', () => {
+    // Sync the visible game count + first stats target ("Games Shipped")
+    // from the actual tile count, so the hero <span> and stats animation
+    // match the DOM without per-tile manual edits.
+    const cards = document.querySelectorAll('.game-card');
+    const gameCount = cards.length;
+    const heroSpan = document.querySelector('.game-count span');
+    if (heroSpan) heroSpan.textContent = gameCount;
+    const firstStatTarget = document.querySelector('.stats-ticker .stat-value[data-target]');
+    if (firstStatTarget) firstStatTarget.dataset.target = String(gameCount);
+
+    // Auto-attach aria-label to each tile so screen readers announce
+    // "Play <Title> — <Genre>" instead of the bare URL.
+    cards.forEach(card => {
+        if (card.hasAttribute('aria-label')) return;
+        const title = card.querySelector('.card-title')?.textContent?.trim();
+        const genre = card.querySelector('.card-genre')?.textContent?.trim();
+        if (title) {
+            card.setAttribute('aria-label', genre ? `Play ${title} — ${genre}` : `Play ${title}`);
+        }
+    });
+
+    // Lazy-draw each tile canvas as it scrolls near the viewport.
+    const drawn = new Set();
+    const drawIfReady = (canvas) => {
+        const fn = tileCanvasDrawers[canvas.id];
+        if (fn) fn(canvas);
+    };
+    if ('IntersectionObserver' in window) {
+        const tileObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const c = entry.target;
+                if (drawn.has(c.id)) return;
+                drawn.add(c.id);
+                drawIfReady(c);
+                tileObs.unobserve(c);
+            });
+        }, { rootMargin: '300px' });
+        Object.keys(tileCanvasDrawers).forEach(id => {
+            const c = document.getElementById(id);
+            if (c) tileObs.observe(c);
+        });
+    } else {
+        // Fallback: draw everything immediately
+        Object.keys(tileCanvasDrawers).forEach(id => {
+            const c = document.getElementById(id);
+            if (c) { drawn.add(id); drawIfReady(c); }
+        });
+    }
+
+    // Debounced resize: redraw only the tiles that have already drawn at
+    // least once (no point rendering offscreen tiles the user hasn't seen).
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            drawn.forEach(id => {
+                const c = document.getElementById(id);
+                if (c) drawIfReady(c);
+            });
+        }, 150);
+    });
 });
 
 // ============================================================
