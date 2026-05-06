@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
-    <meta name="description" content="Play 22 free browser games built entirely by AI. From tower defense and RTS to football, basketball, card games, shooters, space shmups, sliding puzzles, 3D Rubik's Cube, Pass the Pigs, kaiju rampage, retro text adventures, maze arcade, scrap rocket builder, gravity-flip puzzles, and nuclear war strategy. 100% vibe coded, 0% unit tested. Hallucinated Games - Chicago, IL.">
+    <meta name="description" content="Free browser games built entirely by AI &mdash; shooters, RTS, sports, puzzles, parser adventures, kaiju rampage, gravity puzzles and more. 100% vibe coded, 0% unit tested. Hallucinated Games, Chicago IL.">
     <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, UFO shooter, puzzle game, nuclear war game, hallucinated games">
     <meta name="author" content="Hallucinated Games">
     <meta name="robots" content="index, follow">
@@ -15,13 +15,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.hallucinatedgames.com/">
     <meta property="og:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta property="og:description" content="22 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs, kaiju rampage, text adventures, maze arcade, scrap rocket builder, gravity-flip puzzles and more. 100% vibe coded, 0% unit tested.">
+    <meta property="og:description" content="A growing collection of free browser games built entirely by AI &mdash; tower defense, RTS, shooters, sports, puzzles, card games, parser adventures, kaiju rampage and more. 100% vibe coded, 0% unit tested.">
     <meta property="og:site_name" content="Hallucinated Games">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Hallucinated Games | Free AI-Generated Browser Games">
-    <meta name="twitter:description" content="22 free browser games built entirely by AI. Tower defense, RTS, shooters, football, basketball, card games, puzzles, 3D Rubik's Cube, Pass the Pigs, kaiju rampage, text adventures, maze arcade, scrap rocket builder, gravity-flip puzzles and more. 100% vibe coded, 0% unit tested.">
+    <meta name="twitter:description" content="A growing collection of free browser games built entirely by AI &mdash; tower defense, RTS, shooters, sports, puzzles, card games, parser adventures, kaiju rampage and more. 100% vibe coded, 0% unit tested.">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -210,6 +210,56 @@
             background: linear-gradient(90deg, transparent, #00ffaa, transparent);
             margin: 30px auto 50px;
         }
+
+        /* Search input above filter pills */
+        .search-bar {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 14px;
+            padding: 0 30px;
+            max-width: 1200px;
+        }
+        .game-search {
+            width: 100%;
+            max-width: 420px;
+            padding: 10px 16px 10px 38px;
+            background: rgba(0, 255, 170, 0.04);
+            border: 1px solid rgba(0, 255, 170, 0.2);
+            border-radius: 22px;
+            color: #ddd;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            outline: none;
+            transition: all 0.25s ease;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300ffaa' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 14px center;
+            background-size: 14px 14px;
+        }
+        .game-search::placeholder { color: #666; }
+        .game-search:focus {
+            border-color: rgba(0, 255, 170, 0.6);
+            background-color: rgba(0, 255, 170, 0.07);
+            box-shadow: 0 0 14px rgba(0, 255, 170, 0.18);
+        }
+        .game-search:not(:placeholder-shown) {
+            border-color: rgba(0, 255, 170, 0.45);
+            color: #fff;
+        }
+        .search-empty {
+            display: none;
+            text-align: center;
+            color: #666;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+        .search-empty.visible { display: block; }
+        .search-empty span { color: #00ffaa; }
 
         /* Category filter pills */
         .filter-bar {
@@ -1586,6 +1636,10 @@
     <div class="divider"></div>
 </header>
 
+<div class="search-bar">
+    <input type="search" id="game-search" class="game-search" placeholder="Search games..." aria-label="Search games" autocomplete="off">
+</div>
+
 <div class="filter-bar" id="filter-bar">
     <button class="filter-pill active" data-filter="all">All Games</button>
     <button class="filter-pill" data-filter="shooter">Shooters</button>
@@ -1597,6 +1651,10 @@
 </div>
 
 <div class="game-grid">
+
+    <div class="search-empty" id="search-empty" role="status" aria-live="polite">
+        No games match <span id="search-empty-term"></span>. Try a different word.
+    </div>
 
     <!-- Kaiju Rampage -->
     <a href="https://kaiju-am8i.onrender.com" class="game-card card-kaiju featured" data-category="strategy">
@@ -2312,25 +2370,82 @@
     });
 })();
 
-// Category filter
+// Category filter + live search
 (function() {
     const pills = document.querySelectorAll('.filter-pill');
     const cards = document.querySelectorAll('.game-card');
+    const searchInput = document.getElementById('game-search');
+    const emptyState = document.getElementById('search-empty');
+    const emptyTerm = document.getElementById('search-empty-term');
+
+    // Append per-category counts to each filter pill, e.g. "Shooters (4)"
+    pills.forEach(pill => {
+        const filter = pill.dataset.filter;
+        const count = (filter === 'all')
+            ? cards.length
+            : Array.from(cards).filter(c => c.dataset.category === filter).length;
+        pill.textContent = pill.textContent.trim() + ` (${count})`;
+    });
+
+    // Build a searchable index per card so we don't re-read the DOM on every keystroke.
+    const cardIndex = Array.from(cards).map(card => ({
+        el: card,
+        category: card.dataset.category || '',
+        text: [
+            card.querySelector('.card-title')?.textContent || '',
+            card.querySelector('.card-genre')?.textContent || '',
+            card.querySelector('.card-desc')?.textContent || '',
+            ...Array.from(card.querySelectorAll('.feature-tag')).map(t => t.textContent || '')
+        ].join(' ').toLowerCase()
+    }));
+
+    let activeFilter = 'all';
+    let activeSearch = '';
+
+    function applyFilters() {
+        let visibleCount = 0;
+        cardIndex.forEach(({ el, category, text }) => {
+            const categoryMatch = activeFilter === 'all' || category === activeFilter;
+            const searchMatch = !activeSearch || text.includes(activeSearch);
+            if (categoryMatch && searchMatch) {
+                el.classList.remove('filter-hidden');
+                el.classList.add('revealed');
+                visibleCount++;
+            } else {
+                el.classList.add('filter-hidden');
+            }
+        });
+        if (visibleCount === 0 && activeSearch) {
+            emptyTerm.textContent = `"${searchInput.value}"`;
+            emptyState.classList.add('visible');
+        } else {
+            emptyState.classList.remove('visible');
+        }
+    }
+
     pills.forEach(pill => {
         pill.addEventListener('click', () => {
             pills.forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
-            const filter = pill.dataset.filter;
-            cards.forEach(card => {
-                if (filter === 'all' || card.dataset.category === filter) {
-                    card.classList.remove('filter-hidden');
-                    card.classList.add('revealed');
-                } else {
-                    card.classList.add('filter-hidden');
-                }
-            });
+            activeFilter = pill.dataset.filter;
+            applyFilters();
         });
     });
+
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            activeSearch = searchInput.value.trim().toLowerCase();
+            applyFilters();
+        });
+        // ESC clears the search
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && searchInput.value) {
+                searchInput.value = '';
+                activeSearch = '';
+                applyFilters();
+            }
+        });
+    }
 })();
 
 // Animated stat counters
