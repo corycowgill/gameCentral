@@ -47,7 +47,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 22,
+        "numberOfItems": 23,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Kaiju Rampage", "url": "https://kaiju-am8i.onrender.com"},
             {"@type": "ListItem", "position": 2, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
@@ -70,7 +70,8 @@
             {"@type": "ListItem", "position": 19, "name": "The Last Will of Ashvale", "url": "https://textgame2000.onrender.com"},
             {"@type": "ListItem", "position": 20, "name": "Cowgill-Man", "url": "https://cowgillman.onrender.com"},
             {"@type": "ListItem", "position": 21, "name": "Scrap Rocket: Moonshot Mayhem", "url": "https://rocket5000.onrender.com"},
-            {"@type": "ListItem", "position": 22, "name": "Gravity Flip Lab", "url": "https://gravityflip.onrender.com"}
+            {"@type": "ListItem", "position": 22, "name": "Gravity Flip Lab", "url": "https://gravityflip.onrender.com"},
+            {"@type": "ListItem", "position": 23, "name": "Checkers", "url": "https://checkers5000.onrender.com"}
         ]
     }
     </script>
@@ -1282,6 +1283,41 @@
             border-color: rgba(102, 243, 255, 0.6);
         }
 
+        .card-checkers .card-bg {
+            background: linear-gradient(135deg, #2a160a 0%, #14080a 100%);
+        }
+        .card-checkers .card-art::after {
+            background: linear-gradient(to top, #2a160a, transparent);
+        }
+        .card-checkers .card-genre { color: #d6473a; }
+        .card-checkers .card-title { color: #f4e3b8; }
+        .card-checkers .feature-tag {
+            background: rgba(214, 71, 58, 0.13);
+            color: #ff7a66;
+            border: 1px solid rgba(214, 71, 58, 0.3);
+        }
+        .card-checkers .play-btn {
+            background: linear-gradient(135deg, #c8332a, #ff6644);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(214, 71, 58, 0.45);
+        }
+        .card-checkers:hover {
+            box-shadow: 0 30px 60px rgba(214, 71, 58, 0.22);
+        }
+        .card-checkers .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(214, 71, 58, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-checkers:hover .glow-border {
+            border-color: rgba(214, 71, 58, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2264,6 +2300,34 @@
                     <span class="feature-tag">Neon Lab</span>
                     <span class="feature-tag">6 Worlds</span>
                     <span class="feature-tag">Mobile + Desktop</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Checkers -->
+    <a href="https://checkers5000.onrender.com" class="game-card card-checkers" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-checkers"></canvas>
+                <div class="game-icon">&#x1F534;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Board Game / Strategy</div>
+                <div class="card-title">Checkers</div>
+                <p class="card-desc">
+                    Because chess is too damn complicated. The classic board game for the common person &mdash; eight rows, eight columns, two colors, and an AI that specializes in checkers and will absolutely crush you. Diagonal jumps, forced multi-captures you'll never see coming, and the slow horror of realizing your remaining four pieces are all about to be kinged by the bot. Crowns? Earned. Pieces? Lost. Dignity? Pending. Fun!
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Board Game</span>
+                    <span class="feature-tag">vs AI</span>
+                    <span class="feature-tag">Classic</span>
+                    <span class="feature-tag">Strategy</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -6338,6 +6402,239 @@ function drawGravityScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawCheckersScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Warm wood-grain background
+    const bg = ctx.createRadialGradient(W*0.3, H*0.4, 10, W*0.5, H*0.5, W*0.9);
+    bg.addColorStop(0, '#3a1f10');
+    bg.addColorStop(1, '#160808');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle wood-grain striations
+    const seed = (n) => { const x = Math.sin(n*12.9898+78.233)*43758.5453; return x-Math.floor(x); };
+    ctx.strokeStyle = 'rgba(120,60,30,0.06)';
+    ctx.lineWidth = 0.6;
+    for (let i = 0; i < 14; i++) {
+        const y = i*(H/14) + seed(i)*4;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.bezierCurveTo(W*0.3, y + 2, W*0.6, y - 3, W, y + 1);
+        ctx.stroke();
+    }
+
+    // Board positioning — angled isometric-ish for visual interest
+    const boardSize = Math.min(W, H) * 0.78;
+    const bx = W/2 - boardSize/2;
+    const by = H*0.18;
+    const cell = boardSize / 8;
+
+    // Board frame (dark wood border)
+    ctx.fillStyle = '#3a1a08';
+    ctx.fillRect(bx - 6, by - 6, boardSize + 12, boardSize + 12);
+    ctx.strokeStyle = '#1a0804';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(bx - 6, by - 6, boardSize + 12, boardSize + 12);
+
+    // Inner bevel
+    ctx.fillStyle = '#5a2810';
+    ctx.fillRect(bx - 3, by - 3, boardSize + 6, boardSize + 6);
+
+    // Board squares — alternating cream and dark red
+    for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+            const dark = (r + c) % 2 === 1;
+            ctx.fillStyle = dark ? '#7a2818' : '#f4e3b8';
+            ctx.fillRect(bx + c*cell, by + r*cell, cell, cell);
+        }
+    }
+
+    // Faint board-square outlines
+    ctx.strokeStyle = 'rgba(0,0,0,0.18)';
+    ctx.lineWidth = 0.4;
+    for (let i = 0; i <= 8; i++) {
+        ctx.beginPath();
+        ctx.moveTo(bx + i*cell, by); ctx.lineTo(bx + i*cell, by + boardSize);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(bx, by + i*cell); ctx.lineTo(bx + boardSize, by + i*cell);
+        ctx.stroke();
+    }
+
+    // Piece layout — mid-game position (only on dark squares)
+    // 0 = empty, R = red piece, B = black piece, K = red king, k = black king
+    const board = [
+        ['','B','','B','','B','','B'],
+        ['B','','B','','','','B',''],
+        ['','','','B','','B','',''],
+        ['','','B','','R','','',''],
+        ['','','','R','','','',''],
+        ['R','','','','','R','','R'],
+        ['','R','','','','','K',''],
+        ['R','','','','R','','','']
+    ];
+
+    function drawPiece(pcx, pcy, isRed, isKing) {
+        const r = cell * 0.38;
+        // Drop shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.45)';
+        ctx.beginPath(); ctx.ellipse(pcx, pcy + r*0.2, r*0.95, r*0.35, 0, 0, Math.PI*2); ctx.fill();
+        // Disc body
+        const grad = ctx.createRadialGradient(pcx - r*0.3, pcy - r*0.3, r*0.1, pcx, pcy, r);
+        if (isRed) {
+            grad.addColorStop(0, '#ff6a4a');
+            grad.addColorStop(0.7, '#c8332a');
+            grad.addColorStop(1, '#7a1a14');
+        } else {
+            grad.addColorStop(0, '#4a3a36');
+            grad.addColorStop(0.6, '#1a1010');
+            grad.addColorStop(1, '#050202');
+        }
+        ctx.fillStyle = grad;
+        ctx.beginPath(); ctx.arc(pcx, pcy, r, 0, Math.PI*2); ctx.fill();
+        // Inner ridge ring (decorative)
+        ctx.strokeStyle = isRed ? 'rgba(255,200,180,0.55)' : 'rgba(180,180,180,0.3)';
+        ctx.lineWidth = 0.6;
+        ctx.beginPath(); ctx.arc(pcx, pcy, r*0.72, 0, Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(pcx, pcy, r*0.55, 0, Math.PI*2); ctx.stroke();
+        // King crown (on top)
+        if (isKing) {
+            const cw = r * 1.1, ch = r * 0.5;
+            const kx = pcx - cw/2, ky = pcy - r*0.55;
+            ctx.fillStyle = '#ffd148';
+            // crown base
+            ctx.fillRect(kx, ky + ch*0.6, cw, ch*0.35);
+            // crown points
+            ctx.beginPath();
+            ctx.moveTo(kx, ky + ch*0.6);
+            ctx.lineTo(kx + cw*0.15, ky);
+            ctx.lineTo(kx + cw*0.3, ky + ch*0.4);
+            ctx.lineTo(kx + cw*0.5, ky - ch*0.1);
+            ctx.lineTo(kx + cw*0.7, ky + ch*0.4);
+            ctx.lineTo(kx + cw*0.85, ky);
+            ctx.lineTo(kx + cw, ky + ch*0.6);
+            ctx.closePath();
+            ctx.fill();
+            // crown highlight
+            ctx.fillStyle = '#fff4a0';
+            ctx.fillRect(kx + cw*0.1, ky + ch*0.7, cw*0.8, ch*0.12);
+            // crown jewel
+            ctx.fillStyle = '#d6473a';
+            ctx.beginPath(); ctx.arc(pcx, ky + ch*0.78, ch*0.16, 0, Math.PI*2); ctx.fill();
+        }
+    }
+
+    for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+            const ch = board[r][c];
+            if (!ch) continue;
+            const pcx = bx + c*cell + cell/2;
+            const pcy = by + r*cell + cell/2;
+            const isRed = ch === 'R' || ch === 'K';
+            const isKing = ch === 'K' || ch === 'k';
+            drawPiece(pcx, pcy, isRed, isKing);
+        }
+    }
+
+    // Highlight: a forced-jump move from R at (4,3) over (3,2) capturing B
+    // Indicate with a glowing destination square + dashed arrow from piece.
+    const fromR = 4, fromC = 3, capR = 3, capC = 2, toR = 2, toC = 1;
+    const hx = bx + toC*cell, hy = by + toR*cell;
+    ctx.fillStyle = 'rgba(255, 232, 120, 0.32)';
+    ctx.fillRect(hx, hy, cell, cell);
+    ctx.strokeStyle = '#ffe066';
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = '#ffe066';
+    ctx.shadowBlur = 6;
+    ctx.strokeRect(hx + 1, hy + 1, cell - 2, cell - 2);
+    ctx.shadowBlur = 0;
+
+    // Dashed arrow from origin diagonally through captured piece to destination
+    const ax1 = bx + fromC*cell + cell/2;
+    const ay1 = by + fromR*cell + cell/2;
+    const ax2 = bx + toC*cell + cell/2;
+    const ay2 = by + toR*cell + cell/2;
+    ctx.strokeStyle = 'rgba(255, 232, 120, 0.85)';
+    ctx.lineWidth = 1.6;
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    ctx.moveTo(ax1, ay1);
+    ctx.lineTo(ax2, ay2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    // Arrow head
+    const ang = Math.atan2(ay2 - ay1, ax2 - ax1);
+    ctx.fillStyle = '#ffe066';
+    ctx.beginPath();
+    ctx.moveTo(ax2, ay2);
+    ctx.lineTo(ax2 - Math.cos(ang - 0.5) * 7, ay2 - Math.sin(ang - 0.5) * 7);
+    ctx.lineTo(ax2 - Math.cos(ang + 0.5) * 7, ay2 - Math.sin(ang + 0.5) * 7);
+    ctx.closePath();
+    ctx.fill();
+
+    // X over the about-to-be-captured piece
+    const cpx = bx + capC*cell + cell/2;
+    const cpy = by + capR*cell + cell/2;
+    ctx.strokeStyle = '#ffe066';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.moveTo(cpx - 6, cpy - 6); ctx.lineTo(cpx + 6, cpy + 6);
+    ctx.moveTo(cpx + 6, cpy - 6); ctx.lineTo(cpx - 6, cpy + 6);
+    ctx.stroke();
+
+    // Captured pieces row (small) at bottom
+    const cy0 = H - 14;
+    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillRect(8, cy0 - 4, W - 16, 14);
+    ctx.fillStyle = '#d6473a';
+    ctx.font = 'bold 7px monospace';
+    ctx.fillText('CAPTURED:', 12, cy0 + 5);
+    // Tiny black discs (red captured)
+    for (let i = 0; i < 3; i++) {
+        ctx.fillStyle = '#1a1010';
+        ctx.beginPath(); ctx.arc(64 + i*8, cy0 + 3, 3, 0, Math.PI*2); ctx.fill();
+    }
+    // Tiny red discs (black captured)
+    for (let i = 0; i < 2; i++) {
+        ctx.fillStyle = '#c8332a';
+        ctx.beginPath(); ctx.arc(W - 30 + i*8, cy0 + 3, 3, 0, Math.PI*2); ctx.fill();
+    }
+
+    // Top HUD: turn indicator + AI badge
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.04, 78, 14);
+    ctx.fillStyle = '#d6473a';
+    ctx.font = 'bold 7px monospace';
+    ctx.fillText('YOUR TURN', W*0.04 + 6, H*0.04 + 10);
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W - W*0.04 - 56, H*0.04, 56, 14);
+    ctx.fillStyle = '#f4e3b8';
+    ctx.fillText('vs AI', W - W*0.04 - 50, H*0.04 + 10);
+    ctx.fillStyle = '#ff6644';
+    ctx.fillText('LV 4', W - W*0.04 - 26, H*0.04 + 10);
+
+    // "JUMP!" callout
+    ctx.fillStyle = 'rgba(255, 224, 102, 0.95)';
+    ctx.font = 'bold 9px "Orbitron", monospace';
+    ctx.save();
+    ctx.translate(W*0.78, H*0.92);
+    ctx.rotate(-0.08);
+    ctx.fillText('JUMP!', 0, 0);
+    ctx.restore();
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.25, W/2, H/2, W*0.78);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.55)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 // ============================================================
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
@@ -6366,7 +6663,8 @@ const tileCanvasDrawers = {
     'canvas-textgame': drawTextgameScene,
     'canvas-cowgillman': drawCowgillmanScene,
     'canvas-rocket': drawRocketScene,
-    'canvas-gravity': drawGravityScene
+    'canvas-gravity': drawGravityScene,
+    'canvas-checkers': drawCheckersScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
