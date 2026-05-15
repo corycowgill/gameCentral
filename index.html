@@ -30,7 +30,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 22 games built entirely by AI - tower defense, RTS, shooters, football, puzzles, and more.",
+        "description": "Free AI-generated browser games. 24 games built entirely by AI - tower defense, RTS, shooters, football, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -47,7 +47,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 23,
+        "numberOfItems": 24,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Kaiju Rampage", "url": "https://kaiju-am8i.onrender.com"},
             {"@type": "ListItem", "position": 2, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
@@ -71,7 +71,8 @@
             {"@type": "ListItem", "position": 20, "name": "Cowgill-Man", "url": "https://cowgillman.onrender.com"},
             {"@type": "ListItem", "position": 21, "name": "Scrap Rocket: Moonshot Mayhem", "url": "https://rocket5000.onrender.com"},
             {"@type": "ListItem", "position": 22, "name": "Gravity Flip Lab", "url": "https://gravityflip.onrender.com"},
-            {"@type": "ListItem", "position": 23, "name": "Checkers", "url": "https://checkers5000.onrender.com"}
+            {"@type": "ListItem", "position": 23, "name": "Checkers", "url": "https://checkers5000.onrender.com"},
+            {"@type": "ListItem", "position": 24, "name": "Performance Review", "url": "https://synergygame.onrender.com"}
         ]
     }
     </script>
@@ -1318,6 +1319,41 @@
             border-color: rgba(214, 71, 58, 0.6);
         }
 
+        .card-perfreview .card-bg {
+            background: linear-gradient(135deg, #1a1d2b 0%, #0a0c14 100%);
+        }
+        .card-perfreview .card-art::after {
+            background: linear-gradient(to top, #1a1d2b, transparent);
+        }
+        .card-perfreview .card-genre { color: #d63a3a; }
+        .card-perfreview .card-title { color: #f4e8c8; }
+        .card-perfreview .feature-tag {
+            background: rgba(214, 58, 58, 0.12);
+            color: #ff7a7a;
+            border: 1px solid rgba(214, 58, 58, 0.32);
+        }
+        .card-perfreview .play-btn {
+            background: linear-gradient(135deg, #b82a2a, #e84444);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(214, 58, 58, 0.45);
+        }
+        .card-perfreview:hover {
+            box-shadow: 0 30px 60px rgba(214, 58, 58, 0.22);
+        }
+        .card-perfreview .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(214, 58, 58, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-perfreview:hover .glow-border {
+            border-color: rgba(214, 58, 58, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2427,6 +2463,34 @@
                     <span class="feature-tag">vs AI</span>
                     <span class="feature-tag">Classic</span>
                     <span class="feature-tag">Strategy</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Performance Review -->
+    <a href="https://synergygame.onrender.com" class="game-card card-perfreview" data-category="card">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-perfreview"></canvas>
+                <div class="game-icon">&#x1F4BC;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Office Battle Card Game</div>
+                <div class="card-title">Performance Review</div>
+                <p class="card-desc">
+                    Finally, a game that captures the true violence of corporate America. Build a deck of 20 stereotypical office employees &mdash; The Intern, The Sales Bro, The CEO &mdash; and battle in Pok&eacute;mon-style turn-based combat. Spend Energy (refills each turn, like your coffee), trade Influence damage minus Tenure, and weaponize abilities like Mandatory Meetings, office gossip, and an IT Guy who reboots everything. Sales beats People-Ops beats Engineering beats Finance beats Creative beats Operations beats Sales. Caffeine is neutral &mdash; it doesn't pick sides, it just vibrates. KO every card or take down the CEO for an instant W. Quick Battle if you don't have time to build a deck, because you have a stand-up at 9:15.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Card Game</span>
+                    <span class="feature-tag">Turn-Based</span>
+                    <span class="feature-tag">Deck Builder</span>
+                    <span class="feature-tag">Passive Aggression</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -6734,6 +6798,204 @@ function drawCheckersScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawPerfreviewScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Office wall + fluorescent ceiling
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#2a2f3e');
+    bg.addColorStop(0.45, '#1a1d2b');
+    bg.addColorStop(1, '#0c0e16');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Fluorescent ceiling strip
+    ctx.fillStyle = 'rgba(255, 240, 200, 0.18)';
+    ctx.fillRect(W*0.1, 0, W*0.8, 4);
+    ctx.fillStyle = 'rgba(255, 240, 200, 0.06)';
+    ctx.fillRect(W*0.08, 4, W*0.84, 3);
+
+    // Cubicle wall (faint vertical pinstripe)
+    ctx.fillStyle = 'rgba(255,255,255,0.025)';
+    for (let x = 0; x < W; x += 6) {
+        ctx.fillRect(x, 8, 1, H-8);
+    }
+
+    // Desk (lower band)
+    ctx.fillStyle = '#3a2a1c';
+    ctx.fillRect(0, H*0.82, W, H*0.18);
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(0, H*0.82, W, 2);
+
+    // Top header bar "PERFORMANCE REVIEW"
+    ctx.fillStyle = 'rgba(214, 58, 58, 0.92)';
+    ctx.fillRect(W*0.18, H*0.06, W*0.64, 13);
+    ctx.fillStyle = '#f4e8c8';
+    ctx.font = 'bold 8px "Orbitron", monospace';
+    ctx.fillText('PERFORMANCE REVIEW', W*0.255, H*0.06 + 9);
+
+    // Helper: draw office-employee card
+    function drawCard(cx, cy, cw, ch, role, hp, hpMax, dept, deptColor, energy) {
+        // Manila body
+        const g = ctx.createLinearGradient(cx, cy, cx, cy+ch);
+        g.addColorStop(0, '#f6e8c4');
+        g.addColorStop(1, '#d8c79a');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(cx+3, cy);
+        ctx.arcTo(cx+cw, cy, cx+cw, cy+ch, 3);
+        ctx.arcTo(cx+cw, cy+ch, cx, cy+ch, 3);
+        ctx.arcTo(cx, cy+ch, cx, cy, 3);
+        ctx.arcTo(cx, cy, cx+cw, cy, 3);
+        ctx.fill();
+        // Card shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.45)';
+        ctx.shadowBlur = 5;
+        ctx.shadowOffsetY = 2;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+
+        // Dept color stripe (top)
+        ctx.fillStyle = deptColor;
+        ctx.fillRect(cx+2, cy+2, cw-4, 6);
+
+        // Role name
+        ctx.fillStyle = '#1a1208';
+        ctx.font = 'bold 6.5px "Rajdhani", sans-serif';
+        ctx.fillText(role, cx+3, cy+15);
+
+        // Employee silhouette (head + shoulders)
+        ctx.fillStyle = '#3d3324';
+        ctx.beginPath();
+        ctx.arc(cx+cw/2, cy+ch*0.45, 5.5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillRect(cx+cw/2-7, cy+ch*0.55, 14, 8);
+        // Tie
+        ctx.fillStyle = deptColor;
+        ctx.beginPath();
+        ctx.moveTo(cx+cw/2, cy+ch*0.55);
+        ctx.lineTo(cx+cw/2-2, cy+ch*0.58);
+        ctx.lineTo(cx+cw/2, cy+ch*0.66);
+        ctx.lineTo(cx+cw/2+2, cy+ch*0.58);
+        ctx.closePath();
+        ctx.fill();
+
+        // Department tag
+        ctx.fillStyle = deptColor;
+        ctx.font = 'bold 5px monospace';
+        ctx.fillText(dept, cx+3, cy+ch-12);
+
+        // HP bar
+        ctx.fillStyle = '#1a1208';
+        ctx.fillRect(cx+3, cy+ch-8, cw-6, 4);
+        ctx.fillStyle = '#3aaa44';
+        ctx.fillRect(cx+4, cy+ch-7, (cw-8) * (hp/hpMax), 2);
+        ctx.fillStyle = '#f4e8c8';
+        ctx.font = 'bold 4.5px monospace';
+        ctx.fillText(hp+'/'+hpMax, cx+cw-15, cy+ch-9);
+
+        // Energy pip (top right corner)
+        ctx.fillStyle = '#e9c464';
+        ctx.beginPath();
+        ctx.arc(cx+cw-5, cy+5, 3.5, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#1a1208';
+        ctx.font = 'bold 5px monospace';
+        ctx.fillText(String(energy), cx+cw-6.5, cy+7);
+    }
+
+    const cw = 44, ch = 56;
+
+    // Enemy card (top): THE CEO - Finance
+    drawCard(W*0.5 - cw/2, H*0.22, cw, ch, 'THE CEO', 6, 12, 'FINANCE', '#7b61ff', 5);
+
+    // Player card (bottom): THE INTERN - Engineering
+    drawCard(W*0.5 - cw/2, H*0.55, cw, ch, 'THE INTERN', 9, 9, 'ENGINEERING', '#3aa8d6', 3);
+
+    // VS clash in center between cards
+    ctx.fillStyle = '#d63a3a';
+    ctx.font = 'bold 11px "Orbitron", monospace';
+    ctx.fillText('VS', W*0.5 - 6, H*0.52);
+
+    // Damage indicator near enemy
+    ctx.fillStyle = '#ffd700';
+    ctx.font = 'bold 9px "Orbitron", monospace';
+    ctx.save();
+    ctx.translate(W*0.5 + cw/2 + 4, H*0.27);
+    ctx.rotate(-0.12);
+    ctx.fillText('-4', 0, 0);
+    ctx.restore();
+
+    // Yellow zap line from intern → CEO
+    ctx.strokeStyle = 'rgba(255, 215, 80, 0.85)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(W*0.5, H*0.55);
+    ctx.lineTo(W*0.5 - 3, H*0.5);
+    ctx.lineTo(W*0.5 + 3, H*0.45);
+    ctx.lineTo(W*0.5 - 2, H*0.4);
+    ctx.lineTo(W*0.5 + 2, H*0.35);
+    ctx.lineTo(W*0.5, H*0.22 + ch);
+    ctx.stroke();
+
+    // Coffee cup (bottom-left on desk)
+    const cux = W*0.1, cuy = H*0.88;
+    ctx.fillStyle = '#f4e8c8';
+    ctx.fillRect(cux, cuy, 9, 10);
+    ctx.fillStyle = '#3a2010';
+    ctx.fillRect(cux+1, cuy+1, 7, 3);
+    // Steam
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(cux+2, cuy-1); ctx.quadraticCurveTo(cux+4, cuy-4, cux+2, cuy-7);
+    ctx.moveTo(cux+6, cuy-1); ctx.quadraticCurveTo(cux+8, cuy-4, cux+6, cuy-7);
+    ctx.stroke();
+
+    // Stack of papers (bottom-right)
+    ctx.fillStyle = '#e8e2d2';
+    ctx.fillRect(W*0.84, H*0.9, 14, 2);
+    ctx.fillStyle = '#d6cdb6';
+    ctx.fillRect(W*0.83, H*0.92, 14, 2);
+    ctx.fillStyle = '#c2b89a';
+    ctx.fillRect(W*0.85, H*0.94, 14, 2);
+
+    // "MANDATORY MEETING" stamp (rotated red ink)
+    ctx.save();
+    ctx.translate(W*0.5, H*0.5);
+    ctx.rotate(-0.32);
+    ctx.strokeStyle = 'rgba(214, 58, 58, 0.85)';
+    ctx.lineWidth = 1.2;
+    ctx.strokeRect(-38, -7, 76, 14);
+    ctx.fillStyle = 'rgba(214, 58, 58, 0.9)';
+    ctx.font = 'bold 7px "Orbitron", monospace';
+    ctx.fillText('MANDATORY MEETING', -36, 3);
+    ctx.restore();
+
+    // Bottom HUD: Energy + Turn
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.84, 60, 12);
+    ctx.fillStyle = '#e9c464';
+    ctx.font = 'bold 6.5px monospace';
+    ctx.fillText('ENERGY 4/5', W*0.04 + 4, H*0.84 + 8);
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W - W*0.04 - 52, H*0.84, 52, 12);
+    ctx.fillStyle = '#f4e8c8';
+    ctx.fillText('TURN 7', W - W*0.04 - 46, H*0.84 + 8);
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.22, W/2, H/2, W*0.75);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.55)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 // ============================================================
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
@@ -6763,7 +7025,8 @@ const tileCanvasDrawers = {
     'canvas-cowgillman': drawCowgillmanScene,
     'canvas-rocket': drawRocketScene,
     'canvas-gravity': drawGravityScene,
-    'canvas-checkers': drawCheckersScene
+    'canvas-checkers': drawCheckersScene,
+    'canvas-perfreview': drawPerfreviewScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
