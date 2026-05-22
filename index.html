@@ -1354,6 +1354,41 @@
             border-color: rgba(214, 58, 58, 0.6);
         }
 
+        .card-parker .card-bg {
+            background: linear-gradient(135deg, #1b2438 0%, #080b14 100%);
+        }
+        .card-parker .card-art::after {
+            background: linear-gradient(to top, #1b2438, transparent);
+        }
+        .card-parker .card-genre { color: #ff8c42; }
+        .card-parker .card-title { color: #e8f0ff; }
+        .card-parker .feature-tag {
+            background: rgba(79, 184, 232, 0.12);
+            color: #6fd6f0;
+            border: 1px solid rgba(79, 184, 232, 0.32);
+        }
+        .card-parker .play-btn {
+            background: linear-gradient(135deg, #2563c8, #4fb8e8);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(58, 123, 214, 0.45);
+        }
+        .card-parker:hover {
+            box-shadow: 0 30px 60px rgba(58, 123, 214, 0.22);
+        }
+        .card-parker .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(79, 184, 232, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-parker:hover .glow-border {
+            border-color: rgba(79, 184, 232, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2491,6 +2526,34 @@
                     <span class="feature-tag">Turn-Based</span>
                     <span class="feature-tag">Deck Builder</span>
                     <span class="feature-tag">Passive Aggression</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Parker Battle -->
+    <a href="https://parkerbattle.onrender.com" class="game-card card-parker" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-parker"></canvas>
+                <div class="game-icon">&#x1F300;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Spinning Tops Battler / Arena</div>
+                <div class="card-title">Parker Battle</div>
+                <p class="card-desc">
+                    Wind the ripcord, scream the obligatory catchphrase, and fling a spinning disc of pure centrifugal rage into the arena bowl. Two tops enter, physics throws a tantrum, and exactly one walks away while the other wobbles pathetically out of the ring. Customize your top, crank your launch power, and discover that &quot;spin faster than the other guy&quot; is a deceptively deep strategy. Let it rip &mdash; or get ripped.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Beyblade-Style</span>
+                    <span class="feature-tag">Spinning Tops</span>
+                    <span class="feature-tag">Arena Combat</span>
+                    <span class="feature-tag">Physics</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -6996,6 +7059,188 @@ function drawPerfreviewScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawParkerScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Arena hall background
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#1d2740');
+    bg.addColorStop(0.5, '#121829');
+    bg.addColorStop(1, '#070a12');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Distant crowd specks in the dark upper stands
+    ctx.fillStyle = 'rgba(120, 150, 200, 0.2)';
+    for (let i = 0; i < 64; i++) {
+        const px = (i * 53) % W;
+        const py = ((i * 37) % 30) + 5;
+        ctx.fillRect(px, py, 2, 2);
+    }
+
+    // Twin spotlight cones from the rafters
+    [-1, 1].forEach(dir => {
+        const sx = W*0.5 + dir*W*0.34;
+        const sg = ctx.createLinearGradient(sx, 0, W*0.5, H*0.62);
+        sg.addColorStop(0, 'rgba(140, 190, 255, 0.16)');
+        sg.addColorStop(1, 'transparent');
+        ctx.fillStyle = sg;
+        ctx.beginPath();
+        ctx.moveTo(sx - 5, 0);
+        ctx.lineTo(sx + 5, 0);
+        ctx.lineTo(W*0.5 + dir*28, H*0.66);
+        ctx.lineTo(W*0.5 - dir*28, H*0.66);
+        ctx.closePath();
+        ctx.fill();
+    });
+
+    // Battle stadium bowl
+    const cx = W*0.5, cy = H*0.62, rx = W*0.42, ry = H*0.27;
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy + 6, rx, ry, 0, 0, Math.PI*2);
+    ctx.fill();
+    // Outer rim
+    ctx.fillStyle = '#39456b';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(120, 200, 255, 0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+    ctx.stroke();
+    // Inner bowl
+    const bowl = ctx.createRadialGradient(cx, cy - ry*0.35, 3, cx, cy, rx*0.92);
+    bowl.addColorStop(0, '#2c3a5c');
+    bowl.addColorStop(0.7, '#161e33');
+    bowl.addColorStop(1, '#0c1120');
+    ctx.fillStyle = bowl;
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, rx*0.88, ry*0.86, 0, 0, Math.PI*2);
+    ctx.fill();
+    // Concentric guide rings
+    ctx.strokeStyle = 'rgba(90, 140, 220, 0.25)';
+    ctx.lineWidth = 1;
+    for (let i = 1; i <= 3; i++) {
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, rx*0.88*(i/4), ry*0.86*(i/4), 0, 0, Math.PI*2);
+        ctx.stroke();
+    }
+
+    // Spinning top
+    function drawTop(tx, ty, r, color, glow, dir) {
+        // Motion-blur trail
+        ctx.save();
+        ctx.globalAlpha = 0.45;
+        ctx.strokeStyle = glow;
+        ctx.lineWidth = 3.5;
+        for (let a = 0; a < 3; a++) {
+            ctx.beginPath();
+            ctx.arc(tx, ty, r + 3, a*2.1, a*2.1 + 1.3);
+            ctx.stroke();
+        }
+        ctx.restore();
+        // Metal body
+        const g = ctx.createRadialGradient(tx - r*0.35, ty - r*0.35, 1, tx, ty, r);
+        g.addColorStop(0, '#ffffff');
+        g.addColorStop(0.35, color);
+        g.addColorStop(1, '#090b14');
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(tx, ty, r, 0, Math.PI*2);
+        ctx.fill();
+        // Outer energy ring
+        ctx.strokeStyle = glow;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(tx, ty, r - 1, 0, Math.PI*2);
+        ctx.stroke();
+        // Spin blades
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        for (let b = 0; b < 5; b++) {
+            const ang = (b/5)*Math.PI*2 + dir*0.4;
+            ctx.beginPath();
+            ctx.moveTo(tx, ty);
+            ctx.arc(tx, ty, r*0.7, ang, ang + 0.5);
+            ctx.closePath();
+            ctx.fill();
+        }
+        // Center hub
+        ctx.fillStyle = '#10131f';
+        ctx.beginPath();
+        ctx.arc(tx, ty, r*0.26, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(tx, ty, r*0.12, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    // Two tops mid-clash
+    const t1x = cx - 14, t1y = cy + 3;
+    const t2x = cx + 16, t2y = cy - 5;
+    drawTop(t1x, t1y, 17, '#3a7bd6', '#5fd0ff', 1);
+    drawTop(t2x, t2y, 15, '#d6453a', '#ff8c42', -1);
+
+    // Collision burst
+    const bx = (t1x + t2x)/2, by = (t1y + t2y)/2;
+    const burst = ctx.createRadialGradient(bx, by, 1, bx, by, 16);
+    burst.addColorStop(0, 'rgba(255, 240, 180, 0.95)');
+    burst.addColorStop(0.5, 'rgba(255, 180, 70, 0.5)');
+    burst.addColorStop(1, 'transparent');
+    ctx.fillStyle = burst;
+    ctx.beginPath();
+    ctx.arc(bx, by, 16, 0, Math.PI*2);
+    ctx.fill();
+    // Spark shards
+    ctx.strokeStyle = '#ffd470';
+    ctx.lineWidth = 1.5;
+    for (let s = 0; s < 9; s++) {
+        const ang = (s/9)*Math.PI*2 + 0.3;
+        const len = 7 + (s % 3)*4;
+        ctx.beginPath();
+        ctx.moveTo(bx + Math.cos(ang)*5, by + Math.sin(ang)*5);
+        ctx.lineTo(bx + Math.cos(ang)*(5+len), by + Math.sin(ang)*(5+len));
+        ctx.stroke();
+    }
+    // Spark dots
+    ctx.fillStyle = '#fff0c0';
+    for (let s = 0; s < 7; s++) {
+        const ang = s*1.4;
+        const d = 14 + (s % 2)*6;
+        ctx.beginPath();
+        ctx.arc(bx + Math.cos(ang)*d, by + Math.sin(ang)*d, 1.5, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    // "LET IT RIP!" banner
+    ctx.save();
+    ctx.translate(W*0.5, H*0.16);
+    ctx.rotate(-0.04);
+    ctx.fillStyle = 'rgba(58, 123, 214, 0.92)';
+    ctx.fillRect(-W*0.3, -9, W*0.6, 18);
+    ctx.strokeStyle = '#5fd0ff';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(-W*0.3, -9, W*0.6, 18);
+    ctx.fillStyle = '#fff0c0';
+    ctx.font = 'bold 11px "Orbitron", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('LET IT RIP!', 0, 4);
+    ctx.restore();
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, W*0.22, W/2, H/2, W*0.75);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.6)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 // ============================================================
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
@@ -7026,7 +7271,8 @@ const tileCanvasDrawers = {
     'canvas-rocket': drawRocketScene,
     'canvas-gravity': drawGravityScene,
     'canvas-checkers': drawCheckersScene,
-    'canvas-perfreview': drawPerfreviewScene
+    'canvas-perfreview': drawPerfreviewScene,
+    'canvas-parker': drawParkerScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
