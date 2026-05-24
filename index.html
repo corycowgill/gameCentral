@@ -6,7 +6,7 @@
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="description" content="Free browser games built entirely by AI &mdash; shooters, RTS, sports, puzzles, parser adventures, kaiju rampage, gravity puzzles and more. 100% vibe coded, 0% unit tested. Hallucinated Games, Chicago IL.">
-    <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, soccer game, spinning top battler, UFO shooter, puzzle game, nuclear war game, hallucinated games">
+    <meta name="keywords" content="AI games, browser games, free online games, AI generated games, vibe coded games, tower defense, RTS, football game, soccer game, spinning top battler, typing game, UFO shooter, puzzle game, nuclear war game, hallucinated games">
     <meta name="author" content="Hallucinated Games">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://www.hallucinatedgames.com/">
@@ -30,7 +30,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 26 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 27 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -47,7 +47,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 26,
+        "numberOfItems": 27,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Kaiju Rampage", "url": "https://kaiju-am8i.onrender.com"},
             {"@type": "ListItem", "position": 2, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
@@ -74,7 +74,8 @@
             {"@type": "ListItem", "position": 23, "name": "Checkers", "url": "https://checkers5000.onrender.com"},
             {"@type": "ListItem", "position": 24, "name": "Performance Review", "url": "https://synergygame.onrender.com"},
             {"@type": "ListItem", "position": 25, "name": "Brennan Soccer", "url": "https://brennansoccer.onrender.com"},
-            {"@type": "ListItem", "position": 26, "name": "Parker's Battle Tops", "url": "https://parkerbattle.onrender.com"}
+            {"@type": "ListItem", "position": 26, "name": "Parker's Battle Tops", "url": "https://parkerbattle.onrender.com"},
+            {"@type": "ListItem", "position": 27, "name": "Typing Battle", "url": "https://typingbattle.onrender.com"}
         ]
     }
     </script>
@@ -1426,6 +1427,41 @@
             border-color: rgba(255, 140, 26, 0.6);
         }
 
+        .card-typing .card-bg {
+            background: linear-gradient(135deg, #0e1a36 0%, #060c1a 100%);
+        }
+        .card-typing .card-art::after {
+            background: linear-gradient(to top, #0e1a36, transparent);
+        }
+        .card-typing .card-genre { color: #fbbf24; }
+        .card-typing .card-title { color: #bae6fd; }
+        .card-typing .feature-tag {
+            background: rgba(56, 189, 248, 0.13);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .card-typing .play-btn {
+            background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+            color: #06121f;
+            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+        }
+        .card-typing:hover {
+            box-shadow: 0 30px 60px rgba(56, 189, 248, 0.22);
+        }
+        .card-typing .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-typing:hover .glow-border {
+            border-color: rgba(56, 189, 248, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -1898,7 +1934,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>26</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>27</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2622,6 +2658,34 @@
         </div>
     </a>
 
+    <!-- Typing Battle -->
+    <a href="https://typingbattle.onrender.com" class="game-card card-typing" data-category="puzzle">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-typing"></canvas>
+                <div class="game-icon">&#x2328;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Typing Tutor / Skill</div>
+                <div class="card-title">Typing Battle</div>
+                <p class="card-desc">
+                    Four mini-games and a panda avatar are here to teach you how to type &mdash; like, actually type, with all ten fingers, the way nature intended. Drill the keys in calm Practice mode, catch Falling Words before they crash, blast keyboard enemies in Word Blaster, or chase a checkered flag through the stars in Adventure Race. Tracks WPM, accuracy, streak, and score, because nothing motivates a kid like the cold judgment of a number going down. The AI swears this is educational. Your kids will mostly believe it.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Typing</span>
+                    <span class="feature-tag">Educational</span>
+                    <span class="feature-tag">4 Mini-Games</span>
+                    <span class="feature-tag">WPM Tracking</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
     <!-- Parker's Battle Tops -->
     <a href="https://parkerbattle.onrender.com" class="game-card card-battle" data-category="party">
         <div class="card-bg"></div>
@@ -2654,7 +2718,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="26" data-suffix="">0</div>
+        <div class="stat-value" data-target="27" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -7414,6 +7478,135 @@ function drawBattleScene(canvas) {
     ctx.fillText('ROUND 3', W-72, 23);
 }
 
+function drawTypingScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Deep navy gradient
+    const bg = ctx.createRadialGradient(W*0.5, H*0.45, 10, W*0.5, H*0.5, W*0.85);
+    bg.addColorStop(0, '#0e1a3a');
+    bg.addColorStop(1, '#060c1a');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Background star field (small dots)
+    for (let i = 0; i < 42; i++) {
+        const sx = Math.random()*W;
+        const sy = Math.random()*H*0.78;
+        const size = Math.random()*1.6 + 0.5;
+        const bright = Math.random()*0.5 + 0.3;
+        ctx.fillStyle = `rgba(252,211,77,${bright})`;
+        ctx.beginPath();
+        ctx.arc(sx, sy, size, 0, Math.PI*2);
+        ctx.fill();
+    }
+
+    // A few proper 5-point stars
+    function drawStar(cx, cy, r, color) {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        for (let i = 0; i < 10; i++) {
+            const a = i/10*Math.PI*2 - Math.PI/2;
+            const rad = i % 2 === 0 ? r : r*0.45;
+            const x = cx + Math.cos(a)*rad;
+            const y = cy + Math.sin(a)*rad;
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+    drawStar(W*0.32, H*0.28, 4, '#fbbf24');
+    drawStar(W*0.55, H*0.2, 3, '#fde68a');
+    drawStar(W*0.78, H*0.4, 3.5, '#fcd34d');
+    drawStar(W*0.42, H*0.46, 2.5, '#fcd34d');
+    drawStar(W*0.66, H*0.52, 2.8, '#fbbf24');
+
+    // Dashed flight path from rocket to flag
+    ctx.strokeStyle = 'rgba(147,197,253,0.5)';
+    ctx.setLineDash([4,4]);
+    ctx.lineWidth = 1.2;
+    ctx.beginPath();
+    ctx.moveTo(W*0.22, H*0.56);
+    ctx.quadraticCurveTo(W*0.5, H*0.46, W*0.84, H*0.56);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Rocket
+    const rx = W*0.22, ry = H*0.56;
+    // Flame
+    const flame = ctx.createRadialGradient(rx-9, ry+1, 0, rx-9, ry+1, 11);
+    flame.addColorStop(0, 'rgba(255,210,80,0.9)');
+    flame.addColorStop(0.5, 'rgba(255,90,40,0.55)');
+    flame.addColorStop(1, 'transparent');
+    ctx.fillStyle = flame;
+    ctx.beginPath();
+    ctx.ellipse(rx-10, ry, 11, 4, 0, 0, Math.PI*2);
+    ctx.fill();
+    // Body (triangle pointing right)
+    ctx.fillStyle = '#e5e7eb';
+    ctx.beginPath();
+    ctx.moveTo(rx+11, ry);
+    ctx.lineTo(rx-3, ry-6);
+    ctx.lineTo(rx-3, ry+6);
+    ctx.closePath();
+    ctx.fill();
+    // Window
+    ctx.fillStyle = '#38bdf8';
+    ctx.beginPath();
+    ctx.arc(rx+3, ry, 2, 0, Math.PI*2);
+    ctx.fill();
+    // Fins
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath();
+    ctx.moveTo(rx-3, ry-6); ctx.lineTo(rx-8, ry-9); ctx.lineTo(rx-3, ry-2);
+    ctx.closePath(); ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(rx-3, ry+6); ctx.lineTo(rx-8, ry+9); ctx.lineTo(rx-3, ry+2);
+    ctx.closePath(); ctx.fill();
+
+    // Checkered flag finish line
+    const fgx = W*0.85, fgy = H*0.56;
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillRect(fgx, fgy-15, 1.5, 30);
+    const cw = 3, ch = 3;
+    for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 5; c++) {
+            ctx.fillStyle = (r+c) % 2 === 0 ? '#ffffff' : '#0f172a';
+            ctx.fillRect(fgx + 1.5 + c*cw, fgy - 13 + r*ch, cw, ch);
+        }
+    }
+
+    // Typed-word panel
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.16, H*0.74, W*0.68, 22);
+    ctx.strokeStyle = 'rgba(56,189,248,0.35)';
+    ctx.lineWidth = 0.5;
+    ctx.strokeRect(W*0.16, H*0.74, W*0.68, 22);
+    ctx.fillStyle = '#bae6fd';
+    ctx.font = 'bold 13px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('the quick brown fox', W*0.5, H*0.88);
+    ctx.textAlign = 'start';
+    // Cursor
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillRect(W*0.5 + 60, H*0.81, 2, 10);
+
+    // HUD pills
+    ctx.fillStyle = 'rgba(0,0,0,0.65)';
+    ctx.fillRect(8, 8, 70, 22);
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = 'bold 10px monospace';
+    ctx.fillText('WPM 62', 14, 23);
+
+    ctx.fillStyle = 'rgba(0,0,0,0.65)';
+    ctx.fillRect(W-78, 8, 70, 22);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillText('ACC 98%', W-72, 23);
+}
+
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
 // fold defer their (sometimes expensive) draw until they scroll
@@ -7445,7 +7638,8 @@ const tileCanvasDrawers = {
     'canvas-checkers': drawCheckersScene,
     'canvas-perfreview': drawPerfreviewScene,
     'canvas-soccer': drawSoccerScene,
-    'canvas-battle': drawBattleScene
+    'canvas-battle': drawBattleScene,
+    'canvas-typing': drawTypingScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
