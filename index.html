@@ -1897,6 +1897,175 @@
                 padding: 8px 10px;
             }
         }
+
+        /* ── Terms of Use modal ── */
+        .terms-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 11000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            opacity: 1;
+            transition: opacity 0.35s ease;
+        }
+        .terms-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .terms-modal-content {
+            position: relative;
+            max-width: 640px;
+            width: 100%;
+            max-height: 86vh;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #0d0d18 0%, #0a0a12 100%);
+            border: 1px solid rgba(0, 255, 170, 0.35);
+            border-radius: 14px;
+            box-shadow: 0 0 60px rgba(0, 255, 170, 0.18), 0 0 140px rgba(123, 97, 255, 0.12), inset 0 0 30px rgba(0, 0, 0, 0.6);
+            padding: 36px 32px 30px;
+            color: #d0d0d8;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            line-height: 1.65;
+            letter-spacing: 0.3px;
+        }
+        .terms-modal-content::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 14px;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.18) 2px, rgba(0, 0, 0, 0.18) 3px);
+            opacity: 0.35;
+        }
+        .terms-modal-content > * {
+            position: relative;
+            z-index: 1;
+        }
+        .terms-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #00ffaa 0%, #7b61ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+        .terms-subtitle {
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 22px;
+        }
+        .terms-modal-content p {
+            margin-bottom: 14px;
+        }
+        .terms-modal-content ol {
+            margin: 0 0 18px 0;
+            padding-left: 22px;
+        }
+        .terms-modal-content ol li {
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+        .terms-modal-content strong {
+            color: #00ffaa;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .terms-modal-content a {
+            color: #7b61ff;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(123, 97, 255, 0.5);
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        .terms-modal-content a:hover {
+            color: #00ffaa;
+            border-bottom-color: rgba(0, 255, 170, 0.7);
+        }
+        .terms-signoff {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+            margin-top: 6px;
+            margin-bottom: 24px;
+        }
+        .terms-accept-btn {
+            display: block;
+            margin: 0 auto;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 12px 38px;
+            border: 1.5px solid #00ffaa;
+            border-radius: 28px;
+            background: rgba(0, 255, 170, 0.08);
+            color: #00ffaa;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.25s ease;
+        }
+        .terms-accept-btn:hover {
+            background: rgba(0, 255, 170, 0.2);
+            box-shadow: 0 0 22px rgba(0, 255, 170, 0.4);
+            transform: scale(1.04);
+        }
+        .terms-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 22px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            line-height: 1;
+            padding: 4px 8px;
+            z-index: 2;
+            transition: color 0.2s ease;
+        }
+        .terms-close:hover {
+            color: #00ffaa;
+        }
+
+        /* Tiny footer terms link */
+        .footer-meta {
+            margin-top: 14px;
+            font-size: 11px;
+            color: #2c2c34;
+            letter-spacing: 1.5px;
+        }
+        .footer-meta a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            margin: 0 6px;
+        }
+        .footer-meta a:hover {
+            color: #00ffaa;
+        }
+        .footer-meta .sep {
+            color: #222;
+        }
     </style>
 </head>
 <body>
@@ -2741,8 +2910,46 @@
     <div class="footer-logo">HALLUCINATED GAMES</div>
     <p class="footer-tagline">100% vibe coded &mdash; 0% unit tested &mdash; built with <span>&#9889;</span> and mass hallucination &mdash; &copy; 2026 &mdash; who are we kidding, AI generated content can't be copyrighted! LOL.</p>
     <p class="footer-contact"><a href="mailto:hallucinated.games.inc@gmail.com">Contact Us</a></p>
+    <p class="footer-meta">
+        <a href="#" id="terms-link">Terms of Use</a>
+        <span class="sep">&middot;</span>
+        <a href="https://github.com/corycowgill" target="_blank" rel="noopener noreferrer">GitHub: corycowgill</a>
+        <span class="sep">&middot;</span>
+        <span>No cookies. No tracking. No ads.</span>
+    </p>
     <p style="margin-top:20px;font-size:10px;color:#333;letter-spacing:1px;">Hallucinated Games, Chicago IL. Proudly serving AI game slop since 2026.</p>
 </footer>
+
+<!-- Terms of Use Modal -->
+<div class="terms-modal hidden" id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+    <div class="terms-modal-content">
+        <button class="terms-close" id="terms-close" aria-label="Close">&times;</button>
+        <div class="terms-title" id="terms-title">Terms of Use</div>
+        <div class="terms-subtitle">Such As They Are</div>
+
+        <p>Hi! Welcome to Hallucinated Games. Before you dive in, a few small things in plain English &mdash; co-written by a real human in Chicago and a swarm of AI co-conspirators who hallucinated everything else on this site.</p>
+
+        <ol>
+            <li><strong>It's free.</strong> All of it. Every game. Forever, or until I forget to pay the bills. No paywalls, no microtransactions, no &ldquo;watch this video to continue,&rdquo; no ads, no clicks I'm trying to farm. If anyone is charging you to play these &mdash; run.</li>
+
+            <li><strong>No tracking. No cookies.</strong> I don't want your data. There are no analytics, no ad networks, no pixels, no profile being built about you. The only thing this site remembers is whether you clicked the button on this popup, and that lives in your own browser &mdash; not on a server, not with me, not with anyone.</li>
+
+            <li><strong>AI built everything.</strong> The code, the art, the lore, the game names, this Terms of Use page (yes, really). I'm just the human who pressed Enter a lot and yelled &ldquo;no, like THIS&rdquo; until something playable appeared. 100% vibe coded. 0% unit tested. 100,000% hallucinated.</li>
+
+            <li><strong>The code is open.</strong> Most of these games live in public GitHub repos. Fork them. Learn from them. Rewrite them better than I did. They're up at <a href="https://github.com/corycowgill" target="_blank" rel="noopener noreferrer">github.com/corycowgill</a>. Have at it.</li>
+
+            <li><strong>No warranties. None.</strong> This is a hobby site run by one person. Games might break. Saves might vanish into the void. The free-tier hosting might take 30 seconds to wake up like it's coming out of cryosleep. The AI might invent a new physics constant mid-match. You play at your own risk &mdash; though the worst likely outcome is mild disappointment. Please don't sue me. All I have are unit tests I never wrote.</li>
+
+            <li><strong>Be cool.</strong> Don't try to break stuff for other people. Don't be a jerk. Have fun.</li>
+
+            <li><strong>This is a hobby.</strong> I'm not monetizing this. I'm not collecting emails. I'm not pivoting to crypto. I'm not building a funnel. I just think it's wildly fun to watch an AI hallucinate an entire arcade into existence and then let strangers on the internet play with it.</li>
+        </ol>
+
+        <p class="terms-signoff">That's it. Go play.<br>&mdash; Cory, Chicago IL</p>
+
+        <button class="terms-accept-btn" id="terms-accept">OK, I Get It</button>
+    </div>
+</div>
 
 <script>
 // Floating particles
@@ -7759,6 +7966,42 @@ window.addEventListener('DOMContentLoaded', () => {
     // Music toggle button
     btn.addEventListener('click', () => {
         if (playing) stopMusic(); else startMusic();
+    });
+})();
+
+// Terms of Use modal
+(function() {
+    const modal = document.getElementById('terms-modal');
+    const link = document.getElementById('terms-link');
+    const closeBtn = document.getElementById('terms-close');
+    const acceptBtn = document.getElementById('terms-accept');
+    const STORAGE_KEY = 'hg_terms_seen_v1';
+
+    function openModal() {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+    }
+
+    let seen = false;
+    try { seen = localStorage.getItem(STORAGE_KEY) === '1'; } catch (e) {}
+    if (!seen) {
+        // Show after the welcome overlay is dismissed-ish; give it a beat.
+        setTimeout(openModal, 1200);
+    }
+
+    link.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+    closeBtn.addEventListener('click', closeModal);
+    acceptBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
     });
 })();
 </script>
