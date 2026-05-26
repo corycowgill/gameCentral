@@ -75,7 +75,8 @@
             {"@type": "ListItem", "position": 24, "name": "Performance Review", "url": "https://synergygame.onrender.com"},
             {"@type": "ListItem", "position": 25, "name": "Brennan Soccer", "url": "https://brennansoccer.onrender.com"},
             {"@type": "ListItem", "position": 26, "name": "Parker's Battle Tops", "url": "https://parkerbattle.onrender.com"},
-            {"@type": "ListItem", "position": 27, "name": "Typing Battle", "url": "https://typingbattle.onrender.com"}
+            {"@type": "ListItem", "position": 27, "name": "Typing Battle", "url": "https://typingbattle.onrender.com"},
+            {"@type": "ListItem", "position": 28, "name": "Chicago Chess", "url": "https://chess2000.onrender.com"}
         ]
     }
     </script>
@@ -1460,6 +1461,41 @@
         }
         .card-typing:hover .glow-border {
             border-color: rgba(56, 189, 248, 0.6);
+        }
+
+        .card-chess2000 .card-bg {
+            background: linear-gradient(135deg, #0e1f3a 0%, #050a18 100%);
+        }
+        .card-chess2000 .card-art::after {
+            background: linear-gradient(to top, #0e1f3a, transparent);
+        }
+        .card-chess2000 .card-genre { color: #66f3ff; }
+        .card-chess2000 .card-title { color: #f0f9ff; }
+        .card-chess2000 .feature-tag {
+            background: rgba(230, 57, 70, 0.13);
+            color: #ff6b78;
+            border: 1px solid rgba(230, 57, 70, 0.35);
+        }
+        .card-chess2000 .play-btn {
+            background: linear-gradient(135deg, #e63946, #ff6b78);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.45);
+        }
+        .card-chess2000:hover {
+            box-shadow: 0 30px 60px rgba(102, 243, 255, 0.22);
+        }
+        .card-chess2000 .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 243, 255, 0.25);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-chess2000:hover .glow-border {
+            border-color: rgba(102, 243, 255, 0.65);
         }
 
         /* Footer */
@@ -2875,6 +2911,34 @@
                     <span class="feature-tag">Battle Arena</span>
                     <span class="feature-tag">Let It Rip</span>
                     <span class="feature-tag">vs Friend</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Chicago Chess -->
+    <a href="https://chess2000.onrender.com" class="game-card card-chess2000" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-chess2000"></canvas>
+                <div class="game-icon">&#x265C;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Board Game / Strategy</div>
+                <div class="card-title">Chicago Chess</div>
+                <p class="card-desc">
+                    Chess, but the pieces are Chicago. Marina City corn cobs hold the corners as rooks, the Willis and Hancock loom over the center as king and queen, broadcast towers go diagonal as bishops, and a chrome Cloud Gate "Bean" leaps like a knight. Pawns are stubby red-star pillars marching up an 8x8 deck of cyan and navy, with the skyline silhouetted behind a glossy esports-grade arena. Same rules you already know &mdash; same tactical heartbreak when you blunder your queen on move 12 &mdash; just dressed up like a tactical battleground built by a city planner who plays too much chess.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Chess</span>
+                    <span class="feature-tag">Chicago Skyline</span>
+                    <span class="feature-tag">3D Isometric</span>
+                    <span class="feature-tag">vs AI</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -7221,6 +7285,578 @@ function drawCheckersScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawChess2000Scene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Dark cyberpunk arena sky
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#050a18');
+    sky.addColorStop(0.45, '#0a1428');
+    sky.addColorStop(1, '#020610');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // Distant Chicago skyline silhouette
+    const horizon = H * 0.52;
+    const skyline = [
+        // [x_frac, width_frac, height_frac, hasAntenna]
+        [0.02, 0.06, 0.10, false],
+        [0.08, 0.05, 0.16, false],
+        [0.13, 0.04, 0.13, false],
+        [0.17, 0.07, 0.22, true],  // willis-ish
+        [0.24, 0.05, 0.14, false],
+        [0.29, 0.04, 0.18, false],
+        [0.33, 0.06, 0.25, true],  // hancock-ish
+        [0.40, 0.05, 0.16, false],
+        [0.45, 0.04, 0.12, false],
+        [0.49, 0.06, 0.20, false],
+        [0.55, 0.05, 0.15, false],
+        [0.60, 0.04, 0.22, true],
+        [0.64, 0.05, 0.17, false],
+        [0.69, 0.06, 0.13, false],
+        [0.75, 0.04, 0.20, false],
+        [0.79, 0.05, 0.15, false],
+        [0.84, 0.06, 0.18, true],
+        [0.90, 0.04, 0.12, false],
+        [0.94, 0.05, 0.16, false]
+    ];
+    skyline.forEach(([xf, wf, hf, ant]) => {
+        const x = xf * W;
+        const bw = wf * W;
+        const bh = hf * H;
+        // Building body
+        ctx.fillStyle = '#0a1830';
+        ctx.fillRect(x, horizon - bh, bw, bh);
+        // Top edge highlight (cyan glow)
+        ctx.fillStyle = 'rgba(102, 243, 255, 0.18)';
+        ctx.fillRect(x, horizon - bh, bw, 1);
+        // Window dots
+        ctx.fillStyle = 'rgba(102, 243, 255, 0.28)';
+        for (let wy = horizon - bh + 4; wy < horizon - 2; wy += 4) {
+            for (let wx = x + 1; wx < x + bw - 1; wx += 3) {
+                if ((wx + wy) % 7 === 0) ctx.fillRect(wx, wy, 1, 1);
+            }
+        }
+        // Antenna
+        if (ant) {
+            ctx.strokeStyle = '#0a1830';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(x + bw/2, horizon - bh);
+            ctx.lineTo(x + bw/2, horizon - bh - bh*0.25);
+            ctx.stroke();
+            ctx.fillStyle = 'rgba(230, 57, 70, 0.6)';
+            ctx.beginPath(); ctx.arc(x + bw/2, horizon - bh - bh*0.25, 1, 0, Math.PI*2); ctx.fill();
+        }
+    });
+
+    // Horizon glow
+    const hg = ctx.createLinearGradient(0, horizon - 8, 0, horizon + 12);
+    hg.addColorStop(0, 'rgba(102, 243, 255, 0)');
+    hg.addColorStop(0.5, 'rgba(102, 243, 255, 0.10)');
+    hg.addColorStop(1, 'rgba(102, 243, 255, 0)');
+    ctx.fillStyle = hg;
+    ctx.fillRect(0, horizon - 8, W, 20);
+
+    // Glossy reflective floor
+    const floor = ctx.createLinearGradient(0, horizon, 0, H);
+    floor.addColorStop(0, '#06101e');
+    floor.addColorStop(0.5, '#030814');
+    floor.addColorStop(1, '#000206');
+    ctx.fillStyle = floor;
+    ctx.fillRect(0, horizon, W, H - horizon);
+
+    // Floor sheen lines (perspective)
+    ctx.strokeStyle = 'rgba(102, 243, 255, 0.05)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i < 8; i++) {
+        const yy = horizon + (i*i)*1.2 + 4;
+        if (yy > H) break;
+        ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(W, yy); ctx.stroke();
+    }
+
+    // ---- Isometric chessboard ----
+    // Project 8x8 board with isometric tilt
+    const cx = W/2;
+    const cy = H * 0.74;
+    const boardW = W * 0.86;       // visual width at front
+    const boardDepth = H * 0.32;   // visual depth (front-to-back)
+    const tilesPerSide = 8;
+
+    // Quad corners: TL (far-left), TR (far-right), BR (near-right), BL (near-left)
+    const TLx = cx - boardW * 0.40, TLy = cy - boardDepth;
+    const TRx = cx + boardW * 0.40, TRy = cy - boardDepth;
+    const BRx = cx + boardW * 0.50, BRy = cy;
+    const BLx = cx - boardW * 0.50, BLy = cy;
+
+    // Helper: bilinear interp for a board (col, row) where col 0..8, row 0..8
+    // row 0 = back (TL/TR), row 8 = front (BL/BR)
+    function bp(col, row) {
+        const u = col / tilesPerSide;
+        const v = row / tilesPerSide;
+        const topX = TLx + (TRx - TLx) * u;
+        const topY = TLy + (TRy - TLy) * u;
+        const botX = BLx + (BRx - BLx) * u;
+        const botY = BLy + (BRy - BLy) * u;
+        return {
+            x: topX + (botX - topX) * v,
+            y: topY + (botY - topY) * v
+        };
+    }
+
+    // Board base shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy + 6, boardW * 0.55, boardDepth * 0.18, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // Navy outer frame
+    const pad = 8;
+    ctx.fillStyle = '#0a1f4a';
+    ctx.beginPath();
+    ctx.moveTo(TLx - pad*0.6, TLy - pad*0.5);
+    ctx.lineTo(TRx + pad*0.6, TRy - pad*0.5);
+    ctx.lineTo(BRx + pad*0.9, BRy + pad*0.5);
+    ctx.lineTo(BLx - pad*0.9, BLy + pad*0.5);
+    ctx.closePath();
+    ctx.fill();
+
+    // Red trim line
+    ctx.strokeStyle = '#e63946';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+
+    // Inner cyan glow trim
+    ctx.strokeStyle = 'rgba(102, 243, 255, 0.55)';
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.moveTo(TLx - 2, TLy - 1);
+    ctx.lineTo(TRx + 2, TRy - 1);
+    ctx.lineTo(BRx + 3, BRy + 1);
+    ctx.lineTo(BLx - 3, BLy + 1);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Squares (light cyan / white)
+    for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+            const light = (r + c) % 2 === 0;
+            const a = bp(c,     r);
+            const b = bp(c + 1, r);
+            const d = bp(c + 1, r + 1);
+            const e = bp(c,     r + 1);
+            ctx.fillStyle = light ? '#eaf6ff' : '#7fd9e8';
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.lineTo(d.x, d.y);
+            ctx.lineTo(e.x, e.y);
+            ctx.closePath();
+            ctx.fill();
+        }
+    }
+
+    // Coordinate labels (a-h along bottom edge)
+    ctx.fillStyle = '#66f3ff';
+    ctx.font = 'bold 5px "Orbitron", monospace';
+    const files = ['a','b','c','d','e','f','g','h'];
+    for (let c = 0; c < 8; c++) {
+        const mid = bp(c + 0.5, 8);
+        ctx.fillText(files[c], mid.x - 2, mid.y + 6);
+    }
+    // Ranks (1-8 along left edge)
+    for (let r = 0; r < 8; r++) {
+        const mid = bp(0, r + 0.5);
+        ctx.fillText(String(8 - r), mid.x - 7, mid.y + 2);
+    }
+
+    // ---- Pieces ----
+    // Helper to get tile center in world coords
+    function tileCenter(col, row) {
+        return bp(col + 0.5, row + 0.5);
+    }
+    // Approx tile vertical scale (front rows look taller)
+    function tileScale(row) {
+        // back row 0 -> smaller, front row 7 -> larger
+        return 0.55 + (row / 7) * 0.55;
+    }
+
+    // Marina City "corn cob" rook
+    function drawRook(col, row, white) {
+        const p = tileCenter(col, row);
+        const s = tileScale(row);
+        const baseW = 9 * s;
+        const baseH = 22 * s;
+        const top = p.y - baseH;
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.45)';
+        ctx.beginPath(); ctx.ellipse(p.x + 1, p.y + 1, baseW * 0.55, baseW * 0.22, 0, 0, Math.PI*2); ctx.fill();
+        // Two stacked cylinders side by side? Marina City is twin towers — but for one piece show one tower with ribbing
+        const bodyFill = white ? '#f0f9ff' : '#1a1a22';
+        const bodyShade = white ? '#b8d4e0' : '#08080c';
+        // Body
+        const g = ctx.createLinearGradient(p.x - baseW/2, top, p.x + baseW/2, top);
+        g.addColorStop(0, bodyShade);
+        g.addColorStop(0.5, bodyFill);
+        g.addColorStop(1, bodyShade);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.ellipse(p.x, top, baseW/2, baseW*0.25, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillRect(p.x - baseW/2, top, baseW, baseH);
+        ctx.beginPath();
+        ctx.ellipse(p.x, top + baseH, baseW/2, baseW*0.28, 0, 0, Math.PI*2);
+        ctx.fill();
+        // Vertical ribs (corn cob)
+        ctx.strokeStyle = white ? 'rgba(40,80,110,0.35)' : 'rgba(255,255,255,0.10)';
+        ctx.lineWidth = 0.5;
+        for (let i = 1; i < 6; i++) {
+            const xx = p.x - baseW/2 + (baseW * i/6);
+            ctx.beginPath();
+            ctx.moveTo(xx, top + 1);
+            ctx.lineTo(xx, top + baseH - 1);
+            ctx.stroke();
+        }
+        // Horizontal floor rings (scalloped)
+        ctx.strokeStyle = white ? 'rgba(40,80,110,0.25)' : 'rgba(255,255,255,0.08)';
+        for (let j = 1; j < 7; j++) {
+            const yy = top + (baseH * j / 7);
+            ctx.beginPath();
+            ctx.moveTo(p.x - baseW/2, yy);
+            ctx.lineTo(p.x + baseW/2, yy);
+            ctx.stroke();
+        }
+        // Dark rooftop cap
+        ctx.fillStyle = white ? '#3a4a5a' : '#000';
+        ctx.beginPath(); ctx.ellipse(p.x, top, baseW/2, baseW*0.22, 0, 0, Math.PI*2); ctx.fill();
+        // Red accent ring near top
+        ctx.strokeStyle = '#e63946';
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.ellipse(p.x, top + 3, baseW/2, baseW*0.22, 0, 0, Math.PI*2);
+        ctx.stroke();
+    }
+
+    // Willis/Hancock skyscraper for king/queen
+    function drawSkyscraper(col, row, white, isKing) {
+        const p = tileCenter(col, row);
+        const s = tileScale(row);
+        const baseW = 8 * s;
+        const baseH = (isKing ? 32 : 28) * s;
+        const top = p.y - baseH;
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.beginPath(); ctx.ellipse(p.x + 1, p.y + 1, baseW * 0.65, baseW * 0.22, 0, 0, Math.PI*2); ctx.fill();
+        const bodyFill = white ? '#f0f9ff' : '#0a0a10';
+        const bodyShade = white ? '#9ab5c4' : '#020205';
+        // Tapered tower — wider at base, narrower at top
+        const topW = baseW * 0.55;
+        const g = ctx.createLinearGradient(p.x - baseW/2, 0, p.x + baseW/2, 0);
+        g.addColorStop(0, bodyShade);
+        g.addColorStop(0.5, bodyFill);
+        g.addColorStop(1, bodyShade);
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(p.x - baseW/2, p.y);
+        ctx.lineTo(p.x - topW/2, top);
+        ctx.lineTo(p.x + topW/2, top);
+        ctx.lineTo(p.x + baseW/2, p.y);
+        ctx.closePath();
+        ctx.fill();
+        // Window grid stripes
+        ctx.fillStyle = white ? 'rgba(60,90,120,0.25)' : 'rgba(102,243,255,0.18)';
+        const segs = isKing ? 9 : 7;
+        for (let i = 1; i < segs; i++) {
+            const yy = top + (baseH * i / segs);
+            const interpW = topW + (baseW - topW) * (i / segs);
+            ctx.fillRect(p.x - interpW/2 + 1, yy, interpW - 2, 0.7);
+        }
+        // Twin antenna spires for king
+        ctx.strokeStyle = white ? '#3a4a5a' : '#000';
+        ctx.lineWidth = 0.7;
+        ctx.beginPath();
+        ctx.moveTo(p.x - 1, top);
+        ctx.lineTo(p.x - 1, top - (isKing ? 8 : 5) * s);
+        ctx.moveTo(p.x + 1, top);
+        ctx.lineTo(p.x + 1, top - (isKing ? 6 : 4) * s);
+        ctx.stroke();
+        // Crown indicator (king = red star on top, queen = cyan ring)
+        if (isKing) {
+            const sx = p.x, sy = top - (isKing ? 8 : 5) * s - 2;
+            ctx.fillStyle = '#e63946';
+            // 5-point star
+            ctx.beginPath();
+            for (let k = 0; k < 10; k++) {
+                const ang = -Math.PI/2 + k * Math.PI / 5;
+                const rr = (k % 2 === 0) ? 2.6 : 1.1;
+                const xx = sx + Math.cos(ang) * rr;
+                const yy = sy + Math.sin(ang) * rr;
+                if (k === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+            }
+            ctx.closePath(); ctx.fill();
+        } else {
+            ctx.strokeStyle = '#e63946';
+            ctx.lineWidth = 0.9;
+            ctx.beginPath();
+            ctx.ellipse(p.x, top - 4 * s, 3, 1.2, 0, 0, Math.PI*2);
+            ctx.stroke();
+        }
+        // Red horizontal accent stripe mid-tower
+        ctx.fillStyle = 'rgba(230,57,70,0.85)';
+        const midY = top + baseH * 0.55;
+        const interpW2 = topW + (baseW - topW) * 0.45;
+        ctx.fillRect(p.x - interpW2/2, midY, interpW2, 0.8);
+    }
+
+    // Broadcast / lattice tower (bishop)
+    function drawBishop(col, row, white) {
+        const p = tileCenter(col, row);
+        const s = tileScale(row);
+        const baseW = 6 * s;
+        const baseH = 24 * s;
+        const top = p.y - baseH;
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
+        ctx.beginPath(); ctx.ellipse(p.x + 1, p.y + 1, baseW * 0.6, baseW * 0.22, 0, 0, Math.PI*2); ctx.fill();
+        const color = white ? '#f0f9ff' : '#15151c';
+        ctx.strokeStyle = color;
+        ctx.fillStyle = color;
+        ctx.lineWidth = 0.8;
+        // Outer lattice legs
+        ctx.beginPath();
+        ctx.moveTo(p.x - baseW/2, p.y);
+        ctx.lineTo(p.x, top);
+        ctx.moveTo(p.x + baseW/2, p.y);
+        ctx.lineTo(p.x, top);
+        ctx.stroke();
+        // Cross-bracing X's
+        ctx.lineWidth = 0.5;
+        const segs = 5;
+        for (let i = 0; i < segs; i++) {
+            const t1 = i / segs;
+            const t2 = (i + 1) / segs;
+            const y1 = p.y + (top - p.y) * t1;
+            const y2 = p.y + (top - p.y) * t2;
+            const w1 = baseW * (1 - t1);
+            const w2 = baseW * (1 - t2);
+            ctx.beginPath();
+            ctx.moveTo(p.x - w1/2, y1);
+            ctx.lineTo(p.x + w2/2, y2);
+            ctx.moveTo(p.x + w1/2, y1);
+            ctx.lineTo(p.x - w2/2, y2);
+            ctx.stroke();
+            // Horizontal brace
+            ctx.beginPath();
+            ctx.moveTo(p.x - w2/2, y2);
+            ctx.lineTo(p.x + w2/2, y2);
+            ctx.stroke();
+        }
+        // Antenna mast on top
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(p.x, top);
+        ctx.lineTo(p.x, top - 6 * s);
+        ctx.stroke();
+        // Red beacon
+        ctx.fillStyle = '#e63946';
+        ctx.beginPath(); ctx.arc(p.x, top - 6 * s, 1.2, 0, Math.PI*2); ctx.fill();
+    }
+
+    // Cloud Gate "Bean" knight
+    function drawKnight(col, row, white) {
+        const p = tileCenter(col, row);
+        const s = tileScale(row);
+        const r = 7 * s;
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.beginPath(); ctx.ellipse(p.x + 1, p.y + 1, r * 1.05, r * 0.32, 0, 0, Math.PI*2); ctx.fill();
+        // Glossy bean dome (ellipse, chrome reflection)
+        const g = ctx.createRadialGradient(p.x - r*0.4, p.y - r*0.8, r*0.1, p.x, p.y - r*0.3, r*1.2);
+        if (white) {
+            g.addColorStop(0, '#ffffff');
+            g.addColorStop(0.45, '#cfe7f0');
+            g.addColorStop(1, '#5a7280');
+        } else {
+            g.addColorStop(0, '#5a6878');
+            g.addColorStop(0.4, '#1a1f28');
+            g.addColorStop(1, '#02040a');
+        }
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y - r*0.4, r * 1.15, r * 0.95, 0, Math.PI, 0);
+        ctx.lineTo(p.x + r * 0.85, p.y);
+        ctx.lineTo(p.x - r * 0.85, p.y);
+        ctx.closePath();
+        ctx.fill();
+        // Specular highlight strip
+        ctx.fillStyle = white ? 'rgba(255,255,255,0.85)' : 'rgba(150,200,220,0.5)';
+        ctx.beginPath();
+        ctx.ellipse(p.x - r*0.3, p.y - r*0.9, r*0.55, r*0.18, -0.3, 0, Math.PI*2);
+        ctx.fill();
+        // Underside reflection line
+        ctx.strokeStyle = 'rgba(230,57,70,0.6)';
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.ellipse(p.x, p.y - r*0.15, r * 0.95, r * 0.3, 0, 0, Math.PI);
+        ctx.stroke();
+    }
+
+    // Red-star-topped pillar pawn
+    function drawPawn(col, row, white) {
+        const p = tileCenter(col, row);
+        const s = tileScale(row);
+        const baseW = 5 * s;
+        const baseH = 11 * s;
+        const top = p.y - baseH;
+        // Shadow
+        ctx.fillStyle = 'rgba(0,0,0,0.4)';
+        ctx.beginPath(); ctx.ellipse(p.x + 0.5, p.y + 0.5, baseW * 0.55, baseW * 0.2, 0, 0, Math.PI*2); ctx.fill();
+        // Pillar
+        const fill = white ? '#f0f9ff' : '#15151c';
+        const shade = white ? '#9ab5c4' : '#02040a';
+        const g = ctx.createLinearGradient(p.x - baseW/2, 0, p.x + baseW/2, 0);
+        g.addColorStop(0, shade);
+        g.addColorStop(0.5, fill);
+        g.addColorStop(1, shade);
+        ctx.fillStyle = g;
+        ctx.fillRect(p.x - baseW/2, top, baseW, baseH);
+        // Cap rim
+        ctx.fillStyle = white ? '#3a4a5a' : '#000';
+        ctx.fillRect(p.x - baseW/2 - 0.5, top - 1, baseW + 1, 1.5);
+        // Red star on top
+        const sx = p.x, sy = top - 3;
+        ctx.fillStyle = '#e63946';
+        ctx.beginPath();
+        for (let k = 0; k < 10; k++) {
+            const ang = -Math.PI/2 + k * Math.PI / 5;
+            const rr = (k % 2 === 0) ? 2.1 : 0.9;
+            const xx = sx + Math.cos(ang) * rr;
+            const yy = sy + Math.sin(ang) * rr;
+            if (k === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+        }
+        ctx.closePath(); ctx.fill();
+    }
+
+    // Draw pieces back-to-front so far pieces are occluded by near pieces.
+    // Back rank (row 0, black) — Rook Knight Bishop Queen King Bishop Knight Rook
+    // Black pawns row 1, White pawns row 6, White back rank row 7
+    const backRank = ['R','N','B','Q','K','B','N','R'];
+
+    function drawPieceAt(col, row, type, white) {
+        switch (type) {
+            case 'R': drawRook(col, row, white); break;
+            case 'N': drawKnight(col, row, white); break;
+            case 'B': drawBishop(col, row, white); break;
+            case 'Q': drawSkyscraper(col, row, white, false); break;
+            case 'K': drawSkyscraper(col, row, white, true); break;
+            case 'P': drawPawn(col, row, white); break;
+        }
+    }
+
+    // Mid-game style position — leave a few empty squares, show one capture target highlight
+    // rows: 0..7 (0 = far/black back rank)
+    const layout = [
+        // row 0: black back rank
+        ['R','N','B','Q','K','B','N','R'],
+        // row 1: black pawns (one advanced)
+        ['P','P','P','P','','P','P','P'],
+        ['', '', '', '', 'P','', '', ''],
+        ['', '', '', '', '', '', '', ''],
+        ['', '', '', '', 'P','', '', ''],   // white e4 pawn
+        ['', '', 'N','', '', '', '', ''],   // white knight developed
+        // row 6: white pawns (e-pawn moved)
+        ['P','P','P','P','','P','P','P'],
+        // row 7: white back rank (no knight at b1, it moved)
+        ['R','','B','Q','K','B','N','R']
+    ];
+
+    // Highlight: a target square (e.g. a possible knight move from c5 to e6? Just visual)
+    // Pick square (e5? -> row 3, col 4). Show floating ring.
+    const hl = bp(4.5, 3.5);
+    ctx.fillStyle = 'rgba(230, 57, 70, 0.18)';
+    // Highlight tile
+    const ha = bp(4, 3), hb = bp(5, 3), hc = bp(5, 4), hd = bp(4, 4);
+    ctx.beginPath();
+    ctx.moveTo(ha.x, ha.y); ctx.lineTo(hb.x, hb.y); ctx.lineTo(hc.x, hc.y); ctx.lineTo(hd.x, hd.y); ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#e63946';
+    ctx.lineWidth = 1;
+    ctx.shadowColor = '#e63946';
+    ctx.shadowBlur = 4;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Draw back to front
+    for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+            const t = layout[r][c];
+            if (!t) continue;
+            const white = r >= 4; // bottom half = white
+            drawPieceAt(c, r, t, white);
+        }
+    }
+
+    // ---- Floating UI: "WHITE TO MOVE" header ----
+    const uiX = W*0.5, uiY = H*0.07;
+    ctx.fillStyle = 'rgba(10, 31, 74, 0.85)';
+    const uiW = 96, uiH = 14;
+    ctx.fillRect(uiX - uiW/2, uiY - uiH/2, uiW, uiH);
+    ctx.strokeStyle = '#e63946';
+    ctx.lineWidth = 0.8;
+    ctx.strokeRect(uiX - uiW/2, uiY - uiH/2, uiW, uiH);
+    // Inner cyan tick
+    ctx.fillStyle = '#66f3ff';
+    ctx.fillRect(uiX - uiW/2 + 2, uiY - uiH/2 + 2, 2, uiH - 4);
+    ctx.fillStyle = '#f0f9ff';
+    ctx.font = 'bold 8px "Orbitron", monospace';
+    ctx.fillText('WHITE TO MOVE', uiX - 40, uiY + 3);
+
+    // Top-left turn timer chip
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(W*0.04, H*0.04, 36, 13);
+    ctx.strokeStyle = 'rgba(102,243,255,0.5)';
+    ctx.lineWidth = 0.6;
+    ctx.strokeRect(W*0.04, H*0.04, 36, 13);
+    ctx.fillStyle = '#66f3ff';
+    ctx.font = 'bold 7px "Orbitron", monospace';
+    ctx.fillText('05:14', W*0.04 + 6, H*0.04 + 9);
+
+    // Top-right "vs AI" chip
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(W - W*0.04 - 36, H*0.04, 36, 13);
+    ctx.strokeStyle = 'rgba(230,57,70,0.55)';
+    ctx.strokeRect(W - W*0.04 - 36, H*0.04, 36, 13);
+    ctx.fillStyle = '#ff6b78';
+    ctx.fillText('vs AI', W - W*0.04 - 30, H*0.04 + 9);
+
+    // "CHICAGO" stylized callout bottom-left
+    ctx.fillStyle = 'rgba(230, 57, 70, 0.92)';
+    ctx.font = 'bold 9px "Orbitron", monospace';
+    ctx.save();
+    ctx.translate(W*0.07, H*0.95);
+    ctx.rotate(-0.05);
+    ctx.fillText('CHICAGO', 0, 0);
+    ctx.restore();
+    ctx.fillStyle = 'rgba(102, 243, 255, 0.9)';
+    ctx.font = 'bold 7px "Orbitron", monospace';
+    ctx.save();
+    ctx.translate(W*0.07, H*0.95 + 7);
+    ctx.rotate(-0.05);
+    ctx.fillText('CHESS // 2000', 0, 0);
+    ctx.restore();
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H*0.55, W*0.25, W/2, H*0.55, W*0.85);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.65)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 function drawPerfreviewScene(canvas) {
     const ctx = canvas.getContext('2d');
     const w = canvas.width = canvas.offsetWidth * 2;
@@ -7846,7 +8482,8 @@ const tileCanvasDrawers = {
     'canvas-perfreview': drawPerfreviewScene,
     'canvas-soccer': drawSoccerScene,
     'canvas-battle': drawBattleScene,
-    'canvas-typing': drawTypingScene
+    'canvas-typing': drawTypingScene,
+    'canvas-chess2000': drawChess2000Scene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
