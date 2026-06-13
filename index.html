@@ -1498,6 +1498,41 @@
             border-color: rgba(102, 243, 255, 0.65);
         }
 
+        .card-wcbracket .card-bg {
+            background: linear-gradient(135deg, #0a2e1a 0%, #04150c 100%);
+        }
+        .card-wcbracket .card-art::after {
+            background: linear-gradient(to top, #0a2e1a, transparent);
+        }
+        .card-wcbracket .card-genre { color: #4ade80; }
+        .card-wcbracket .card-title { color: #ffe08a; }
+        .card-wcbracket .feature-tag {
+            background: rgba(255, 215, 0, 0.13);
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.32);
+        }
+        .card-wcbracket .play-btn {
+            background: linear-gradient(135deg, #16a34a, #ffd700);
+            color: #04150c;
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.45);
+        }
+        .card-wcbracket:hover {
+            box-shadow: 0 30px 60px rgba(34, 197, 94, 0.22);
+        }
+        .card-wcbracket .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-wcbracket:hover .glow-border {
+            border-color: rgba(255, 215, 0, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2770,6 +2805,34 @@
                     <span class="feature-tag">Chicago Skyline</span>
                     <span class="feature-tag">3D Isometric</span>
                     <span class="feature-tag">vs AI</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- World Cup Family Fun Bracket 2026 -->
+    <a href="https://soccerbracket2026.onrender.com/" class="game-card card-wcbracket" data-category="sports">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-wcbracket"></canvas>
+                <div class="game-icon">&#x1F3C6;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Bracket Predictor / Sports</div>
+                <div class="card-title">World Cup Family Fun Bracket 2026</div>
+                <p class="card-desc">
+                    Fill out the entire 2026 World Cup, group stage to final, and let the whole family argue about it. Drag your picks through the knockout rounds, crown a champion, and watch the bracket judge your wildly optimistic faith in the underdog. Track everyone's predictions, tally the bragging rights, and discover that your uncle who "doesn't even watch soccer" somehow called every upset. The trophy is golden, the confetti is free, and the family group chat will never recover.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">World Cup 2026</span>
+                    <span class="feature-tag">Bracket</span>
+                    <span class="feature-tag">Family Fun</span>
+                    <span class="feature-tag">Predictions</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -8243,6 +8306,153 @@ function drawTypingScene(canvas) {
     ctx.fillText('ACC 98%', W-72, 23);
 }
 
+function drawWcbracketScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Stadium-night background
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#0d3b22');
+    bg.addColorStop(1, '#04150c');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Faint pitch stripes
+    for (let i = 0; i < 8; i++) {
+        if (i % 2 === 0) {
+            ctx.fillStyle = 'rgba(255,255,255,0.03)';
+            ctx.fillRect(0, i * (H/8), W, H/8);
+        }
+    }
+
+    // Tournament bracket (left side) — two rounds feeding a final
+    ctx.strokeStyle = 'rgba(255,255,255,0.45)';
+    ctx.lineWidth = 1.3;
+    const seedX = W*0.06, seedW = W*0.16;
+    const ys = [H*0.18, H*0.34, H*0.6, H*0.76];
+    // Round-of-4 seed boxes
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ys.forEach((y, i) => {
+        ctx.fillRect(seedX, y-6, seedW, 12);
+        ctx.strokeRect(seedX, y-6, seedW, 12);
+    });
+    // First filled-pick highlight
+    ctx.fillStyle = 'rgba(74,222,128,0.4)';
+    ctx.fillRect(seedX, ys[0]-6, seedW, 12);
+    ctx.fillRect(seedX, ys[3]-6, seedW, 12);
+
+    // Connectors to semifinal boxes
+    const semiX = seedX + seedW + W*0.06;
+    const semiW = W*0.16;
+    const sy1 = (ys[0]+ys[1])/2, sy2 = (ys[2]+ys[3])/2;
+    function bracketLink(y1, y2, fromX, toX, midY) {
+        ctx.beginPath();
+        ctx.moveTo(fromX, y1); ctx.lineTo((fromX+toX)/2, y1);
+        ctx.lineTo((fromX+toX)/2, y2); ctx.lineTo(fromX, y2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo((fromX+toX)/2, midY); ctx.lineTo(toX, midY);
+        ctx.stroke();
+    }
+    bracketLink(ys[0], ys[1], seedX+seedW, semiX, sy1);
+    bracketLink(ys[2], ys[3], seedX+seedW, semiX, sy2);
+    // Semifinal boxes
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    [sy1, sy2].forEach(y => { ctx.fillRect(semiX, y-6, semiW, 12); ctx.strokeRect(semiX, y-6, semiW, 12); });
+    ctx.fillStyle = 'rgba(74,222,128,0.4)';
+    ctx.fillRect(semiX, sy1-6, semiW, 12);
+    // Final connector
+    const finalX = semiX + semiW + W*0.05;
+    const fy = (sy1+sy2)/2;
+    bracketLink(sy1, sy2, semiX+semiW, finalX, fy);
+    // Champion box (gold)
+    ctx.fillStyle = 'rgba(255,215,0,0.22)';
+    ctx.fillRect(finalX, fy-7, W*0.13, 14);
+    ctx.strokeStyle = '#ffd700';
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(finalX, fy-7, W*0.13, 14);
+
+    // --- Golden trophy (upper right) ---
+    const tx = W*0.8, ty = H*0.34;
+    ctx.save();
+    const gold = ctx.createLinearGradient(tx-12, ty-20, tx+12, ty+20);
+    gold.addColorStop(0, '#fff4b8');
+    gold.addColorStop(0.5, '#ffd700');
+    gold.addColorStop(1, '#b8860b');
+    ctx.fillStyle = gold;
+    // Cup bowl
+    ctx.beginPath();
+    ctx.moveTo(tx-12, ty-16);
+    ctx.quadraticCurveTo(tx, ty+10, tx+12, ty-16);
+    ctx.closePath();
+    ctx.fill();
+    // Handles
+    ctx.strokeStyle = gold;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.arc(tx-12, ty-10, 5, Math.PI*0.5, Math.PI*1.6); ctx.stroke();
+    ctx.beginPath(); ctx.arc(tx+12, ty-10, 5, Math.PI*1.4, Math.PI*0.5); ctx.stroke();
+    // Stem + base
+    ctx.fillRect(tx-2, ty+2, 4, 8);
+    ctx.fillRect(tx-7, ty+10, 14, 3);
+    ctx.fillRect(tx-9, ty+13, 18, 3);
+    // Shine
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.beginPath();
+    ctx.ellipse(tx-4, ty-9, 1.6, 4, -0.3, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // --- Soccer ball (lower right) ---
+    const bx = W*0.82, by = H*0.7, br = 12;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#111';
+    // Center pentagon
+    ctx.beginPath();
+    for (let i = 0; i < 5; i++) {
+        const a = i/5*Math.PI*2 - Math.PI/2;
+        const px = bx + Math.cos(a)*4.5, py = by + Math.sin(a)*4.5;
+        i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.fill();
+    // Outer patches
+    for (let i = 0; i < 5; i++) {
+        const a = i/5*Math.PI*2 - Math.PI/2 + Math.PI/5;
+        ctx.beginPath();
+        ctx.arc(bx + Math.cos(a)*9, by + Math.sin(a)*9, 1.6, 0, Math.PI*2);
+        ctx.fill();
+    }
+    ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+    ctx.lineWidth = 0.6;
+    ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI*2); ctx.stroke();
+
+    // --- Confetti celebration ---
+    const confetti = ['#ff6b6b', '#ffd700', '#4ade80', '#5599ff', '#ff9f1c', '#ffffff'];
+    let seed = 7;
+    const rnd = () => { seed = (seed*9301 + 49297) % 233280; return seed/233280; };
+    for (let i = 0; i < 26; i++) {
+        ctx.fillStyle = confetti[i % confetti.length];
+        const cx = W*0.55 + rnd()*W*0.45;
+        const cy = rnd()*H*0.9;
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(rnd()*Math.PI);
+        ctx.fillRect(-1.5, -1.5, 3, 3.5);
+        ctx.restore();
+    }
+
+    // "2026" banner ribbon
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.04, 56, 18);
+    ctx.fillStyle = '#ffd700';
+    ctx.font = 'bold 12px Arial';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('WC 2026', W*0.04 + 6, H*0.04 + 10);
+}
+
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
 // fold defer their (sometimes expensive) draw until they scroll
@@ -8276,7 +8486,8 @@ const tileCanvasDrawers = {
     'canvas-soccer': drawSoccerScene,
     'canvas-battle': drawBattleScene,
     'canvas-typing': drawTypingScene,
-    'canvas-chess2000': drawChess2000Scene
+    'canvas-chess2000': drawChess2000Scene,
+    'canvas-wcbracket': drawWcbracketScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
