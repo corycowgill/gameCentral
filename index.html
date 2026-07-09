@@ -1533,6 +1533,41 @@
             border-color: rgba(255, 215, 0, 0.6);
         }
 
+        .card-cosmos .card-bg {
+            background: linear-gradient(135deg, #1a0b3d 0%, #05010f 100%);
+        }
+        .card-cosmos .card-art::after {
+            background: linear-gradient(to top, #1a0b3d, transparent);
+        }
+        .card-cosmos .card-genre { color: #67e8f9; }
+        .card-cosmos .card-title { color: #e9deff; }
+        .card-cosmos .feature-tag {
+            background: rgba(167, 139, 250, 0.14);
+            color: #c4b5fd;
+            border: 1px solid rgba(167, 139, 250, 0.34);
+        }
+        .card-cosmos .play-btn {
+            background: linear-gradient(135deg, #7c3aed, #22d3ee);
+            color: #05010f;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45);
+        }
+        .card-cosmos:hover {
+            box-shadow: 0 30px 60px rgba(124, 58, 237, 0.28);
+        }
+        .card-cosmos .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(167, 139, 250, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-cosmos:hover .glow-border {
+            border-color: rgba(167, 139, 250, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2833,6 +2868,34 @@
                     <span class="feature-tag">Bracket</span>
                     <span class="feature-tag">Family Fun</span>
                     <span class="feature-tag">Predictions</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Cosmos Explorer -->
+    <a href="https://cosmosexplorer.onrender.com" class="game-card card-cosmos" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-cosmos"></canvas>
+                <div class="game-icon">&#x1F680;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Space Exploration / Adventure</div>
+                <div class="card-title">Cosmos Explorer</div>
+                <p class="card-desc">
+                    Fire up your engines and chart a course through an endless, star-strewn galaxy. Slingshot around alien planets, thread glittering asteroid fields, and scan uncharted worlds for the secrets they've been hiding since the dawn of time. Every jump drops you somewhere new &mdash; a ringed gas giant, a shimmering nebula, a lonely moon waiting to be named. Manage your fuel, dodge the debris, and see just how deep into the cosmos your curiosity will carry you. Space is big. Go find out how big.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Space Sim</span>
+                    <span class="feature-tag">Exploration</span>
+                    <span class="feature-tag">Procedural Worlds</span>
+                    <span class="feature-tag">Sci-Fi</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -8453,6 +8516,164 @@ function drawWcbracketScene(canvas) {
     ctx.fillText('WC 2026', W*0.04 + 6, H*0.04 + 10);
 }
 
+function drawCosmosScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Deterministic PRNG so the starfield is stable across redraws
+    let seed = 91;
+    const rnd = () => { seed = (seed*9301 + 49297) % 233280; return seed/233280; };
+
+    // Deep-space gradient backdrop
+    const bg = ctx.createLinearGradient(0, 0, W, H);
+    bg.addColorStop(0, '#1a0b3d');
+    bg.addColorStop(0.55, '#0b0524');
+    bg.addColorStop(1, '#05010f');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Nebula clouds (soft radial glows)
+    const nebulas = [
+        { x: W*0.28, y: H*0.7, r: W*0.42, c: 'rgba(124,58,237,0.28)' },
+        { x: W*0.78, y: H*0.28, r: W*0.4, c: 'rgba(34,211,238,0.18)' },
+        { x: W*0.6, y: H*0.85, r: W*0.35, c: 'rgba(236,72,153,0.14)' }
+    ];
+    nebulas.forEach(n => {
+        const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+        g.addColorStop(0, n.c);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, W, H);
+    });
+
+    // Starfield — many faint stars, a few bright twinklers
+    for (let i = 0; i < 120; i++) {
+        const sx = rnd()*W, sy = rnd()*H, sr = rnd()*0.9 + 0.2;
+        ctx.fillStyle = `rgba(255,255,255,${0.25 + rnd()*0.55})`;
+        ctx.beginPath(); ctx.arc(sx, sy, sr, 0, Math.PI*2); ctx.fill();
+    }
+    // Bright cross-shaped twinkle stars
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 0.8;
+    for (let i = 0; i < 5; i++) {
+        const sx = rnd()*W, sy = rnd()*H*0.7, s = 3 + rnd()*3;
+        ctx.beginPath();
+        ctx.moveTo(sx-s, sy); ctx.lineTo(sx+s, sy);
+        ctx.moveTo(sx, sy-s); ctx.lineTo(sx, sy+s);
+        ctx.stroke();
+    }
+
+    // --- Ringed gas giant (upper right) ---
+    const px = W*0.8, py = H*0.32, pr = 22;
+    const planet = ctx.createRadialGradient(px-8, py-8, 2, px, py, pr);
+    planet.addColorStop(0, '#ffd9a0');
+    planet.addColorStop(0.5, '#e8873c');
+    planet.addColorStop(1, '#7a2f14');
+    ctx.fillStyle = planet;
+    ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2); ctx.fill();
+    // Banding
+    ctx.save();
+    ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2); ctx.clip();
+    ctx.strokeStyle = 'rgba(120,45,20,0.4)';
+    ctx.lineWidth = 2.5;
+    for (let i = -2; i <= 2; i++) {
+        ctx.beginPath();
+        ctx.moveTo(px-pr, py + i*7 + 2);
+        ctx.quadraticCurveTo(px, py + i*7 - 2, px+pr, py + i*7 + 2);
+        ctx.stroke();
+    }
+    ctx.restore();
+    // Ring
+    ctx.save();
+    ctx.translate(px, py);
+    ctx.rotate(-0.42);
+    ctx.strokeStyle = 'rgba(255,224,180,0.7)';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(0, 0, pr+13, (pr+13)*0.32, 0, 0, Math.PI*2); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,224,180,0.3)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.ellipse(0, 0, pr+20, (pr+20)*0.32, 0, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+
+    // --- Small moon (lower left) ---
+    const mx = W*0.16, my = H*0.78, mr = 9;
+    const moon = ctx.createRadialGradient(mx-3, my-3, 1, mx, my, mr);
+    moon.addColorStop(0, '#dfe6f0');
+    moon.addColorStop(1, '#6b7a94');
+    ctx.fillStyle = moon;
+    ctx.beginPath(); ctx.arc(mx, my, mr, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(70,80,100,0.5)';
+    ctx.beginPath(); ctx.arc(mx-2, my-1, 2, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(mx+3, my+2, 1.4, 0, Math.PI*2); ctx.fill();
+
+    // --- Explorer ship on a dashed orbital trajectory (center) ---
+    const sx0 = W*0.34, sy0 = H*0.46;
+    // Curved flight-path trail
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = 'rgba(103,232,249,0.55)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(W*0.06, H*0.7);
+    ctx.quadraticCurveTo(W*0.22, H*0.34, sx0, sy0);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    ctx.save();
+    ctx.translate(sx0, sy0);
+    ctx.rotate(-0.5);
+    // Engine glow
+    const flame = ctx.createRadialGradient(-13, 0, 0, -13, 0, 9);
+    flame.addColorStop(0, 'rgba(103,232,249,0.9)');
+    flame.addColorStop(1, 'rgba(103,232,249,0)');
+    ctx.fillStyle = flame;
+    ctx.beginPath(); ctx.arc(-13, 0, 9, 0, Math.PI*2); ctx.fill();
+    // Hull
+    ctx.fillStyle = '#e9deff';
+    ctx.beginPath();
+    ctx.moveTo(14, 0);
+    ctx.lineTo(-8, -6);
+    ctx.lineTo(-11, 0);
+    ctx.lineTo(-8, 6);
+    ctx.closePath();
+    ctx.fill();
+    // Fin
+    ctx.fillStyle = '#7c3aed';
+    ctx.beginPath();
+    ctx.moveTo(-8, -6); ctx.lineTo(-13, -9); ctx.lineTo(-8, -1); ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-8, 6); ctx.lineTo(-13, 9); ctx.lineTo(-8, 1); ctx.closePath();
+    ctx.fill();
+    // Cockpit
+    ctx.fillStyle = '#22d3ee';
+    ctx.beginPath(); ctx.arc(3, 0, 2.6, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+
+    // --- Distant comet streaking across ---
+    ctx.save();
+    const cx = W*0.5, cy = H*0.16;
+    const cg = ctx.createLinearGradient(cx, cy, cx-26, cy+12);
+    cg.addColorStop(0, 'rgba(255,255,255,0.9)');
+    cg.addColorStop(1, 'rgba(103,232,249,0)');
+    ctx.strokeStyle = cg;
+    ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx-26, cy+12); ctx.stroke();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(cx, cy, 2, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+
+    // Scanner HUD label (upper left)
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillRect(W*0.04, H*0.05, 74, 18);
+    ctx.fillStyle = '#67e8f9';
+    ctx.font = 'bold 11px Arial';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('◈ SCANNING', W*0.04 + 7, H*0.05 + 10);
+}
+
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
 // fold defer their (sometimes expensive) draw until they scroll
@@ -8487,7 +8708,8 @@ const tileCanvasDrawers = {
     'canvas-battle': drawBattleScene,
     'canvas-typing': drawTypingScene,
     'canvas-chess2000': drawChess2000Scene,
-    'canvas-wcbracket': drawWcbracketScene
+    'canvas-wcbracket': drawWcbracketScene,
+    'canvas-cosmos': drawCosmosScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
