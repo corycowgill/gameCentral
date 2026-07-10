@@ -1568,6 +1568,41 @@
             border-color: rgba(167, 139, 250, 0.6);
         }
 
+        .card-pinball .card-bg {
+            background: linear-gradient(135deg, #0a2440 0%, #05101c 100%);
+        }
+        .card-pinball .card-art::after {
+            background: linear-gradient(to top, #0a2440, transparent);
+        }
+        .card-pinball .card-genre { color: #41b6e6; }
+        .card-pinball .card-title { color: #ff5a5a; }
+        .card-pinball .feature-tag {
+            background: rgba(65, 182, 230, 0.14);
+            color: #7fd0f2;
+            border: 1px solid rgba(65, 182, 230, 0.34);
+        }
+        .card-pinball .play-btn {
+            background: linear-gradient(135deg, #ee2b2b, #41b6e6);
+            color: #05101c;
+            box-shadow: 0 4px 20px rgba(65, 182, 230, 0.45);
+        }
+        .card-pinball:hover {
+            box-shadow: 0 30px 60px rgba(238, 43, 43, 0.24);
+        }
+        .card-pinball .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(65, 182, 230, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-pinball:hover .glow-border {
+            border-color: rgba(65, 182, 230, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2896,6 +2931,34 @@
                     <span class="feature-tag">Exploration</span>
                     <span class="feature-tag">Procedural Worlds</span>
                     <span class="feature-tag">Sci-Fi</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Da Pinball - Chicago Pinball Wiz 5000 -->
+    <a href="https://chicagopinballwiz5000.onrender.com" class="game-card card-pinball" data-category="party">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-pinball"></canvas>
+                <div class="game-icon">&#x1F579;&#xFE0F;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Chicago Pinball / Arcade</div>
+                <div class="card-title">Da Pinball</div>
+                <p class="card-desc">
+                    A deep-dish, deep-fried love letter to Chicago &mdash; built by an AI that has never set foot in the city, never eaten the pizza, and has genuinely never played a single game of pinball in its life. The result? A silver ball that obeys no known law of physics, ricocheting off the skyline like it's had one too many at the corner tavern. Nudge da flippers, chase da high score, and marvel as gravity takes a personal day. Is it accurate to Chicago? Absolutely not. Is it a blast? Ya betcha. Go Bears.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Pinball</span>
+                    <span class="feature-tag">Chicago</span>
+                    <span class="feature-tag">Impossible Gravity</span>
+                    <span class="feature-tag">Arcade</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -8674,6 +8737,123 @@ function drawCosmosScene(canvas) {
     ctx.fillText('◈ SCANNING', W*0.04 + 7, H*0.05 + 10);
 }
 
+function drawPinballScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Playfield backdrop — moody blue arcade cabinet
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#0d2f52');
+    bg.addColorStop(1, '#05101c');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Chicago flag stripes (two light-blue bands, faint, top area)
+    ctx.fillStyle = 'rgba(65,182,230,0.12)';
+    ctx.fillRect(0, H*0.16, W, H*0.05);
+    ctx.fillRect(0, H*0.30, W, H*0.05);
+
+    // Chicago skyline silhouette across the middle-back
+    ctx.fillStyle = 'rgba(3,10,20,0.85)';
+    const base = H*0.62;
+    const bd = [
+        [0.00,0.10],[0.06,0.10],[0.06,0.22],[0.11,0.22],[0.11,0.06],
+        [0.17,0.06],[0.17,0.14],[0.22,0.14],[0.22,0.20],[0.27,0.20],
+        [0.27,0.30],[0.31,0.30], // Willis-style stepped tower
+        [0.31,0.16],[0.37,0.16],[0.37,0.24],[0.43,0.24],[0.43,0.12],
+        [0.49,0.12],[0.49,0.26],[0.55,0.26],[0.55,0.18],[0.60,0.18],
+        [0.60,0.34],[0.64,0.34],[0.64,0.10],[0.66,0.10], // Hancock-ish tall
+        [0.66,0.22],[0.72,0.22],[0.72,0.15],[0.78,0.15],[0.78,0.27],
+        [0.84,0.27],[0.84,0.11],[0.90,0.11],[0.90,0.20],[1.00,0.20],
+        [1.00,0.40]
+    ];
+    ctx.beginPath();
+    ctx.moveTo(0, base);
+    bd.forEach(p => ctx.lineTo(p[0]*W, base - p[1]*H));
+    ctx.lineTo(W, base);
+    ctx.closePath();
+    ctx.fill();
+    // Tiny lit windows
+    ctx.fillStyle = 'rgba(255,214,90,0.5)';
+    let s = 33; const rnd = () => { s = (s*9301 + 49297) % 233280; return s/233280; };
+    for (let i = 0; i < 40; i++) {
+        ctx.fillRect(rnd()*W, base - rnd()*H*0.32, 1.2, 1.2);
+    }
+
+    // --- Bumpers as red Chicago six-point stars ---
+    function star(cx, cy, r, glow) {
+        ctx.save();
+        const g = ctx.createRadialGradient(cx, cy, 1, cx, cy, r*2.1);
+        g.addColorStop(0, glow);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(cx, cy, r*2.1, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#ee2b2b';
+        ctx.beginPath();
+        for (let i = 0; i < 12; i++) {
+            const rad = i % 2 === 0 ? r : r*0.45;
+            const a = i/12*Math.PI*2 - Math.PI/2;
+            const px = cx + Math.cos(a)*rad, py = cy + Math.sin(a)*rad;
+            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+        }
+        ctx.closePath(); ctx.fill();
+        ctx.restore();
+    }
+    star(W*0.30, H*0.40, 9, 'rgba(238,43,43,0.5)');
+    star(W*0.58, H*0.34, 8, 'rgba(238,43,43,0.45)');
+    star(W*0.46, H*0.52, 7, 'rgba(238,43,43,0.4)');
+
+    // --- Impossible-gravity ball trajectory (loopy squiggle) ---
+    ctx.strokeStyle = 'rgba(127,208,242,0.7)';
+    ctx.lineWidth = 1.6;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(W*0.88, H*0.22);
+    ctx.bezierCurveTo(W*0.55, H*0.10, W*0.62, H*0.66, W*0.40, H*0.44);
+    ctx.bezierCurveTo(W*0.20, H*0.28, W*0.30, H*0.72, W*0.50, H*0.78);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // --- The silver ball ---
+    const bx = W*0.5, by = H*0.78, br = 7;
+    const ball = ctx.createRadialGradient(bx-2.5, by-2.5, 1, bx, by, br);
+    ball.addColorStop(0, '#ffffff');
+    ball.addColorStop(0.5, '#c8d4e0');
+    ball.addColorStop(1, '#5a6b7d');
+    ctx.fillStyle = ball;
+    ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.9)';
+    ctx.beginPath(); ctx.arc(bx-2.5, by-2.5, 1.6, 0, Math.PI*2); ctx.fill();
+
+    // --- Flippers (V at the bottom) ---
+    ctx.strokeStyle = '#41b6e6';
+    ctx.lineCap = 'round';
+    ctx.lineWidth = 7;
+    ctx.beginPath();
+    ctx.moveTo(W*0.30, H*0.86); ctx.lineTo(W*0.46, H*0.94);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(W*0.70, H*0.86); ctx.lineTo(W*0.54, H*0.94);
+    ctx.stroke();
+    ctx.lineCap = 'butt';
+
+    // Plunger lane (right rail)
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(W*0.93, H*0.2); ctx.lineTo(W*0.93, H*0.9); ctx.stroke();
+
+    // Neon score marquee (top)
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.05, 96, 20);
+    ctx.fillStyle = '#ff5a5a';
+    ctx.font = 'bold 13px "Courier New", monospace';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('DA 5,000,000', W*0.04 + 8, H*0.05 + 11);
+}
+
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
 // fold defer their (sometimes expensive) draw until they scroll
@@ -8709,7 +8889,8 @@ const tileCanvasDrawers = {
     'canvas-typing': drawTypingScene,
     'canvas-chess2000': drawChess2000Scene,
     'canvas-wcbracket': drawWcbracketScene,
-    'canvas-cosmos': drawCosmosScene
+    'canvas-cosmos': drawCosmosScene,
+    'canvas-pinball': drawPinballScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
