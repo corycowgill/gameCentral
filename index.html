@@ -1603,6 +1603,41 @@
             border-color: rgba(65, 182, 230, 0.6);
         }
 
+        .card-ant .card-bg {
+            background: linear-gradient(135deg, #3a1512 0%, #180705 100%);
+        }
+        .card-ant .card-art::after {
+            background: linear-gradient(to top, #3a1512, transparent);
+        }
+        .card-ant .card-genre { color: #ffb703; }
+        .card-ant .card-title { color: #ff6b52; }
+        .card-ant .feature-tag {
+            background: rgba(230, 57, 70, 0.14);
+            color: #ff9e8f;
+            border: 1px solid rgba(230, 57, 70, 0.34);
+        }
+        .card-ant .play-btn {
+            background: linear-gradient(135deg, #e63946, #ffb703);
+            color: #180705;
+            box-shadow: 0 4px 20px rgba(230, 57, 70, 0.45);
+        }
+        .card-ant:hover {
+            box-shadow: 0 30px 60px rgba(230, 57, 70, 0.24);
+        }
+        .card-ant .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 183, 3, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-ant:hover .glow-border {
+            border-color: rgba(255, 183, 3, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2959,6 +2994,34 @@
                     <span class="feature-tag">Chicago</span>
                     <span class="feature-tag">Impossible Gravity</span>
                     <span class="feature-tag">Arcade</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Mom's Ant Attack -->
+    <a href="https://momsantattack.onrender.com" class="game-card card-ant" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-ant"></canvas>
+                <div class="game-icon">&#x1F41C;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Bug Defense / Arcade</div>
+                <div class="card-title">Mom's Ant Attack</div>
+                <p class="card-desc">
+                    Somebody left the picnic out again, and now the whole colony's marching on the kitchen. Grab your slipper, Mom &mdash; it's time to defend the crumbs. Waves of six-legged invaders swarm the tablecloth from every crack and corner, and only your lightning reflexes stand between them and the sugar bowl. Squash the scouts before they signal the swarm, clear the trail before it becomes a highway, and rack up a combo big enough to make the exterminator jealous. They're organized. They're relentless. They will not respect your clean floors.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Ant Swarm</span>
+                    <span class="feature-tag">Reflexes</span>
+                    <span class="feature-tag">Wave Defense</span>
+                    <span class="feature-tag">Combos</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -8854,6 +8917,130 @@ function drawPinballScene(canvas) {
     ctx.fillText('DA 5,000,000', W*0.04 + 8, H*0.05 + 11);
 }
 
+function drawAntScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Warm kitchen-counter backdrop
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#4a2018');
+    bg.addColorStop(1, '#180705');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Red-and-white checkered picnic tablecloth (lower two-thirds), in perspective
+    const clothTop = H*0.42, cell = 26;
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0, clothTop, W, H-clothTop); ctx.clip();
+    for (let r = 0; r < 10; r++) {
+        for (let c = -1; c < W/cell + 2; c++) {
+            const y = clothTop + r*cell*0.9;
+            const scale = 1 + r*0.06;            // fake perspective — rows widen slightly
+            const x = (c*cell - (r%2?cell/2:0)) * scale;
+            ctx.fillStyle = (r + c) % 2 === 0 ? 'rgba(230,57,70,0.55)' : 'rgba(255,255,255,0.16)';
+            ctx.fillRect(x, y, cell*scale*0.9 + 1, cell*0.9 + 1);
+        }
+    }
+    ctx.restore();
+
+    // A dropped cookie the ants are marching toward (the objective)
+    const fx = W*0.8, fy = H*0.7, fr = 15;
+    ctx.fillStyle = '#c68a52';
+    ctx.beginPath(); ctx.arc(fx, fy, fr, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#8a5a2b';
+    [[-5,-4],[4,-6],[6,3],[-3,5],[0,0],[-7,2]].forEach(d => {
+        ctx.beginPath(); ctx.arc(fx+d[0], fy+d[1], 1.8, 0, Math.PI*2); ctx.fill();
+    });
+
+    // Crumbs scattered around
+    ctx.fillStyle = 'rgba(200,140,80,0.8)';
+    let s = 51; const rnd = () => { s = (s*9301 + 49297) % 233280; return s/233280; };
+    for (let i = 0; i < 10; i++) ctx.fillRect(W*0.55 + rnd()*W*0.4, H*0.5 + rnd()*H*0.4, 2, 2);
+
+    // --- Marching ant helper ---
+    function ant(cx, cy, ang, size) {
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(ang);
+        ctx.scale(size, size);
+        // Legs
+        ctx.strokeStyle = '#1a0d08';
+        ctx.lineWidth = 0.8;
+        for (const s1 of [-1, 1]) {
+            for (const off of [-2.5, 0, 2.5]) {
+                ctx.beginPath();
+                ctx.moveTo(off, 0);
+                ctx.lineTo(off + s1*3, s1*3.5);
+                ctx.stroke();
+            }
+        }
+        // Antennae
+        ctx.beginPath();
+        ctx.moveTo(5, 0); ctx.lineTo(8, -2.5);
+        ctx.moveTo(5, 0); ctx.lineTo(8, 2.5);
+        ctx.stroke();
+        // Three body segments
+        ctx.fillStyle = '#2a140a';
+        [[-4.5, 2.6], [0, 2.2], [4.5, 1.9]].forEach(seg => {
+            ctx.beginPath(); ctx.arc(seg[0], 0, seg[1], 0, Math.PI*2); ctx.fill();
+        });
+        ctx.restore();
+    }
+
+    // A curving column of ants streaming toward the cookie
+    const path = [
+        [W*0.08, H*0.9], [W*0.2, H*0.82], [W*0.32, H*0.68],
+        [W*0.42, H*0.6], [W*0.55, H*0.64], [W*0.66, H*0.68]
+    ];
+    for (let i = 0; i < path.length; i++) {
+        const p = path[i];
+        const nxt = path[Math.min(i+1, path.length-1)];
+        const ang = Math.atan2(nxt[1]-p[1], nxt[0]-p[0]);
+        ant(p[0], p[1], ang, 1 + i*0.08);
+    }
+    // A couple of scouts breaking formation
+    ant(W*0.24, H*0.5, -0.6, 0.9);
+    ant(W*0.5, H*0.44, 0.3, 0.85);
+
+    // --- Mom's raised slipper, mid-swat over the column ---
+    ctx.save();
+    ctx.translate(W*0.34, H*0.30);
+    ctx.rotate(0.35);
+    // Sole
+    ctx.fillStyle = '#c0392b';
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 26, 13, 0, 0, Math.PI*2);
+    ctx.fill();
+    // Strap
+    ctx.fillStyle = '#7d2318';
+    ctx.beginPath();
+    ctx.ellipse(-6, 0, 11, 8, 0, Math.PI*1.05, Math.PI*1.95);
+    ctx.fill();
+    // Highlight
+    ctx.fillStyle = 'rgba(255,255,255,0.18)';
+    ctx.beginPath(); ctx.ellipse(6, -4, 10, 4, -0.2, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+    // Motion swoosh lines above the slipper
+    ctx.strokeStyle = 'rgba(255,183,3,0.6)';
+    ctx.lineWidth = 1.6;
+    for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.arc(W*0.34, H*0.30, 30 + i*6, Math.PI*1.15, Math.PI*1.5);
+        ctx.stroke();
+    }
+
+    // Combo / score marquee (top-left)
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.05, 92, 20);
+    ctx.fillStyle = '#ffb703';
+    ctx.font = 'bold 13px Arial';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('x12 SPLAT!', W*0.04 + 8, H*0.05 + 11);
+}
+
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
 // fold defer their (sometimes expensive) draw until they scroll
@@ -8890,7 +9077,8 @@ const tileCanvasDrawers = {
     'canvas-chess2000': drawChess2000Scene,
     'canvas-wcbracket': drawWcbracketScene,
     'canvas-cosmos': drawCosmosScene,
-    'canvas-pinball': drawPinballScene
+    'canvas-pinball': drawPinballScene,
+    'canvas-ant': drawAntScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
