@@ -47,7 +47,7 @@
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 27,
+        "numberOfItems": 29,
         "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Kaiju Rampage", "url": "https://kaiju-am8i.onrender.com"},
             {"@type": "ListItem", "position": 2, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
@@ -76,7 +76,8 @@
             {"@type": "ListItem", "position": 25, "name": "Brennan Soccer", "url": "https://brennansoccer.onrender.com"},
             {"@type": "ListItem", "position": 26, "name": "Parker's Battle Tops", "url": "https://parkerbattle.onrender.com"},
             {"@type": "ListItem", "position": 27, "name": "Typing Battle", "url": "https://typingbattle.onrender.com"},
-            {"@type": "ListItem", "position": 28, "name": "Chicago Chess", "url": "https://chess2000.onrender.com"}
+            {"@type": "ListItem", "position": 28, "name": "Chicago Chess", "url": "https://chess2000.onrender.com"},
+            {"@type": "ListItem", "position": 29, "name": "Castle Survivor", "url": "https://castlesurvivor.onrender.com"}
         ]
     }
     </script>
@@ -1638,6 +1639,41 @@
             border-color: rgba(255, 183, 3, 0.6);
         }
 
+        .card-survivor .card-bg {
+            background: linear-gradient(135deg, #1b2a3f 0%, #0a0f18 100%);
+        }
+        .card-survivor .card-art::after {
+            background: linear-gradient(to top, #1b2a3f, transparent);
+        }
+        .card-survivor .card-genre { color: #7fd36a; }
+        .card-survivor .card-title { color: #f2c14e; }
+        .card-survivor .feature-tag {
+            background: rgba(242, 193, 78, 0.12);
+            color: #f5d58a;
+            border: 1px solid rgba(242, 193, 78, 0.32);
+        }
+        .card-survivor .play-btn {
+            background: linear-gradient(135deg, #c9a13b, #7fd36a);
+            color: #0a0f18;
+            box-shadow: 0 4px 20px rgba(242, 193, 78, 0.4);
+        }
+        .card-survivor:hover {
+            box-shadow: 0 30px 60px rgba(242, 193, 78, 0.22);
+        }
+        .card-survivor .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(127, 211, 106, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-survivor:hover .glow-border {
+            border-color: rgba(127, 211, 106, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -3022,6 +3058,34 @@
                     <span class="feature-tag">Reflexes</span>
                     <span class="feature-tag">Wave Defense</span>
                     <span class="feature-tag">Combos</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Castle Survivor -->
+    <a href="https://castlesurvivor.onrender.com" class="game-card card-survivor" data-category="shooter">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-survivor"></canvas>
+                <div class="game-icon">&#x1F6E1;&#xFE0F;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Survivors-like / 3D Action</div>
+                <div class="card-title">Castle Survivor</div>
+                <p class="card-desc">
+                    Three knights &mdash; Dad, Brennan and Parker &mdash; hold the kingdom against twenty waves of goblins, wolves and ogres. You move; your blade swings on its own. Enemies pour in from every edge, XP rains from the fallen, and every level-up deals three cards. Fill four weapon slots and three relics, push a weapon to level 5 and evolve it into Excalibur, Meteor Shower or Armageddon, then survive seventeen minutes to face the Ogre King. Fight through the lantern-lit streets of Kingsfield or the moonlit pines of Darkwood. A word of warning: the archers will kill you. Go get them.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">3 Knights</span>
+                    <span class="feature-tag">20 Waves</span>
+                    <span class="feature-tag">Evolutions</span>
+                    <span class="feature-tag">Ogre King</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -9041,6 +9105,128 @@ function drawAntScene(canvas) {
     ctx.fillText('x12 SPLAT!', W*0.04 + 8, H*0.05 + 11);
 }
 
+function drawSurvivorScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+
+    // Dusk sky over Kingsfield
+    const sky = ctx.createLinearGradient(0, 0, 0, H*0.45);
+    sky.addColorStop(0, '#0e1626');
+    sky.addColorStop(1, '#3a3350');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H*0.45);
+
+    // Moon
+    ctx.fillStyle = 'rgba(240,235,210,0.9)';
+    ctx.beginPath(); ctx.arc(W*0.86, H*0.12, 9, 0, Math.PI*2); ctx.fill();
+
+    // Castle silhouette with crenellated curtain wall and towers
+    ctx.fillStyle = '#141b29';
+    const wallY = H*0.3;
+    ctx.fillRect(0, wallY, W, H*0.15);
+    for (let x = 0; x < W; x += 12) ctx.fillRect(x, wallY - 5, 7, 5);
+    [[W*0.12, 26], [W*0.5, 38], [W*0.78, 30]].forEach(([tx, th]) => {
+        ctx.fillRect(tx - 10, wallY - th, 20, th);
+        for (let i = 0; i < 3; i++) ctx.fillRect(tx - 10 + i*8, wallY - th - 5, 5, 5);
+        ctx.fillStyle = 'rgba(255,190,90,0.8)';            // lantern-lit window
+        ctx.fillRect(tx - 2, wallY - th + 8, 4, 6);
+        ctx.fillStyle = '#141b29';
+    });
+
+    // Trampled field (the arena)
+    const ground = ctx.createRadialGradient(W*0.5, H*0.72, 10, W*0.5, H*0.72, W*0.6);
+    ground.addColorStop(0, '#3f5a2c');
+    ground.addColorStop(1, '#172414');
+    ctx.fillStyle = ground;
+    ctx.fillRect(0, H*0.45, W, H*0.55);
+
+    // Scattered XP gems
+    let seed = 17; const rnd = () => { seed = (seed*9301 + 49297) % 233280; return seed/233280; };
+    for (let i = 0; i < 16; i++) {
+        const gx = W*0.1 + rnd()*W*0.8, gy = H*0.5 + rnd()*H*0.45;
+        ctx.fillStyle = rnd() > 0.3 ? '#5ad1ff' : '#7fd36a';
+        ctx.beginPath();
+        ctx.moveTo(gx, gy - 3); ctx.lineTo(gx + 2, gy); ctx.lineTo(gx, gy + 3); ctx.lineTo(gx - 2, gy);
+        ctx.closePath(); ctx.fill();
+    }
+
+    const cx = W*0.3, cy = H*0.76;
+
+    // Goblin horde closing in from every edge
+    function goblin(x, y, s) {
+        ctx.fillStyle = '#4e7a2e';
+        ctx.beginPath(); ctx.ellipse(x, y, 5*s, 6*s, 0, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(x, y - 7*s, 4*s, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath();                                    // pointy ears
+        ctx.moveTo(x - 3*s, y - 8*s); ctx.lineTo(x - 8*s, y - 10*s); ctx.lineTo(x - 3*s, y - 5*s);
+        ctx.moveTo(x + 3*s, y - 8*s); ctx.lineTo(x + 8*s, y - 10*s); ctx.lineTo(x + 3*s, y - 5*s);
+        ctx.fill();
+        ctx.fillStyle = '#ff4d3d';
+        ctx.fillRect(x - 2*s, y - 8*s, 1.2*s, 1.2*s);
+        ctx.fillRect(x + 1*s, y - 8*s, 1.2*s, 1.2*s);
+    }
+    for (let i = 0; i < 14; i++) {
+        const a = (i / 14) * Math.PI*2 + rnd()*0.3;
+        const r = 58 + rnd()*40;
+        const gx = cx + Math.cos(a)*r*1.6, gy = cy + Math.sin(a)*r*0.55;
+        if (gy < H*0.5 || gy > H - 4) continue;
+        goblin(gx, gy, 0.8 + (gy - H*0.5)/H);
+    }
+
+    // A hulking ogre lumbering in from the right
+    ctx.fillStyle = '#6b5a3a';
+    ctx.beginPath(); ctx.ellipse(W*0.88, H*0.66, 13, 17, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(W*0.88, H*0.66 - 20, 8, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#3d2f1c'; ctx.lineWidth = 4;        // club
+    ctx.beginPath(); ctx.moveTo(W*0.88 - 12, H*0.66 - 4); ctx.lineTo(W*0.88 - 24, H*0.66 - 26); ctx.stroke();
+
+    // Archer hanging back on the left, arrow in flight
+    ctx.fillStyle = '#5b3a6e';
+    ctx.beginPath(); ctx.ellipse(W*0.1, H*0.58, 4, 7, 0, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(W*0.1, H*0.58 - 9, 3.5, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#c9a063'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(W*0.1 + 5, H*0.58 - 2, 7, -Math.PI/2, Math.PI/2); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+    ctx.beginPath(); ctx.moveTo(W*0.14, H*0.6); ctx.lineTo(W*0.22, H*0.66); ctx.stroke();
+
+    // Sword-swing arc around the knight
+    ctx.strokeStyle = 'rgba(255,230,150,0.85)';
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.ellipse(cx, cy - 4, 30, 14, 0, -Math.PI*0.9, -Math.PI*0.1); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,230,150,0.35)';
+    ctx.lineWidth = 7;
+    ctx.beginPath(); ctx.ellipse(cx, cy - 4, 30, 14, 0, -Math.PI*0.75, -Math.PI*0.25); ctx.stroke();
+
+    // The knight
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.beginPath(); ctx.ellipse(cx, cy + 10, 10, 3, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#9aa7b8';                              // armor
+    ctx.fillRect(cx - 6, cy - 6, 12, 15);
+    ctx.fillStyle = '#b8c4d3';                              // helm
+    ctx.beginPath(); ctx.arc(cx, cy - 11, 6, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#1b2a3f';
+    ctx.fillRect(cx - 4, cy - 12, 8, 1.6);                  // visor slit
+    ctx.fillStyle = '#c0392b';                              // plume
+    ctx.beginPath(); ctx.ellipse(cx, cy - 18, 2, 4, 0.3, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#2f5fa8';                              // shield
+    ctx.beginPath(); ctx.moveTo(cx - 12, cy - 5); ctx.lineTo(cx - 5, cy - 5);
+    ctx.lineTo(cx - 5, cy + 3); ctx.lineTo(cx - 8.5, cy + 7); ctx.lineTo(cx - 12, cy + 3); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#f2c14e';
+    ctx.fillRect(cx - 9, cy - 3, 1.2, 7);
+    ctx.fillRect(cx - 11, cy - 0.5, 5, 1.2);
+
+    // Wave counter (top-left)
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(W*0.04, H*0.05, 86, 20);
+    ctx.fillStyle = '#f2c14e';
+    ctx.font = 'bold 13px Arial';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('WAVE 19/20', W*0.04 + 8, H*0.05 + 11);
+}
+
 // Tile canvas registry — each draw fn maps to its canvas id.
 // Canvases lazy-render via IntersectionObserver: tiles below the
 // fold defer their (sometimes expensive) draw until they scroll
@@ -9078,7 +9264,8 @@ const tileCanvasDrawers = {
     'canvas-wcbracket': drawWcbracketScene,
     'canvas-cosmos': drawCosmosScene,
     'canvas-pinball': drawPinballScene,
-    'canvas-ant': drawAntScene
+    'canvas-ant': drawAntScene,
+    'canvas-survivor': drawSurvivorScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
