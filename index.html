@@ -1725,6 +1725,110 @@
             box-shadow: 0 0 16px rgba(0, 255, 170, 0.25);
         }
 
+        /* About dialog */
+        .footer-about {
+            margin-top: 14px;
+        }
+        .footer-about button {
+            background: none;
+            border: none;
+            padding: 4px 8px;
+            color: #7b61ff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            transition: color 0.2s ease;
+        }
+        .footer-about button:hover,
+        .footer-about button:focus-visible {
+            color: #a996ff;
+        }
+        .about-dialog {
+            margin: auto;
+            width: min(680px, calc(100vw - 32px));
+            max-height: calc(100vh - 48px);
+            padding: 0;
+            border: 1px solid rgba(123, 97, 255, 0.35);
+            border-radius: 20px;
+            background: linear-gradient(160deg, #15122a 0%, #0a0a14 100%);
+            color: #c9c9d6;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(123, 97, 255, 0.15);
+        }
+        .about-dialog::backdrop {
+            background: rgba(4, 4, 10, 0.78);
+            backdrop-filter: blur(4px);
+        }
+        .about-inner {
+            position: relative;
+            padding: 36px 36px 30px;
+            text-align: left;
+        }
+        .about-close {
+            position: absolute;
+            top: 14px; right: 14px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.04);
+            color: #ddd;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+        }
+        .about-close:hover { background: rgba(255,255,255,0.1); }
+        .about-kicker {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 3px;
+            color: #00ffaa;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .about-dialog h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: #fff;
+            margin: 0 0 18px;
+            letter-spacing: 1px;
+        }
+        .about-dialog h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: #ffd700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 26px 0 10px;
+        }
+        .about-dialog p {
+            font-size: 15px;
+            line-height: 1.7;
+            margin: 0 0 12px;
+        }
+        .about-dialog a { color: #00ffaa; }
+        .about-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .about-links a {
+            padding: 6px 14px;
+            border: 1px solid rgba(0, 255, 170, 0.3);
+            border-radius: 16px;
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .about-links a:hover { background: rgba(0, 255, 170, 0.1); }
+        @media (max-width: 600px) {
+            .about-inner { padding: 30px 20px 24px; }
+            .about-dialog h2 { font-size: 20px; }
+        }
+
         /* Feature tag hover */
         .feature-tag {
             transition: transform 0.2s ease, background 0.2s ease;
@@ -3121,8 +3225,47 @@
     <div class="footer-logo">HALLUCINATED GAMES</div>
     <p class="footer-tagline">100% vibe coded &mdash; 0% unit tested &mdash; built with <span>&#9889;</span> and mass hallucination &mdash; &copy; 2026 &mdash; who are we kidding, AI generated content can't be copyrighted! LOL.</p>
     <p class="footer-contact"><a href="mailto:hallucinated.games.inc@gmail.com">Contact Us</a></p>
+    <p class="footer-about"><button type="button" id="about-open">About Hallucinated Games</button></p>
     <p style="margin-top:20px;font-size:10px;color:#333;letter-spacing:1px;">Hallucinated Games, Chicago IL. Proudly serving AI game slop since 2026.</p>
 </footer>
+
+<dialog class="about-dialog" id="about-dialog" aria-labelledby="about-title">
+    <div class="about-inner">
+        <button type="button" class="about-close" id="about-close" aria-label="Close">&times;</button>
+        <div class="about-kicker">About</div>
+        <h2 id="about-title">Hallucinated Games</h2>
+
+        <h3>What is this place?</h3>
+        <p>Hallucinated Games is a Chicago dad&rsquo;s arcade of free browser games, every one of them built with AI coding tools. Tower defense, space shooters, a kaiju rampage, parser adventures, chess, pinball, a bowl game with physics best described as &ldquo;vibes&rdquo; &mdash; if it runs in a browser tab, it&rsquo;s fair game.</p>
+        <p>The point is partly to play and partly to find out. Each game is an experiment in how far you can get when you describe what you want and let the machine write the code. Some turned out surprisingly good. Some are held together by optimism. All of them are free, need no install or account, and open with a single click.</p>
+        <p>A lot of these games star the family. Brennan and Parker are the test team, the art directors and the harshest critics, and several games are named after them or put them on the battlefield. Dad usually plays the villain, or at least the guy stealing pizza.</p>
+
+        <h3>About Cory Cowgill</h3>
+        <p>Cory Cowgill is a technologist in Chicago and the Chief Technology Officer at Fusion Risk Management, where he previously led product engineering. Before that he built enterprise software at The Warranty Group, West Monroe, Model Metrics and CNA, after earning his B.S. from Western Illinois University.</p>
+        <p>He is a Salesforce MVP Hall of Famer, has spoken at Dreamforce eight times, and holds a small pile of certifications &mdash; Salesforce System and Application Architect, AWS Solutions Architect and the Cloud Security Alliance&rsquo;s CCSK. He has also written the <a href="https://corycowgill.blogspot.com/" target="_blank" rel="noopener">Achievement Unlocked</a> blog on cloud platforms and enterprise development for years.</p>
+        <p>By night he is a self-described techie nerd and the head of a two-kid QA department. Hallucinated Games is where the day job&rsquo;s curiosity about AI meets family game night: an architect who spends his days on resilient enterprise systems, spending his evenings shipping games that are proudly 0% unit tested.</p>
+
+        <div class="about-links">
+            <a href="https://github.com/corycowgill" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/corycowgill/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://corycowgill.blogspot.com/" target="_blank" rel="noopener">Blog</a>
+            <a href="mailto:hallucinated.games.inc@gmail.com">Email</a>
+        </div>
+    </div>
+</dialog>
+
+<script>
+// About dialog
+(function() {
+    const dlg = document.getElementById('about-dialog');
+    const openBtn = document.getElementById('about-open');
+    if (!dlg || !openBtn || typeof dlg.showModal !== 'function') return;
+    openBtn.addEventListener('click', () => dlg.showModal());
+    document.getElementById('about-close').addEventListener('click', () => dlg.close());
+    // Click on the backdrop closes it
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+})();
+</script>
 
 <script>
 // Floating particles
