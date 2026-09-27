@@ -17,9 +17,15 @@
     <meta property="og:title" content="Hallucinated Games | Free AI-Generated Browser Games">
     <meta property="og:description" content="A growing collection of free browser games built entirely by AI &mdash; tower defense, RTS, shooters, sports, puzzles, card games, parser adventures, kaiju rampage and more. 100% vibe coded, 0% unit tested.">
     <meta property="og:site_name" content="Hallucinated Games">
+    <meta property="og:image" content="https://www.hallucinatedgames.com/images/og-card.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Hallucinated Games - 100% vibe coded, 0% unit tested">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.hallucinatedgames.com/images/og-card.jpg">
+    <meta name="twitter:image:alt" content="Hallucinated Games - 100% vibe coded, 0% unit tested">
     <meta name="twitter:title" content="Hallucinated Games | Free AI-Generated Browser Games">
     <meta name="twitter:description" content="A growing collection of free browser games built entirely by AI &mdash; tower defense, RTS, shooters, sports, puzzles, card games, parser adventures, kaiju rampage and more. 100% vibe coded, 0% unit tested.">
 
@@ -201,7 +207,7 @@
 
         .game-count {
             font-size: 15px;
-            color: #555;
+            color: #8a8a8a;
             letter-spacing: 1px;
         }
 
@@ -1730,7 +1736,7 @@
 
         .footer-tagline {
             font-size: 13px;
-            color: #444;
+            color: #8a8a8a;
             letter-spacing: 1px;
         }
 
@@ -1973,7 +1979,7 @@
         }
         .stat-label {
             font-size: 11px;
-            color: #555;
+            color: #8a8a8a;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
@@ -3590,12 +3596,16 @@
 })();
 
 // Canvas scene renderers for each card
+// Tile art was hardcoded to 2x regardless of display, which wasted memory on
+// 1x screens (34 tiles x a 2x backing store adds up). Cap at the real ratio.
+const TILE_DPR = Math.min(window.devicePixelRatio || 1, 2);
+
 function drawCastleScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Sky
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -3673,10 +3683,10 @@ function drawCastle(ctx, x, y, dark, light) {
 
 function drawWarzoneScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Sky
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -3765,10 +3775,10 @@ function drawTank(ctx, x, y, color) {
 
 function drawDinoScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Dark background
     ctx.fillStyle = '#0a0a0a';
@@ -3864,10 +3874,10 @@ function drawDino(ctx, x, y, scale, color) {
 
 function drawNukeScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Dark sky
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -3967,10 +3977,10 @@ function drawNukeScene(canvas) {
 
 function drawUfoScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Night sky
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -4090,10 +4100,10 @@ function drawUfoScene(canvas) {
 
 function drawShardScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Deep space background
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -4220,10 +4230,10 @@ function drawShardScene(canvas) {
 
 function drawColorScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Ocean gradient
     const ocean = ctx.createLinearGradient(0, 0, 0, H);
@@ -4389,10 +4399,10 @@ function drawColorScene(canvas) {
 
 function drawBowlScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Field background
     ctx.fillStyle = '#1a5c1a';
@@ -4526,10 +4536,10 @@ function drawBowlScene(canvas) {
 
 function drawRobotScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Amber CRT background
     ctx.fillStyle = '#0a0800';
@@ -4674,10 +4684,10 @@ function drawRobotScene(canvas) {
 
 function drawVoidScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Deep space background gradient
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -4861,10 +4871,10 @@ function drawVoidScene(canvas) {
 
 function drawPuzzleScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Dark indigo background
     const bg = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W*0.8);
@@ -4990,10 +5000,10 @@ function drawPuzzleScene(canvas) {
 
 function drawBballScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Dark arena background
     const bg = ctx.createRadialGradient(W/2, H*0.4, 20, W/2, H*0.4, W);
@@ -5211,10 +5221,10 @@ function drawBballScene(canvas) {
 
 function drawDadtaxScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Deep purple background (Italian restaurant at night)
     const bg = ctx.createRadialGradient(W/2, H*0.4, 15, W/2, H*0.5, W*0.9);
@@ -5456,10 +5466,10 @@ function drawDadtaxScene(canvas) {
 
 function drawWarScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Green felt table
     const bg = ctx.createRadialGradient(W/2, H/2, 15, W/2, H/2, W*0.9);
@@ -5654,10 +5664,10 @@ function drawWarScene(canvas) {
 
 function drawStuffyScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Birthday night sky
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -5913,10 +5923,10 @@ function drawStuffyScene(canvas) {
 
 function drawRubikScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Dark radial backdrop
     const bg = ctx.createRadialGradient(W/2, H*0.45, 20, W/2, H*0.45, W*0.85);
@@ -6088,10 +6098,10 @@ function drawRubikScene(canvas) {
 
 function drawPigScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Tabletop/felt background
     const bg = ctx.createRadialGradient(W/2, H*0.55, 20, W/2, H*0.55, W*0.8);
@@ -6271,10 +6281,10 @@ function drawPigScene(canvas) {
 
 function drawKaijuScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Toxic green night sky
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -6531,10 +6541,10 @@ function drawKaijuScene(canvas) {
 
 function drawTextgameScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Inky parchment-black background
     ctx.fillStyle = '#0a0604';
@@ -6658,10 +6668,10 @@ function drawTextgameScene(canvas) {
 
 function drawCowgillmanScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Black arcade backdrop
     ctx.fillStyle = '#000010';
@@ -6815,10 +6825,10 @@ function drawCowgillmanScene(canvas) {
 
 function drawRocketScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Deep space gradient
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -7135,10 +7145,10 @@ function drawRocketScene(canvas) {
 
 function drawGravityScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Deep neon-lab background with subtle rotation hint
     const bg = ctx.createRadialGradient(W*0.35, H*0.45, 10, W*0.35, H*0.45, W*0.95);
@@ -7384,10 +7394,10 @@ function drawGravityScene(canvas) {
 
 function drawCheckersScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Warm wood-grain background
     const bg = ctx.createRadialGradient(W*0.3, H*0.4, 10, W*0.5, H*0.5, W*0.9);
@@ -7617,10 +7627,10 @@ function drawCheckersScene(canvas) {
 
 function drawChess2000Scene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Dark cyberpunk arena sky
     const sky = ctx.createLinearGradient(0, 0, 0, H);
@@ -8189,10 +8199,10 @@ function drawChess2000Scene(canvas) {
 
 function drawPerfreviewScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Office wall + fluorescent ceiling
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -8388,10 +8398,10 @@ function drawPerfreviewScene(canvas) {
 // ============================================================
 function drawSoccerScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Pitch base
     ctx.fillStyle = '#1f7a32';
@@ -8541,10 +8551,10 @@ function drawSoccerScene(canvas) {
 
 function drawBattleScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Background
     const bg = ctx.createRadialGradient(W/2, H*0.45, 10, W/2, H/2, W*0.85);
@@ -8653,10 +8663,10 @@ function drawBattleScene(canvas) {
 
 function drawTypingScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Deep navy gradient
     const bg = ctx.createRadialGradient(W*0.5, H*0.45, 10, W*0.5, H*0.5, W*0.85);
@@ -8782,10 +8792,10 @@ function drawTypingScene(canvas) {
 
 function drawWcbracketScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Stadium-night background
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -8929,10 +8939,10 @@ function drawWcbracketScene(canvas) {
 
 function drawCosmosScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Deterministic PRNG so the starfield is stable across redraws
     let seed = 91;
@@ -9087,10 +9097,10 @@ function drawCosmosScene(canvas) {
 
 function drawPinballScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Playfield backdrop — moody blue arcade cabinet
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -9204,10 +9214,10 @@ function drawPinballScene(canvas) {
 
 function drawAntScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Warm kitchen-counter backdrop
     const bg = ctx.createLinearGradient(0, 0, 0, H);
@@ -9328,10 +9338,10 @@ function drawAntScene(canvas) {
 
 function drawSurvivorScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Dusk sky over Kingsfield
     const sky = ctx.createLinearGradient(0, 0, 0, H*0.45);
@@ -9455,10 +9465,10 @@ function drawSurvivorScene(canvas) {
 // ============================================================
 function drawAlienScene(canvas) {
     const ctx = canvas.getContext('2d');
-    const w = canvas.width = canvas.offsetWidth * 2;
-    const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    const w = canvas.width = canvas.offsetWidth * TILE_DPR;
+    const h = canvas.height = canvas.offsetHeight * TILE_DPR;
+    ctx.scale(TILE_DPR, TILE_DPR);
+    const W = w/TILE_DPR, H = h/TILE_DPR;
 
     // Alien sky - purple nebula over the dig site
     const sky = ctx.createLinearGradient(0, 0, 0, H*0.26);
@@ -9639,6 +9649,11 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Tile art is decorative and the tile itself already carries an aria-label,
+    // so keep 34 canvases out of the screen reader's way.
+    document.querySelectorAll('.card-art canvas')
+        .forEach(c => c.setAttribute('aria-hidden', 'true'));
+
     // Lazy-draw each tile canvas as it scrolls near the viewport.
     const drawn = new Set();
     const drawIfReady = (canvas) => {
@@ -9653,12 +9668,27 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (drawn.has(c.id)) return;
                 drawn.add(c.id);
                 drawIfReady(c);
-                tileObs.unobserve(c);
             });
         }, { rootMargin: '300px' });
+
+        // Scrolling the whole page used to leave all 34 canvases resident at
+        // once - tens of MB of backing store on a phone, never released. Free
+        // the ones that scroll well clear; they redraw if the user comes back.
+        // The margin is deliberately wide so normal scrolling never thrashes.
+        const releaseObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) return;
+                const c = entry.target;
+                if (!drawn.has(c.id)) return;
+                drawn.delete(c.id);
+                c.width = 0;
+                c.height = 0;
+            });
+        }, { rootMargin: '2000px' });
+
         Object.keys(tileCanvasDrawers).forEach(id => {
             const c = document.getElementById(id);
-            if (c) tileObs.observe(c);
+            if (c) { tileObs.observe(c); releaseObs.observe(c); }
         });
     } else {
         // Fallback: draw everything immediately
