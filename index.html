@@ -36,7 +36,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 34 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 35 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -83,7 +83,8 @@
             {"@type": "ListItem", "position": 26, "name": "Player Two's Battle Tops", "url": "https://parkerbattle.onrender.com"},
             {"@type": "ListItem", "position": 27, "name": "Typing Battle", "url": "https://typingbattle.onrender.com"},
             {"@type": "ListItem", "position": 28, "name": "Chicago Chess", "url": "https://chess2000.onrender.com"},
-            {"@type": "ListItem", "position": 29, "name": "Castle Survivor", "url": "https://castlesurvivor.onrender.com"}
+            {"@type": "ListItem", "position": 29, "name": "Castle Survivor", "url": "https://castlesurvivor.onrender.com"},
+            {"@type": "ListItem", "position": 30, "name": "Laundry Monster", "url": "https://laundrymonster.onrender.com"}
         ]
     }
     </script>
@@ -1716,6 +1717,42 @@
             border-color: rgba(57, 215, 232, 0.6);
         }
 
+        /* Laundry Monster - title-card yellow and washer-cycle blue, from the game's HUD */
+        .card-laundry .card-bg {
+            background: linear-gradient(135deg, #1c1a2e 0%, #0b0b0f 100%);
+        }
+        .card-laundry .card-art::after {
+            background: linear-gradient(to top, #1c1a2e, transparent);
+        }
+        .card-laundry .card-genre { color: #59bff2; }
+        .card-laundry .card-title { color: #ffdb59; }
+        .card-laundry .feature-tag {
+            background: rgba(89, 191, 242, 0.12);
+            color: #a8dcf7;
+            border: 1px solid rgba(89, 191, 242, 0.32);
+        }
+        .card-laundry .play-btn {
+            background: linear-gradient(135deg, #ffdb59, #ff8c4d);
+            color: #1a1205;
+            box-shadow: 0 4px 20px rgba(255, 140, 77, 0.4);
+        }
+        .card-laundry:hover {
+            box-shadow: 0 30px 60px rgba(255, 219, 89, 0.2);
+        }
+        .card-laundry .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(89, 191, 242, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-laundry:hover .glow-border {
+            border-color: rgba(89, 191, 242, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2304,7 +2341,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>34</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>35</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2348,6 +2385,34 @@
                     <span class="feature-tag">20 Waves</span>
                     <span class="feature-tag">Evolutions</span>
                     <span class="feature-tag">Ogre King</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Laundry Monster -->
+    <a href="https://laundrymonster.onrender.com" class="game-card card-laundry" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-laundry"></canvas>
+                <div class="game-icon">&#x1F9FA;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Arcade Management / 3D</div>
+                <div class="card-title">Laundry Monster</div>
+                <p class="card-desc">
+                    Washing is easy. <em>Finishing</em> is the game. Pull dirty clothes off the Monster, wash, dry, fold, and put them away &mdash; only the closet scores. The moment a dryer stops, a 15-second wrinkle clock starts. Wet laundry mildews in 20. You can carry two things at a time, so walking is the real cost. Pants always have pockets: hold to check them, or skip it and gamble on the tissue, the crayon, the wallet, or your AirPods. Every dry cycle clogs the lint trap, which never helps the load in front of you and eventually catches fire. Every wash may send one sock to the Void. You will never reach zero. Panic-dump on The Chair and it all wrinkles twice as fast. The Monster grows from everything you fail to finish, and late in a run it has eyes. It ends the same way every time: THE LAUNDRY WON.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Endless Days</span>
+                    <span class="feature-tag">Decay Timers</span>
+                    <span class="feature-tag">Low-Poly 3D</span>
+                    <span class="feature-tag">Touch Controls</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -3284,7 +3349,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="34" data-suffix="">0</div>
+        <div class="stat-value" data-target="35" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -9590,6 +9655,145 @@ function drawAlienScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawLaundryScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+    const floorY = H*0.66;
+
+    // Laundry room wall under a single dim overhead light
+    const wall = ctx.createLinearGradient(0, 0, 0, floorY);
+    wall.addColorStop(0, '#22203a');
+    wall.addColorStop(1, '#34304a');
+    ctx.fillStyle = wall;
+    ctx.fillRect(0, 0, W, floorY);
+    const lamp = ctx.createRadialGradient(W*0.5, 0, 4, W*0.5, 0, W*0.55);
+    lamp.addColorStop(0, 'rgba(255,230,160,0.22)');
+    lamp.addColorStop(1, 'rgba(255,230,160,0)');
+    ctx.fillStyle = lamp;
+    ctx.fillRect(0, 0, W, floorY);
+
+    // Checker tile floor
+    ctx.fillStyle = '#2a2738';
+    ctx.fillRect(0, floorY, W, H - floorY);
+    const tile = 14;
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    for (let y = floorY, r = 0; y < H; y += tile/2, r++) {
+        for (let x = (r % 2) * tile; x < W; x += tile*2) ctx.fillRect(x, y, tile, tile/2);
+    }
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.fillRect(0, floorY, W, 1.5);
+
+    // Two washers (blue lids) and two dryers (orange lids), like the in-game row
+    const mW = Math.min(W*0.075, 36), mH = mW*1.25, mY = floorY - mH;
+    // Right of center, clear of the tile's emoji badge
+    const startX = W*0.62, gap = mW*1.08;
+    const lids = ['#4a9de0', '#4a9de0', '#ff8c4d', '#ff8c4d'];
+    lids.forEach((lid, i) => {
+        const x = startX + i*gap;
+        ctx.fillStyle = '#d9dbe3';                     // body
+        ctx.fillRect(x, mY, mW, mH);
+        ctx.fillStyle = 'rgba(0,0,0,0.18)';            // shaded side
+        ctx.fillRect(x + mW*0.82, mY, mW*0.18, mH);
+        ctx.fillStyle = lid;                           // lid / control strip
+        ctx.fillRect(x, mY, mW, mH*0.18);
+        // Porthole with tumbling laundry
+        const cx = x + mW*0.45, cy = mY + mH*0.58, r = mW*0.3;
+        ctx.fillStyle = '#3a3f55';
+        ctx.beginPath(); ctx.arc(cx, cy, r + 2, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = i < 2 ? '#2f5f8f' : '#6b4a3a';
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = ['#e04d4d', '#f0d050', '#8aa7e0', '#5aa06b'][i];
+        ctx.beginPath(); ctx.arc(cx - r*0.25, cy + r*0.3, r*0.45, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
+        ctx.beginPath(); ctx.arc(cx - r*0.35, cy - r*0.35, r*0.22, 0, Math.PI*2); ctx.fill();
+        // Cycle bar overhead: blue running, yellow done, and one dryer clogged with lint
+        const bar = ['#59bff2', '#f2d81a', '#59bff2', '#f2592a'][i];
+        const fill = [0.55, 1, 0.3, 0.9][i];
+        ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        ctx.fillRect(x + 2, mY - 8, mW - 4, 4);
+        ctx.fillStyle = bar;
+        ctx.fillRect(x + 2, mY - 8, (mW - 4)*fill, 4);
+    });
+
+    // The wrinkle clock ticking over the finished washer's load
+    const rx = startX + gap + mW*0.5, ry = mY - 22;
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+    ctx.beginPath(); ctx.arc(rx, ry, 8, 0, Math.PI*2); ctx.stroke();
+    ctx.strokeStyle = '#ffdb59';
+    ctx.beginPath(); ctx.arc(rx, ry, 8, -Math.PI/2, -Math.PI/2 + Math.PI*2*0.3); ctx.stroke();
+
+    // A pile of colored lumps - used by both the Monster and The Chair
+    const pileColors = ['#f2f2ed', '#ede0c2', '#738fd9', '#334785', '#cc4d4d',
+                        '#599e6b', '#edc752', '#e094b3', '#8c6bb8', '#bf7340', '#408c94'];
+    const lump = (x, y, rx, ry, tint) => {
+        ctx.fillStyle = tint || pileColors[Math.floor(Math.random()*pileColors.length)];
+        ctx.beginPath(); ctx.ellipse(x, y, rx, ry, Math.random()*0.8 - 0.4, 0, Math.PI*2); ctx.fill();
+    };
+
+    // THE MONSTER - a heap of dirty laundry in the corner, late enough in the run to have eyes
+    const mx = W*0.16, my = floorY + 6, mr = Math.min(W*0.17, 70);
+    ctx.fillStyle = 'rgba(0,0,0,0.35)';
+    ctx.beginPath(); ctx.ellipse(mx, my + 4, mr*1.1, mr*0.18, 0, 0, Math.PI*2); ctx.fill();
+    for (let i = 0; i < 46; i++) {
+        const a = Math.random()*Math.PI, d = Math.random()*mr;
+        lump(mx + Math.cos(a)*d, my - Math.sin(a)*d*1.05, mr*0.2, mr*0.12);
+    }
+    // Grime over the whole pile so it reads as dirty, not clean
+    const grime = ctx.createRadialGradient(mx, my - mr*0.4, 2, mx, my - mr*0.4, mr*1.1);
+    grime.addColorStop(0, 'rgba(70,60,30,0.15)');
+    grime.addColorStop(1, 'rgba(40,35,20,0)');
+    ctx.fillStyle = grime;
+    ctx.beginPath(); ctx.ellipse(mx, my - mr*0.3, mr*1.05, mr*0.95, 0, Math.PI, 0); ctx.fill();
+    // Eyes and a jagged sock-lined grin
+    const ey = my - mr*0.62;
+    [-1, 1].forEach(side => {
+        const ex = mx + side*mr*0.24;
+        ctx.fillStyle = 'rgba(255,220,80,0.35)';
+        ctx.beginPath(); ctx.arc(ex, ey, 8, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#ffe680';
+        ctx.beginPath(); ctx.ellipse(ex, ey, 5, 4, side*0.25, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#1a0a0a';
+        ctx.fillRect(ex - 1, ey - 3, 2, 6);
+    });
+    ctx.fillStyle = '#140808';
+    ctx.beginPath();
+    ctx.moveTo(mx - mr*0.32, my - mr*0.34);
+    for (let i = 0; i <= 8; i++) {
+        ctx.lineTo(mx - mr*0.32 + i*mr*0.08, my - mr*0.34 + (i % 2 ? 6 : 0) + Math.sin(i/8*Math.PI)*6);
+    }
+    ctx.lineTo(mx + mr*0.32, my - mr*0.3);
+    ctx.closePath(); ctx.fill();
+
+    // THE CHAIR, overloaded and wrinkling twice as fast
+    const chx = W*0.9, chy = floorY + H*0.26;
+    ctx.fillStyle = '#6b4a30';
+    ctx.fillRect(chx - 16, chy - 44, 4, 44);           // back legs / back
+    ctx.fillRect(chx + 12, chy - 20, 4, 20);
+    ctx.fillRect(chx - 16, chy - 22, 32, 5);           // seat
+    ctx.fillRect(chx - 14, chy - 17, 3, 17);
+    for (let i = 0; i < 9; i++) {
+        lump(chx - 12 + Math.random()*24, chy - 26 - Math.random()*18, 8, 5, Math.random() < 0.5 ? '#c4b48a' : null);
+    }
+
+    // A lone sock on the floor, headed for the Void
+    ctx.fillStyle = '#e04d4d';
+    ctx.fillRect(W*0.62, H*0.86, 12, 4);
+    ctx.fillRect(W*0.62 + 8, H*0.86 - 6, 4, 8);
+    ctx.fillStyle = '#f2f2ed';
+    ctx.fillRect(W*0.62 + 8, H*0.86 - 7, 4, 2);
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.85);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.5)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 const tileCanvasDrawers = {
     'canvas-castle': drawCastleScene,
     'canvas-warzone': drawWarzoneScene,
@@ -9624,7 +9828,8 @@ const tileCanvasDrawers = {
     'canvas-pinball': drawPinballScene,
     'canvas-ant': drawAntScene,
     'canvas-survivor': drawSurvivorScene,
-    'canvas-alien': drawAlienScene
+    'canvas-alien': drawAlienScene,
+    'canvas-laundry': drawLaundryScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -9650,7 +9855,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 34 canvases out of the screen reader's way.
+    // so keep 35 canvases out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
