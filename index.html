@@ -9686,6 +9686,102 @@ function drawLaundryScene(canvas) {
     ctx.fillStyle = 'rgba(0,0,0,0.35)';
     ctx.fillRect(0, floorY, W, 1.5);
 
+    // --- Wall decor ---
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Clothesline sagging under one sock, heart boxers, and a shirt with a hole in it
+    const lineY = (x) => 12 + Math.sin(x / W * Math.PI) * 6;
+    ctx.strokeStyle = 'rgba(230,230,240,0.45)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(4, lineY(4));
+    for (let x = 4; x <= W - 4; x += 6) ctx.lineTo(x, lineY(x));
+    ctx.stroke();
+    const pin = (x) => { ctx.fillStyle = '#c9a26b'; ctx.fillRect(x - 1, lineY(x) - 3, 2, 5); };
+    // Boxers with hearts
+    let cx0 = W*0.2;
+    ctx.fillStyle = '#e8eef8';
+    ctx.fillRect(cx0 - 9, lineY(cx0), 18, 7);
+    ctx.fillRect(cx0 - 9, lineY(cx0) + 7, 7, 6);
+    ctx.fillRect(cx0 + 2, lineY(cx0) + 7, 7, 6);
+    ctx.fillStyle = '#e04d6a';
+    [[-5, 3], [3, 4], [-6, 9], [5, 10]].forEach(([dx, dy]) => {
+        ctx.beginPath(); ctx.arc(cx0 + dx - 1, lineY(cx0) + dy, 1.2, 0, Math.PI*2);
+        ctx.arc(cx0 + dx + 1, lineY(cx0) + dy, 1.2, 0, Math.PI*2); ctx.fill();
+    });
+    pin(cx0 - 7); pin(cx0 + 7);
+    // A single striped sock. Its partner is on the poster.
+    cx0 = W*0.31;
+    ctx.fillStyle = '#7fbf5f';
+    ctx.fillRect(cx0 - 2, lineY(cx0), 5, 13);
+    ctx.fillRect(cx0 - 2, lineY(cx0) + 10, 9, 5);
+    ctx.fillStyle = '#f2f2ed';
+    ctx.fillRect(cx0 - 2, lineY(cx0) + 3, 5, 2);
+    ctx.fillRect(cx0 - 2, lineY(cx0) + 7, 5, 2);
+    pin(cx0);
+    // Shirt, with a hole exactly where a pocket pen exploded
+    cx0 = W*0.6;
+    ctx.fillStyle = '#5a8fd9';
+    ctx.fillRect(cx0 - 8, lineY(cx0), 16, 15);
+    ctx.fillRect(cx0 - 13, lineY(cx0), 5, 6);
+    ctx.fillRect(cx0 + 8, lineY(cx0), 5, 6);
+    ctx.fillStyle = '#1c2a55';
+    ctx.beginPath(); ctx.arc(cx0 + 3, lineY(cx0) + 6, 3, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#22203a';
+    ctx.beginPath(); ctx.arc(cx0 - 3, lineY(cx0) + 10, 1.6, 0, Math.PI*2); ctx.fill();
+    pin(cx0 - 6); pin(cx0 + 6);
+
+    // "Days since last dryer fire" board, the 3 crossed out
+    const bx = W*0.04, by = H*0.17, bw = Math.min(W*0.24, 92), bh = 28;
+    ctx.fillStyle = '#ececf2';
+    ctx.fillRect(bx, by, bw, bh);
+    ctx.strokeStyle = '#8a8aa0'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(bx, by, bw, bh);
+    ctx.fillStyle = '#2a2a3a';
+    ctx.font = 'bold 5.5px sans-serif';
+    ctx.fillText('DAYS SINCE LAST', bx + bw/2, by + 6);
+    ctx.fillText('DRYER FIRE', bx + bw/2, by + 12);
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillStyle = '#9a9aa8';
+    ctx.fillText('3', bx + bw/2 - 9, by + 21);
+    ctx.strokeStyle = '#d63a2a'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(bx + bw/2 - 13, by + 25); ctx.lineTo(bx + bw/2 - 5, by + 17); ctx.stroke();
+    ctx.fillStyle = '#d63a2a';
+    ctx.fillText('0', bx + bw/2 + 7, by + 21);
+
+    // Inspirational wall art, above the badge
+    const sx = W*0.5, sy = Math.max(H*0.22, 46);   // below the clothesline
+    ctx.fillStyle = '#4a3a2a';
+    ctx.fillRect(sx - 36, sy - 8, 72, 16);
+    ctx.fillStyle = '#efe4cf';
+    ctx.fillRect(sx - 34, sy - 6, 68, 12);
+    ctx.fillStyle = '#6b4a30';
+    ctx.font = 'italic bold 6.5px Georgia, serif';
+    ctx.fillText('Live, Laugh, Launder', sx, sy + 0.5);
+
+    // MISSING poster for the sock's other half
+    const px = W*0.73, py0 = H*0.13, pw = 38, ph = 44;
+    ctx.save();
+    ctx.translate(px, py0 + ph/2); ctx.rotate(0.06);
+    ctx.fillStyle = '#f4ecd6';
+    ctx.fillRect(-pw/2, -ph/2, pw, ph);
+    ctx.fillStyle = '#c03a2a';
+    ctx.font = 'bold 7px sans-serif';
+    ctx.fillText('MISSING', 0, -ph/2 + 6);
+    ctx.fillStyle = '#7fbf5f';                       // the striped sock, again
+    ctx.fillRect(-4, -ph/2 + 11, 6, 13);
+    ctx.fillRect(-4, -ph/2 + 21, 11, 5);
+    ctx.fillStyle = '#f2f2ed';
+    ctx.fillRect(-4, -ph/2 + 14, 6, 2);
+    ctx.fillRect(-4, -ph/2 + 18, 6, 2);
+    ctx.fillStyle = '#3a3030';
+    ctx.font = 'bold 4.5px sans-serif';
+    ctx.fillText('LAST SEEN:', 0, ph/2 - 11);
+    ctx.fillText('THE DRYER', 0, ph/2 - 6);
+    ctx.fillStyle = '#d63a2a';                       // push pin
+    ctx.beginPath(); ctx.arc(0, -ph/2 + 1, 1.8, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+
     // Two washers (blue lids) and two dryers (orange lids), like the in-game row
     const mW = Math.min(W*0.075, 36), mH = mW*1.25, mY = floorY - mH;
     // Right of center, clear of the tile's emoji badge
@@ -9781,10 +9877,65 @@ function drawLaundryScene(canvas) {
 
     // A lone sock on the floor, headed for the Void
     ctx.fillStyle = '#e04d4d';
-    ctx.fillRect(W*0.62, H*0.86, 12, 4);
-    ctx.fillRect(W*0.62 + 8, H*0.86 - 6, 4, 8);
+    ctx.fillRect(W*0.68, H*0.8, 12, 4);
+    ctx.fillRect(W*0.68 + 8, H*0.8 - 6, 4, 8);
     ctx.fillStyle = '#f2f2ed';
-    ctx.fillRect(W*0.62 + 8, H*0.86 - 7, 4, 2);
+    ctx.fillRect(W*0.68 + 8, H*0.8 - 7, 4, 2);
+
+    // The lint-clogged dryer is, as foretold, on fire
+    const fx = startX + 3*gap + mW*0.5, fy = mY - 10;
+    for (let i = 0; i < 6; i++) {
+        ctx.fillStyle = `rgba(150,150,165,${0.42 - i*0.06})`;
+        ctx.beginPath(); ctx.arc(fx + Math.sin(i*1.3)*5, fy - 4 - i*6, 3.5 + i*1.3, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.fillStyle = '#ff8c2a';
+    ctx.beginPath();
+    ctx.moveTo(fx - 6, fy + 3); ctx.lineTo(fx - 3, fy - 6); ctx.lineTo(fx, fy - 1);
+    ctx.lineTo(fx + 2, fy - 9); ctx.lineTo(fx + 6, fy + 3); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#ffe066';
+    ctx.beginPath();
+    ctx.moveTo(fx - 3, fy + 3); ctx.lineTo(fx, fy - 3); ctx.lineTo(fx + 3, fy + 3); ctx.closePath(); ctx.fill();
+    // ...with a sticky note that has been there for a while
+    ctx.fillStyle = '#ffe866';
+    ctx.fillRect(startX + 3*gap + mW*0.15, mY + mH*0.22, mW*0.7, 7);
+    ctx.fillStyle = '#5a4a10';
+    ctx.font = 'bold 3.6px sans-serif';
+    ctx.fillText('clean lint', startX + 3*gap + mW*0.5, mY + mH*0.22 + 3.6);
+
+    // Pocket roulette casualties on the floor: a snapped crayon and somebody's AirPods
+    const crx = W*0.44, cry = H*0.8;
+    ctx.save(); ctx.translate(crx, cry); ctx.rotate(-0.3);
+    ctx.fillStyle = '#7a4ae0';
+    ctx.fillRect(-9, -1.5, 7, 3); ctx.fillRect(0, -1.5, 6, 3);
+    ctx.beginPath(); ctx.moveTo(6, -1.5); ctx.lineTo(9, 0); ctx.lineTo(6, 1.5); ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = 'rgba(122,74,224,0.35)';         // and the purple it left on everything
+    ctx.beginPath(); ctx.ellipse(crx + 3, cry + 6, 9, 2.5, 0, 0, Math.PI*2); ctx.fill();
+    const apx = W*0.55, apy = H*0.83;
+    ctx.fillStyle = '#f4f4f8';
+    ctx.beginPath(); ctx.ellipse(apx, apy, 5.5, 4, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.fillRect(apx - 5, apy - 0.4, 10, 0.8);
+    ctx.fillStyle = '#f4f4f8';
+    ctx.fillRect(apx + 8, apy - 2, 2, 5);
+    ctx.beginPath(); ctx.arc(apx + 9, apy - 2.5, 1.8, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(89,191,242,0.6)';          // still dripping from the wash
+    ctx.beginPath(); ctx.ellipse(apx + 3, apy + 5, 7, 1.6, 0, 0, Math.PI*2); ctx.fill();
+
+    // The Monster has stopped pretending: a surrender flag (yours) and a sock for a tongue
+    const flx = mx + mr*0.7, fly = my - mr*0.7;   // on the shoulder, clear of the fire board
+    ctx.fillStyle = '#b8a888';
+    ctx.fillRect(flx, fly - 18, 1.5, 22);
+    ctx.fillStyle = '#f4f4f0';
+    ctx.beginPath();
+    ctx.moveTo(flx + 1.5, fly - 18); ctx.lineTo(flx + 13, fly - 15);
+    ctx.lineTo(flx + 10, fly - 12); ctx.lineTo(flx + 13, fly - 9); ctx.lineTo(flx + 1.5, fly - 10);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#e04d4d';
+    ctx.fillRect(mx - 2, my - mr*0.3, 5, 9);
+    ctx.fillRect(mx - 2, my - mr*0.3 + 7, 9, 4);
+    ctx.fillStyle = '#f2f2ed';
+    ctx.fillRect(mx + 4, my - mr*0.3 + 7, 3, 4);
 
     // Vignette
     const vig = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.85);
