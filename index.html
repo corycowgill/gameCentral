@@ -36,7 +36,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 35 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 36 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -84,7 +84,8 @@
             {"@type": "ListItem", "position": 27, "name": "Typing Battle", "url": "https://typingbattle.onrender.com"},
             {"@type": "ListItem", "position": 28, "name": "Chicago Chess", "url": "https://chess2000.onrender.com"},
             {"@type": "ListItem", "position": 29, "name": "Castle Survivor", "url": "https://castlesurvivor.onrender.com"},
-            {"@type": "ListItem", "position": 30, "name": "Laundry Monster", "url": "https://laundrymonster.onrender.com"}
+            {"@type": "ListItem", "position": 30, "name": "Laundry Monster", "url": "https://laundrymonster.onrender.com"},
+            {"@type": "ListItem", "position": 31, "name": "Chicago Dash", "url": "https://chicagodash.onrender.com"}
         ]
     }
     </script>
@@ -1753,6 +1754,42 @@
             border-color: rgba(89, 191, 242, 0.6);
         }
 
+        /* Chicago Dash - Cubs blue, flag red and coin gold, from the game's UI */
+        .card-dash .card-bg {
+            background: linear-gradient(135deg, #0e3386 0%, #08132e 100%);
+        }
+        .card-dash .card-art::after {
+            background: linear-gradient(to top, #0b1f52, transparent);
+        }
+        .card-dash .card-genre { color: #6ec6f0; }
+        .card-dash .card-title { color: #ffc61a; }
+        .card-dash .feature-tag {
+            background: rgba(110, 198, 240, 0.12);
+            color: #b5e2f8;
+            border: 1px solid rgba(110, 198, 240, 0.32);
+        }
+        .card-dash .play-btn {
+            background: linear-gradient(135deg, #e4002b, #ff9f1a);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(228, 0, 43, 0.4);
+        }
+        .card-dash:hover {
+            box-shadow: 0 30px 60px rgba(255, 198, 26, 0.2);
+        }
+        .card-dash .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(110, 198, 240, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-dash:hover .glow-border {
+            border-color: rgba(110, 198, 240, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2341,7 +2378,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>35</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>36</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2385,6 +2422,34 @@
                     <span class="feature-tag">20 Waves</span>
                     <span class="feature-tag">Evolutions</span>
                     <span class="feature-tag">Ogre King</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Chicago Dash -->
+    <a href="https://chicagodash.onrender.com" class="game-card card-dash" data-category="party">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-dash"></canvas>
+                <div class="game-icon">&#x1F3C3;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Endless Runner / 3D</div>
+                <div class="card-title">Chicago Dash</div>
+                <p class="card-desc">
+                    Run through Chicago at full speed, dodging CTA trains, construction barrels, potholes, and whatever else the city forgot to fix. Sprint through the Loop, race along the Riverwalk, and collect deep-dish pizza power-ups because apparently that&rsquo;s what passes for athletic nutrition around here. Three lanes, endless obstacles, and a steadily increasing chance of getting flattened by the Brown Line. Built by an AI that has never ridden the CTA but is extremely confident about how trains work. Keep running, collect coins, and see how far you make it before Chicago&rsquo;s infrastructure finally wins.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Endless Runner</span>
+                    <span class="feature-tag">4 Neighborhoods</span>
+                    <span class="feature-tag">Power-Ups</span>
+                    <span class="feature-tag">Touch Controls</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -3349,7 +3414,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="35" data-suffix="">0</div>
+        <div class="stat-value" data-target="36" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -9945,6 +10010,265 @@ function drawLaundryScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawDashScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+    const hy = H*0.44;                                  // horizon
+
+    // Daytime sky, straight from the game's palette
+    const sky = ctx.createLinearGradient(0, 0, 0, hy);
+    sky.addColorStop(0, '#2b7de9');
+    sky.addColorStop(0.6, '#7cc4ff');
+    sky.addColorStop(1, '#fff2d6');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, hy);
+
+    // The skyline is always on the horizon
+    const tower = (x, tw, th, col) => { ctx.fillStyle = col; ctx.fillRect(x, hy - th, tw, th); };
+    const fill = ['#5e7591', '#8fa9c7', '#3c4a63', '#b7c6d6'];
+    for (let x = -4, i = 0; x < W; i++) {
+        const tw = 8 + Math.random()*12;
+        tower(x, tw, 14 + Math.random()*26, fill[i % fill.length]);
+        x += tw - 2;
+    }
+    const sx = W*0.2;
+    // Willis: stepped black tubes with two antennas
+    tower(sx, 22, 70, '#2b3446');
+    tower(sx + 4, 14, 82, '#2b3446');
+    ctx.fillStyle = '#2b3446';
+    ctx.fillRect(sx + 7, hy - 96, 1.5, 14);
+    ctx.fillRect(sx + 13, hy - 96, 1.5, 14);
+    // Aon: plain white slab
+    tower(sx + 30, 14, 66, '#dfe7ef');
+    // Trump: silver stepped spire
+    const tx = W*0.68;
+    tower(tx, 16, 52, '#b7c6d6');
+    tower(tx + 3, 10, 62, '#b7c6d6');
+    ctx.fillStyle = '#b7c6d6';
+    ctx.fillRect(tx + 7.5, hy - 78, 1.5, 16);
+    // Hancock: tapered with X bracing and antennas
+    const hx = W*0.8;
+    ctx.fillStyle = '#1f2533';
+    ctx.beginPath();
+    ctx.moveTo(hx, hy); ctx.lineTo(hx + 22, hy);
+    ctx.lineTo(hx + 18, hy - 76); ctx.lineTo(hx + 4, hy - 76);
+    ctx.closePath(); ctx.fill();
+    ctx.fillRect(hx + 7, hy - 92, 1.5, 16);
+    ctx.fillRect(hx + 14, hy - 92, 1.5, 16);
+    ctx.strokeStyle = 'rgba(160,175,200,0.45)';
+    ctx.lineWidth = 0.8;
+    for (let y = 0; y < 4; y++) {
+        const y0 = hy - y*19, y1 = y0 - 19;
+        ctx.beginPath();
+        ctx.moveTo(hx + 1 + y, y0); ctx.lineTo(hx + 17 - y, y1);
+        ctx.moveTo(hx + 21 - y, y0); ctx.lineTo(hx + 5 + y, y1);
+        ctx.stroke();
+    }
+    // Haze where the skyline meets the ground
+    const haze = ctx.createLinearGradient(0, hy - 20, 0, hy);
+    haze.addColorStop(0, 'rgba(207,233,255,0)');
+    haze.addColorStop(1, 'rgba(207,233,255,0.55)');
+    ctx.fillStyle = haze;
+    ctx.fillRect(0, hy - 20, W, 20);
+
+    // Perspective: z = 0 at the camera, s shrinks toward the horizon
+    const S = z => 1/(1 + z);
+    const Y = z => hy + (H*1.05 - hy)*S(z);
+    const X = (lane, z) => W/2 + lane*W*0.3*S(z);
+
+    // Green steel "L" structure on both sides, and the street far below
+    ctx.fillStyle = '#4a5466';
+    ctx.fillRect(0, hy, W, H - hy);
+    ctx.fillStyle = '#2f6b3a';
+    [-1, 1].forEach(side => {
+        ctx.beginPath();
+        ctx.moveTo(W/2, hy);
+        ctx.lineTo(W/2 + side*W*0.75, H*1.05);
+        ctx.lineTo(W/2 + side*W*0.62, H*1.05);
+        ctx.closePath(); ctx.fill();
+    });
+    // Ballast deck carrying three lanes of track
+    ctx.fillStyle = '#6b6560';
+    ctx.beginPath();
+    ctx.moveTo(W/2, hy);
+    ctx.lineTo(W/2 + W*0.47, H*1.05);
+    ctx.lineTo(W/2 - W*0.47, H*1.05);
+    ctx.closePath(); ctx.fill();
+    // Wooden ties, bunching up as they recede
+    ctx.strokeStyle = '#5a3d28';
+    for (let z = 0; z < 30; z = z*1.18 + 0.12) {
+        const y = Y(z), half = W*0.45*S(z);
+        ctx.lineWidth = Math.max(0.6, 4*S(z));
+        ctx.beginPath(); ctx.moveTo(W/2 - half, y); ctx.lineTo(W/2 + half, y); ctx.stroke();
+    }
+    // Two rails per lane
+    ctx.strokeStyle = '#c9ccd2';
+    ctx.lineWidth = 1.5;
+    [-1, 0, 1].forEach(lane => {
+        [-0.32, 0.32].forEach(r => {
+            ctx.beginPath();
+            ctx.moveTo(W/2, hy);
+            ctx.lineTo(X(lane + r, 0) - (X(lane + r, 0) - W/2)*0.05, H*1.05);
+            ctx.stroke();
+        });
+    });
+    // Green girder rails along the deck edges
+    ctx.strokeStyle = '#3e8a4b';
+    ctx.lineWidth = 3;
+    [-1, 1].forEach(side => {
+        ctx.beginPath(); ctx.moveTo(W/2, hy); ctx.lineTo(W/2 + side*W*0.62, H*1.05); ctx.stroke();
+    });
+
+    // CTA station sign on the platform
+    const signX = W*0.05, signY = hy + 6;
+    ctx.fillStyle = '#2f6b3a';
+    ctx.fillRect(signX + 22, signY + 14, 3, 30);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(signX, signY, 48, 16);
+    ctx.fillStyle = '#62361b';
+    ctx.fillRect(signX + 2, signY + 2, 6, 12);
+    ctx.fillStyle = '#14213d';
+    ctx.font = 'bold 7px sans-serif';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('Clark/Lake', signX + 10, signY + 8.5);
+
+    // A Brown Line train, bearing down on the right lane
+    {
+        const z = 1.05, s = S(z), cx = X(1, z), base = Y(z);
+        const tw = W*0.27*s, th = tw*1.3, x = cx - tw/2, y = base - th;
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+        ctx.fillRect(x - 2, base - 2, tw + 4, 4);
+        ctx.fillStyle = '#c8ced6';
+        ctx.fillRect(x, y, tw, th);
+        ctx.fillStyle = 'rgba(0,0,0,0.12)';
+        ctx.fillRect(x + tw*0.85, y, tw*0.15, th);
+        ctx.fillStyle = '#62361b';                       // brown route sign
+        ctx.fillRect(x + tw*0.15, y + th*0.06, tw*0.7, th*0.11);
+        ctx.fillStyle = '#fff';
+        ctx.font = `bold ${Math.max(5, tw*0.11)}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('BROWN', cx, y + th*0.12);
+        ctx.textAlign = 'start';
+        ctx.fillStyle = '#1b2433';                       // windshield
+        ctx.fillRect(x + tw*0.1, y + th*0.22, tw*0.8, th*0.3);
+        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+        ctx.fillRect(x + tw*0.14, y + th*0.24, tw*0.22, th*0.1);
+        ctx.fillStyle = '#62361b';                       // brown stripe
+        ctx.fillRect(x, y + th*0.6, tw, th*0.06);
+        [0.22, 0.78].forEach(f => {                      // headlights
+            const lx = x + tw*f, ly = y + th*0.78;
+            const glow = ctx.createRadialGradient(lx, ly, 0, lx, ly, tw*0.3);
+            glow.addColorStop(0, 'rgba(255,240,180,0.9)');
+            glow.addColorStop(1, 'rgba(255,240,180,0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath(); ctx.arc(lx, ly, tw*0.3, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#fffbe6';
+            ctx.beginPath(); ctx.arc(lx, ly, tw*0.06, 0, Math.PI*2); ctx.fill();
+        });
+        ctx.fillStyle = '#3a3f4a';                       // coupler
+        ctx.fillRect(cx - tw*0.08, y + th*0.88, tw*0.16, th*0.12);
+    }
+
+    // Coins in a line down the middle lane
+    for (let z = 3.2; z > 1.2; z -= 0.55) {
+        const s = S(z), r = Math.max(1.5, 9*s);
+        const cx = X(0, z), cy = Y(z) - 22*s;
+        ctx.fillStyle = '#ff9f1a';
+        ctx.beginPath(); ctx.ellipse(cx, cy, r*0.7, r, 0, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#ffc61a';
+        ctx.beginPath(); ctx.ellipse(cx - r*0.1, cy, r*0.5, r*0.82, 0, 0, Math.PI*2); ctx.fill();
+    }
+
+    // Deep-dish pizza power-up, glowing because that's athletic nutrition now
+    {
+        const z = 0.75, s = S(z), cx = X(0, z) + W*0.06, cy = Y(z) - 30*s, r = 28*s;
+        const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, r*2);
+        glow.addColorStop(0, 'rgba(255,198,26,0.55)');
+        glow.addColorStop(1, 'rgba(255,198,26,0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath(); ctx.arc(cx, cy, r*2, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#b8732e';                       // tall crust wall
+        ctx.beginPath(); ctx.ellipse(cx, cy + r*0.25, r, r*0.42, 0, 0, Math.PI*2); ctx.fill();
+        ctx.fillRect(cx - r, cy - r*0.05, r*2, r*0.3);
+        ctx.fillStyle = '#d99a4e';
+        ctx.beginPath(); ctx.ellipse(cx, cy - r*0.05, r, r*0.42, 0, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#c8261b';                       // sauce on top, as is the law
+        ctx.beginPath(); ctx.ellipse(cx, cy - r*0.05, r*0.84, r*0.33, 0, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#f5d98a';
+        [[-0.4, -0.05], [0.25, -0.15], [0.1, 0.1], [-0.1, -0.2], [0.5, 0.05]].forEach(([dx, dy]) => {
+            ctx.beginPath(); ctx.ellipse(cx + dx*r, cy + dy*r, r*0.12, r*0.06, 0, 0, Math.PI*2); ctx.fill();
+        });
+    }
+
+    // Construction barricade blocking the left lane
+    {
+        const z = 0.55, s = S(z), cx = X(-1, z), base = Y(z);
+        const bw = W*0.26*s, bh = 34*s;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(cx - bw*0.42, base - bh, 3*s, bh);
+        ctx.fillRect(cx + bw*0.42 - 3*s, base - bh, 3*s, bh);
+        [0.15, 0.55].forEach(f => {
+            const by = base - bh + bh*f, bhh = bh*0.22;
+            ctx.save();
+            ctx.beginPath(); ctx.rect(cx - bw/2, by, bw, bhh); ctx.clip();
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(cx - bw/2, by, bw, bhh);
+            ctx.fillStyle = '#ff6a00';
+            for (let i = -2; i < 12; i += 2) {
+                const sx0 = cx - bw/2 + i*bw/10;
+                ctx.beginPath();
+                ctx.moveTo(sx0, by + bhh); ctx.lineTo(sx0 + bw/10, by + bhh);
+                ctx.lineTo(sx0 + bw/5, by); ctx.lineTo(sx0 + bw/10, by);
+                ctx.closePath(); ctx.fill();
+            }
+            ctx.restore();
+        });
+        ctx.fillStyle = '#ffd400';                       // blinking lamp
+        ctx.beginPath(); ctx.arc(cx - bw*0.42 + 1.5*s, base - bh - 3*s, 3*s, 0, Math.PI*2); ctx.fill();
+    }
+
+    // Orange construction barrel, front left
+    {
+        const z = 0.25, s = S(z), cx = X(-1, z) - W*0.04, base = Y(z);
+        const bw = 28*s, bh = 40*s, x = cx - bw/2, y = base - bh;
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.beginPath(); ctx.ellipse(cx, base, bw*0.65, bw*0.15, 0, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#ff6a00';
+        ctx.fillRect(x, y, bw, bh);
+        ctx.fillStyle = '#ffffff';
+        [0.2, 0.55].forEach(f => ctx.fillRect(x, y + bh*f, bw, bh*0.14));
+        ctx.fillStyle = 'rgba(0,0,0,0.15)';
+        ctx.fillRect(x + bw*0.75, y, bw*0.25, bh);
+        ctx.fillStyle = '#e05500';
+        ctx.beginPath(); ctx.ellipse(cx, y, bw/2, bw*0.14, 0, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#1a1a1a';                       // weighted base
+        ctx.fillRect(x - 3*s, base - 5*s, bw + 6*s, 5*s);
+    }
+
+    // The pothole nobody fixed, right at your feet
+    {
+        const z = 0.35, s = S(z), cx = X(0.5, z), cy = Y(z);
+        ctx.fillStyle = '#9a918a';                       // crumbling patch around the rim
+        ctx.beginPath(); ctx.ellipse(cx, cy, 34*s, 11*s, 0.05, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#3b3633';
+        ctx.beginPath(); ctx.ellipse(cx, cy, 30*s, 9*s, 0.05, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#1a1716';
+        ctx.beginPath(); ctx.ellipse(cx + 2, cy + 1, 22*s, 6*s, 0.05, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = 'rgba(120,170,220,0.45)';         // a puddle of mystery water
+        ctx.beginPath(); ctx.ellipse(cx + 4, cy + 2, 12*s, 3*s, 0, 0, Math.PI*2); ctx.fill();
+    }
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.85);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.45)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 const tileCanvasDrawers = {
     'canvas-castle': drawCastleScene,
     'canvas-warzone': drawWarzoneScene,
@@ -9980,7 +10304,8 @@ const tileCanvasDrawers = {
     'canvas-ant': drawAntScene,
     'canvas-survivor': drawSurvivorScene,
     'canvas-alien': drawAlienScene,
-    'canvas-laundry': drawLaundryScene
+    'canvas-laundry': drawLaundryScene,
+    'canvas-dash': drawDashScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -10006,7 +10331,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 35 canvases out of the screen reader's way.
+    // so keep 36 canvases out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
