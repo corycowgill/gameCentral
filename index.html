@@ -36,7 +36,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 36 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 37 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -85,7 +85,8 @@
             {"@type": "ListItem", "position": 28, "name": "Chicago Chess", "url": "https://chess2000.onrender.com"},
             {"@type": "ListItem", "position": 29, "name": "Castle Survivor", "url": "https://castlesurvivor.onrender.com"},
             {"@type": "ListItem", "position": 30, "name": "Laundry Monster", "url": "https://laundrymonster.onrender.com"},
-            {"@type": "ListItem", "position": 31, "name": "Chicago Dash", "url": "https://chicagodash.onrender.com"}
+            {"@type": "ListItem", "position": 31, "name": "Chicago Dash", "url": "https://chicagodash.onrender.com"},
+            {"@type": "ListItem", "position": 32, "name": "Family Kart", "url": "https://familykart.onrender.com"}
         ]
     }
     </script>
@@ -1790,6 +1791,42 @@
             border-color: rgba(110, 198, 240, 0.6);
         }
 
+        /* Family Kart - title yellow over the boot screen's racing blue, from the game's UI */
+        .card-kart .card-bg {
+            background: linear-gradient(135deg, #1b2a7a 0%, #0d1230 100%);
+        }
+        .card-kart .card-art::after {
+            background: linear-gradient(to top, #16225f, transparent);
+        }
+        .card-kart .card-genre { color: #7fb0ff; }
+        .card-kart .card-title { color: #ffd23f; }
+        .card-kart .feature-tag {
+            background: rgba(47, 123, 255, 0.14);
+            color: #b9d2ff;
+            border: 1px solid rgba(47, 123, 255, 0.36);
+        }
+        .card-kart .play-btn {
+            background: linear-gradient(135deg, #ffd23f, #ff3b3b);
+            color: #141a33;
+            box-shadow: 0 4px 20px rgba(255, 59, 59, 0.4);
+        }
+        .card-kart:hover {
+            box-shadow: 0 30px 60px rgba(255, 210, 63, 0.2);
+        }
+        .card-kart .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(47, 123, 255, 0.25);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-kart:hover .glow-border {
+            border-color: rgba(47, 123, 255, 0.65);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2378,7 +2415,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>36</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>37</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2422,6 +2459,34 @@
                     <span class="feature-tag">20 Waves</span>
                     <span class="feature-tag">Evolutions</span>
                     <span class="feature-tag">Ogre King</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Family Kart -->
+    <a href="https://familykart.onrender.com" class="game-card card-kart" data-category="party">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-kart"></canvas>
+                <div class="game-icon">&#x1F3CE;&#xFE0F;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Kart Racing / 3D</div>
+                <div class="card-title">Family Kart</div>
+                <p class="card-desc">
+                    Six family members, three laps, zero mercy. Dad is the Powerhouse with a Dad Boost that roars down any straightaway. Mom is the Strategist, who smiles every time she passes you and carries a shield for everything you throw at her. Player One takes the clean racing line, Player Two takes every risky shortcut, and Lupin, a fluffy Tibetan Terrier with zero brakes, drops bouncing tennis balls behind him. Then there&rsquo;s Grandma: cheerful, sweet, and the owner of a homing pie aimed at whoever is in first. Race the Chicago lakefront, the neighborhood alleys, a giant kitchen, Lupin&rsquo;s dog park and a lake-effect Snowpocalypse. Hold the drift until the sparks turn purple, then fire Flying Pizzas, Banana Peels, Giant Dog Bones and Chicago Potholes at the people you love. Two Grand Prix cups, Time Trials against your own ghost, and two-player split screen, so the arguments can happen on one couch.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">6 Racers</span>
+                    <span class="feature-tag">5 Tracks</span>
+                    <span class="feature-tag">Grand Prix</span>
+                    <span class="feature-tag">2P Split Screen</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -3414,7 +3479,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="36" data-suffix="">0</div>
+        <div class="stat-value" data-target="37" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -10269,6 +10334,216 @@ function drawDashScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawKartScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+    const hy = H*0.42;                                  // horizon
+
+    // Chicago Grand Prix sky, from the track's own palette
+    const sky = ctx.createLinearGradient(0, 0, 0, hy);
+    sky.addColorStop(0, '#3d8fe0');
+    sky.addColorStop(1, '#ffe1b8');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, hy);
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';          // puffy clouds
+    [[0.12, 0.14, 1], [0.58, 0.1, 0.8], [0.86, 0.2, 1.1]].forEach(([cx, cy, k]) => {
+        [[-14, 2, 9], [-4, -3, 12], [8, 0, 10], [17, 3, 7]].forEach(([dx, dy, r]) => {
+            ctx.beginPath(); ctx.arc(W*cx + dx*k, H*cy + dy*k, r*k, 0, Math.PI*2); ctx.fill();
+        });
+    });
+
+    // Downtown to the west, Lake Michigan to the east
+    const cols = ['#5e7591', '#8fa9c7', '#4a5c78', '#b7c6d6'];
+    for (let x = 0, i = 0; x < W*0.5; i++) {
+        const tw = 7 + Math.random()*10, th = 14 + Math.random()*40;
+        ctx.fillStyle = cols[i % cols.length];
+        ctx.fillRect(x, hy - th, tw, th);
+        x += tw - 1;
+    }
+    ctx.fillStyle = '#2b3446';                          // Willis, antennas and all
+    ctx.fillRect(W*0.18, hy - 66, 16, 66);
+    ctx.fillRect(W*0.18 + 3, hy - 76, 10, 10);
+    ctx.fillRect(W*0.18 + 5, hy - 88, 1.2, 12);
+    ctx.fillRect(W*0.18 + 10, hy - 88, 1.2, 12);
+    const lake = ctx.createLinearGradient(0, hy - 4, 0, H);
+    lake.addColorStop(0, '#5fb3e8');
+    lake.addColorStop(1, '#2a7dc4');
+    ctx.fillStyle = lake;
+    ctx.fillRect(W*0.5, hy - 3, W*0.5, H - hy + 3);
+    ctx.strokeStyle = 'rgba(255,255,255,0.35)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 14; i++) {
+        const lx = W*0.62 + Math.random()*W*0.38, ly = hy + 4 + Math.random()*(H - hy)*0.5;
+        ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(lx + 6 + Math.random()*8, ly); ctx.stroke();
+    }
+
+    // Lakefront grass and a road that sweeps in from the left
+    ctx.fillStyle = '#5cc04a';
+    ctx.beginPath();
+    ctx.moveTo(0, hy); ctx.lineTo(W*0.55, hy);
+    ctx.bezierCurveTo(W*0.7, H*0.6, W*0.82, H*0.8, W*0.8, H);
+    ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
+    // Road edges: a far-left edge and a near-right edge, both curving toward the start line
+    const road = (inset) => {
+        ctx.beginPath();
+        ctx.moveTo(W*0.44 - inset*0.04, hy);
+        ctx.bezierCurveTo(W*(0.3 - inset*0.1), H*0.62, W*(0.05 - inset*0.2), H*0.8, W*(-0.1 - inset*0.3), H);
+        ctx.lineTo(W*(0.92 + inset*0.2), H);
+        ctx.bezierCurveTo(W*(0.7 + inset*0.08), H*0.78, W*(0.56 + inset*0.04), H*0.58, W*0.5 + inset*W*0.02, hy);
+        ctx.closePath();
+    };
+    // Red-and-white curbs, drawn as a striped ring under the asphalt
+    road(0.12);
+    ctx.save(); ctx.clip();
+    for (let i = 0; i < 40; i++) {
+        ctx.fillStyle = i % 2 ? '#ffffff' : '#ff3b3b';
+        ctx.fillRect(0, hy + (H - hy)*Math.pow(i/40, 1.6), W, (H - hy)*0.06);
+    }
+    ctx.restore();
+    road(0);
+    const asphalt = ctx.createLinearGradient(0, hy, 0, H);
+    asphalt.addColorStop(0, '#7d8494');
+    asphalt.addColorStop(1, '#4b5160');
+    ctx.fillStyle = asphalt;
+    ctx.fill();
+    // Dashed center line following the curve
+    ctx.save(); road(0); ctx.clip();
+    ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+    ctx.setLineDash([10, 12]);
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(W*0.47, hy);
+    ctx.bezierCurveTo(W*0.44, H*0.6, W*0.42, H*0.8, W*0.42, H);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // Checkered start/finish arch near the horizon
+    const ax = W*0.47, ay = hy + 4, aw = W*0.16;
+    ctx.fillStyle = '#ffd23f';
+    ctx.fillRect(ax - aw/2 - 3, ay - 34, 3, 34);
+    ctx.fillRect(ax + aw/2, ay - 34, 3, 34);
+    for (let r = 0; r < 2; r++) {
+        for (let c = 0; c < 12; c++) {
+            ctx.fillStyle = (r + c) % 2 ? '#141a33' : '#ffffff';
+            ctx.fillRect(ax - aw/2 + c*aw/12, ay - 34 + r*4, aw/12, 4);
+        }
+    }
+
+    // Rainbow item boxes with a question mark
+    const itemBox = (x, y, s) => {
+        const g = ctx.createLinearGradient(x - s, y - s, x + s, y + s);
+        ['#ff3b3b', '#ffd23f', '#4bd36b', '#2f7bff', '#9b5cff'].forEach((c, i) => g.addColorStop(i/4, c));
+        ctx.save();
+        ctx.translate(x, y); ctx.rotate(0.35);
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = g;
+        ctx.fillRect(-s/2, -s/2, s, s);
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+        ctx.lineWidth = 1.2;
+        ctx.strokeRect(-s/2, -s/2, s, s);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = `bold ${s*0.7}px sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('?', 0, s*0.04);
+        ctx.restore();
+    };
+    // (kept off-center so the tile's emoji badge doesn't cover them)
+    itemBox(W*0.35, H*0.56, 9);
+    itemBox(W*0.62, H*0.52, 8);
+
+    // A kart seen from the chase camera
+    const kart = (x, y, s, body, helmet, opts = {}) => {
+        ctx.save(); ctx.translate(x, y); ctx.scale(s, s);
+        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+        ctx.beginPath(); ctx.ellipse(0, 2, 30, 6, 0, 0, Math.PI*2); ctx.fill();
+        if (opts.flames) {                              // Dad Boost exhaust
+            [-8, 8].forEach(dx => {
+                const f = ctx.createLinearGradient(0, -6, 0, 26);
+                f.addColorStop(0, '#fff3a8'); f.addColorStop(0.5, '#ff9f1a'); f.addColorStop(1, 'rgba(255,59,59,0)');
+                ctx.fillStyle = f;
+                ctx.beginPath(); ctx.moveTo(dx - 5, -6); ctx.lineTo(dx, 26); ctx.lineTo(dx + 5, -6); ctx.closePath(); ctx.fill();
+            });
+        }
+        ctx.fillStyle = '#16161c';                      // rear tires
+        ctx.fillRect(-30, -16, 13, 17);
+        ctx.fillRect(17, -16, 13, 17);
+        ctx.fillStyle = body;                           // body and spoiler
+        ctx.beginPath(); ctx.moveTo(-20, -2); ctx.lineTo(20, -2); ctx.lineTo(16, -20); ctx.lineTo(-16, -20); ctx.closePath(); ctx.fill();
+        ctx.fillRect(-24, -26, 48, 5);
+        ctx.fillStyle = '#16161c';
+        ctx.fillRect(-14, -21, 3, 5); ctx.fillRect(11, -21, 3, 5);
+        ctx.fillStyle = '#3a3f4a';                      // exhaust pipes
+        ctx.fillRect(-10, -6, 4, 4); ctx.fillRect(6, -6, 4, 4);
+        ctx.fillStyle = helmet;                         // driver
+        ctx.beginPath(); ctx.arc(0, -34, 10, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.4)';
+        ctx.beginPath(); ctx.arc(-3, -38, 3.5, 0, Math.PI*2); ctx.fill();
+        if (opts.ears) {                                // a fluffy terrier at the wheel
+            ctx.fillStyle = '#e8d5b0';
+            ctx.beginPath(); ctx.ellipse(-10, -30, 4, 8, 0.3, 0, Math.PI*2); ctx.fill();
+            ctx.beginPath(); ctx.ellipse(10, -30, 4, 8, -0.3, 0, Math.PI*2); ctx.fill();
+        }
+        if (opts.shield) {                              // Mom Shield
+            ctx.strokeStyle = 'rgba(190,230,255,0.9)';
+            ctx.fillStyle = 'rgba(160,215,255,0.22)';
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.ellipse(0, -16, 38, 32, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.beginPath(); ctx.ellipse(-16, -34, 8, 4, -0.5, 0, Math.PI*2); ctx.fill();
+        }
+        ctx.restore();
+    };
+    kart(W*0.27, H*0.7, 0.5, '#ffcc1f', '#e8d5b0', { ears: true });   // Lupin
+    kart(W*0.62, H*0.76, 0.6, '#e84fb0', '#8a3fd1', { shield: true });  // Mom
+    kart(W*0.16, H*0.94, 0.7, '#5cc72e', '#1f5fd1');                    // Player Two
+
+    // Bouncing tennis ball from Puppy Panic, and a banana peel waiting for somebody
+    ctx.fillStyle = '#d7f542';
+    ctx.beginPath(); ctx.arc(W*0.37, H*0.76, 4.5, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(W*0.37 - 3, H*0.76, 3.5, -0.9, 0.9); ctx.stroke();
+    ctx.fillStyle = '#ffd23f';
+    const bx = W*0.5, by = H*0.88;
+    [-0.9, 0, 0.9].forEach(a => {
+        ctx.save(); ctx.translate(bx, by); ctx.rotate(a);
+        ctx.beginPath(); ctx.ellipse(0, -6, 3, 7, 0, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+    });
+    ctx.fillStyle = '#6b4a1a';
+    ctx.fillRect(bx - 1, by - 3, 2, 4);
+
+    // Grandma's homing pie, on its way to whoever is leading
+    const px = W*0.68, py = H*0.5;
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([3, 4]);
+    ctx.beginPath(); ctx.moveTo(W*0.8, H*0.72); ctx.quadraticCurveTo(W*0.78, H*0.5, px + 8, py); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#c98a3e';
+    ctx.beginPath(); ctx.ellipse(px, py, 10, 5, -0.2, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#f2d39a';
+    ctx.beginPath(); ctx.ellipse(px, py - 2, 8, 3.5, -0.2, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#b8323a';
+    [[-3, -2], [2, -3], [4, -1]].forEach(([dx, dy]) => {
+        ctx.beginPath(); ctx.arc(px + dx, py + dy, 1.4, 0, Math.PI*2); ctx.fill();
+    });
+
+    // Dad, boosting through on the right, flames and all
+    kart(W*0.86, H*0.95, 0.85, '#1f4fd1', '#d62b2b', { flames: true });
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.85);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.4)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 const tileCanvasDrawers = {
     'canvas-castle': drawCastleScene,
     'canvas-warzone': drawWarzoneScene,
@@ -10305,7 +10580,8 @@ const tileCanvasDrawers = {
     'canvas-survivor': drawSurvivorScene,
     'canvas-alien': drawAlienScene,
     'canvas-laundry': drawLaundryScene,
-    'canvas-dash': drawDashScene
+    'canvas-dash': drawDashScene,
+    'canvas-kart': drawKartScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -10331,7 +10607,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 36 canvases out of the screen reader's way.
+    // so keep 37 canvases out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
