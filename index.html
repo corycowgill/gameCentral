@@ -36,7 +36,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 38 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 39 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -87,7 +87,8 @@
             {"@type": "ListItem", "position": 30, "name": "Laundry Monster", "url": "https://laundrymonster.onrender.com"},
             {"@type": "ListItem", "position": 31, "name": "Chicago Dash", "url": "https://chicagodash.onrender.com"},
             {"@type": "ListItem", "position": 32, "name": "Family Kart", "url": "https://familykart.onrender.com"},
-            {"@type": "ListItem", "position": 33, "name": "Chicago Family Adventure", "url": "https://family2dplatformer.onrender.com"}
+            {"@type": "ListItem", "position": 33, "name": "Chicago Family Adventure", "url": "https://family2dplatformer.onrender.com"},
+            {"@type": "ListItem", "position": 34, "name": "Recursion", "url": "https://recursiongame.onrender.com"}
         ]
     }
     </script>
@@ -1868,6 +1869,44 @@
             border-color: rgba(127, 196, 240, 0.6);
         }
 
+        /* Recursion - the player's gold against the echoes' cyan, from the game's palette */
+        .card-recursion .card-bg {
+            background: linear-gradient(135deg, #12233a 0%, #060a14 100%);
+        }
+        .card-recursion .card-art::after {
+            /* Short fade so the timeline strip stays visible */
+            height: 24px;
+            background: linear-gradient(to top, #0b1424, transparent);
+        }
+        .card-recursion .card-genre { color: #3fd9ff; }
+        .card-recursion .card-title { color: #ffb54a; letter-spacing: 3px; }
+        .card-recursion .feature-tag {
+            background: rgba(63, 217, 255, 0.1);
+            color: #a9ecff;
+            border: 1px solid rgba(63, 217, 255, 0.3);
+        }
+        .card-recursion .play-btn {
+            background: linear-gradient(135deg, #ffb54a, #ff8a3d);
+            color: #1a1205;
+            box-shadow: 0 4px 20px rgba(255, 181, 74, 0.4);
+        }
+        .card-recursion:hover {
+            box-shadow: 0 30px 60px rgba(63, 217, 255, 0.2);
+        }
+        .card-recursion .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(63, 217, 255, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-recursion:hover .glow-border {
+            border-color: rgba(63, 217, 255, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2456,7 +2495,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>38</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>39</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2500,6 +2539,34 @@
                     <span class="feature-tag">20 Waves</span>
                     <span class="feature-tag">Evolutions</span>
                     <span class="feature-tag">Ogre King</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Recursion -->
+    <a href="https://recursiongame.onrender.com" class="game-card card-recursion" data-category="puzzle">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-recursion"></canvas>
+                <div class="game-icon">&#x23F3;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Temporal Puzzle / 3D</div>
+                <div class="card-title">RECURSION</div>
+                <p class="card-desc">
+                    A puzzle game where the only person qualified to help you is you. Unfortunately, you&rsquo;re also the idiot who created the problem. Record your actions, rewind time, and team up with past versions of yourself to solve increasingly ridiculous puzzles. Hold doors open for yourself, move crates with yourself, and watch helplessly as your past self makes the exact same stupid mistake you made 15 seconds ago. It&rsquo;s teamwork, except everyone on the team is you, and somehow nobody knows what they&rsquo;re doing.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">10 Chambers</span>
+                    <span class="feature-tag">Time Echoes</span>
+                    <span class="feature-tag">Rewind</span>
+                    <span class="feature-tag">Touch Controls</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -3549,7 +3616,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="38" data-suffix="">0</div>
+        <div class="stat-value" data-target="39" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -10983,6 +11050,214 @@ function drawPlatformerScene(canvas) {
     ctx.fillRect(0, 0, w, h);
 }
 
+function drawRecursionScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+    const GOLD = '#ffb54a', ECHOES = ['#3fd9ff', '#4f8dff', '#a77bff', '#37f0c8'];
+    const floorTop = H*0.5, floorY = H*0.74, tlTop = H*0.8;
+    const rr = (x, y, rw, rh, r) => {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y); ctx.arcTo(x + rw, y, x + rw, y + rh, r); ctx.arcTo(x + rw, y + rh, x, y + rh, r);
+        ctx.arcTo(x, y + rh, x, y, r); ctx.arcTo(x, y, x + rw, y, r); ctx.closePath();
+    };
+
+    // The chamber: deep blue haze, back wall of panels and lit pillars
+    const bg = ctx.createLinearGradient(0, 0, 0, floorTop);
+    bg.addColorStop(0, '#060a14');
+    bg.addColorStop(1, '#12233a');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+    for (let x = 0; x < W; x += 34) {
+        ctx.fillStyle = '#0d1828';
+        ctx.fillRect(x + 2, H*0.08, 30, floorTop - H*0.08);
+        ctx.strokeStyle = 'rgba(120,160,200,0.08)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(x + 2.5, H*0.08 + 0.5, 29, floorTop - H*0.08);
+    }
+    const pillar = (x, glow) => {
+        const g = ctx.createLinearGradient(x - 7, 0, x + 7, 0);
+        g.addColorStop(0, '#1a2436'); g.addColorStop(0.5, '#33405a'); g.addColorStop(1, '#141c2b');
+        ctx.fillStyle = g;
+        ctx.fillRect(x - 7, 0, 14, floorTop + 4);
+        ctx.fillStyle = '#8a6a3a';                         // brass trim
+        ctx.fillRect(x - 8, floorTop - 4, 16, 4);
+        ctx.fillRect(x - 8, H*0.06, 16, 3);
+        ctx.shadowColor = glow; ctx.shadowBlur = 10;
+        ctx.fillStyle = glow;
+        ctx.fillRect(x - 1, H*0.12, 2, floorTop - H*0.2);
+        ctx.shadowBlur = 0;
+    };
+    pillar(W*0.05, '#3fd9ff');
+    pillar(W*0.5, GOLD);
+    pillar(W*0.95, '#3fd9ff');
+
+    // Floor: metal tiles in perspective with a few glowing seams
+    const fl = ctx.createLinearGradient(0, floorTop, 0, tlTop);
+    fl.addColorStop(0, '#1b2638');
+    fl.addColorStop(1, '#2c3a52');
+    ctx.fillStyle = fl;
+    ctx.fillRect(0, floorTop, W, tlTop - floorTop);
+    ctx.strokeStyle = 'rgba(160,190,230,0.12)';
+    ctx.lineWidth = 1;
+    for (let i = -12; i <= 12; i++) {
+        ctx.beginPath(); ctx.moveTo(W/2 + i*W*0.06, floorTop); ctx.lineTo(W/2 + i*W*0.16, tlTop); ctx.stroke();
+    }
+    for (let k = 0; k < 6; k++) {
+        const y = floorTop + (tlTop - floorTop)*Math.pow(k/5, 1.4);
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(255,181,74,0.35)';
+    ctx.fillRect(0, floorTop, W, 1.5);
+
+    // Temporal gate on the left: a swirling blue ring
+    const gx = W*0.14, gy = H*0.3, gr = Math.min(H*0.19, 32);
+    ctx.fillStyle = '#2a3346';
+    ctx.beginPath(); ctx.arc(gx, gy, gr + 6, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#8a6a3a'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(gx, gy, gr + 6, 0, Math.PI*2); ctx.stroke();
+    const core = ctx.createRadialGradient(gx, gy, 0, gx, gy, gr);
+    core.addColorStop(0, '#e8fbff'); core.addColorStop(0.3, '#3fd9ff'); core.addColorStop(0.75, '#2b3fb0'); core.addColorStop(1, '#0a1230');
+    ctx.fillStyle = core;
+    ctx.beginPath(); ctx.arc(gx, gy, gr, 0, Math.PI*2); ctx.fill();
+    ctx.shadowColor = '#3fd9ff'; ctx.shadowBlur = 8;
+    ctx.strokeStyle = 'rgba(200,245,255,0.8)'; ctx.lineWidth = 1.2;
+    for (let i = 0; i < 4; i++) {
+        ctx.beginPath(); ctx.arc(gx, gy, gr*(0.35 + i*0.16), i*1.7, i*1.7 + 2.6); ctx.stroke();
+    }
+    ctx.shadowBlur = 0;
+
+    // Locked door on the right, held open by an echo on the pressure plate
+    const dx = W*0.86, dw = Math.min(W*0.12, 46), dh = (floorY - H*0.14);
+    ctx.fillStyle = '#2a3346';
+    rr(dx - dw/2 - 5, floorY - dh - 5, dw + 10, dh + 5, 6); ctx.fill();
+    ctx.fillStyle = '#8a6a3a';
+    ctx.fillRect(dx - dw/2 - 5, floorY - dh - 5, dw + 10, 3);
+    const doorLight = ctx.createLinearGradient(0, floorY - dh, 0, floorY);
+    doorLight.addColorStop(0, 'rgba(255,215,140,0.95)'); doorLight.addColorStop(1, 'rgba(255,170,80,0.6)');
+    ctx.fillStyle = doorLight;                            // open: light spills through
+    ctx.fillRect(dx - dw/2, floorY - dh, dw, dh);
+    ctx.fillStyle = '#4a5468';                            // panels slid apart
+    ctx.fillRect(dx - dw/2, floorY - dh, dw*0.18, dh);
+    ctx.fillRect(dx + dw/2 - dw*0.18, floorY - dh, dw*0.18, dh);
+    ctx.fillStyle = GOLD;
+    ctx.fillRect(dx - dw/2 + dw*0.16, floorY - dh, 1.5, dh);
+    ctx.fillRect(dx + dw/2 - dw*0.18, floorY - dh, 1.5, dh);
+    const spill = ctx.createRadialGradient(dx, floorY, 2, dx, floorY, dw*1.4);
+    spill.addColorStop(0, 'rgba(255,190,100,0.45)'); spill.addColorStop(1, 'rgba(255,190,100,0)');
+    ctx.fillStyle = spill;
+    ctx.fillRect(dx - dw*1.5, floorY - dw, dw*3, dw*1.6);
+
+    // A person-shaped hologram: past selves glow in their echo colour
+    const figure = (x, y, s, col, alpha, pose = 0) => {
+        ctx.save();
+        ctx.translate(x, y); ctx.scale(s, s);
+        ctx.globalAlpha = alpha;
+        ctx.shadowColor = col; ctx.shadowBlur = 10;
+        ctx.fillStyle = col;
+        ctx.strokeStyle = col;
+        ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.arc(0, -40, 5.5, 0, Math.PI*2); ctx.fill();          // head
+        ctx.fillRect(-3.5, -46, 7, 3);                                          // hair buns, per the concept art
+        rr(-6, -33, 12, 17, 4); ctx.fill();                                     // torso
+        ctx.lineWidth = 4;
+        ctx.beginPath();                                                        // legs mid-stride
+        ctx.moveTo(-2.5, -17); ctx.lineTo(-5 - pose*3, 0);
+        ctx.moveTo(2.5, -17); ctx.lineTo(5 + pose*3, 0);
+        ctx.stroke();
+        ctx.lineWidth = 3.2;
+        ctx.beginPath();                                                        // arms
+        ctx.moveTo(-6, -30); ctx.lineTo(-9 - pose*2, -18);
+        ctx.moveTo(6, -30); ctx.lineTo(9 + pose*2, -18);
+        ctx.stroke();
+        ctx.globalAlpha = alpha*0.5;                                            // inner light
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(-1, -31, 2, 12);
+        ctx.restore();
+    };
+
+    // Pressure plate with echo 4 standing on it, holding the door for everyone else
+    const px = W*0.72;
+    ctx.shadowColor = '#3fd9ff'; ctx.shadowBlur = 12;
+    ctx.fillStyle = '#3fd9ff';
+    ctx.beginPath(); ctx.ellipse(px, floorY, 16, 4, 0, 0, Math.PI*2); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#0d2a3a';
+    ctx.beginPath(); ctx.ellipse(px, floorY, 11, 2.6, 0, 0, Math.PI*2); ctx.fill();
+    figure(px, floorY - 1, 1.2, ECHOES[3], 0.85, 0);
+
+    // A movable crate, mid-shove
+    const cx = W*0.62, cs = 24;
+    ctx.fillStyle = '#5a6478';
+    rr(cx - cs/2, floorY - cs, cs, cs, 2); ctx.fill();
+    ctx.fillStyle = '#7c879c';
+    ctx.fillRect(cx - cs/2, floorY - cs, cs, 3);
+    ctx.strokeStyle = '#8a6a3a'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(cx - cs/2 + 2, floorY - cs + 4, cs - 4, cs - 6);
+    ctx.fillStyle = GOLD;
+    ctx.beginPath(); ctx.arc(cx, floorY - cs/2 + 1, 2.5, 0, Math.PI*2); ctx.fill();
+
+    // The procession: three echoes replaying the exact same walk, and the gold player at the front
+    const trailY = floorY + 2;
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.setLineDash([3, 4]);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(W*0.06, trailY); ctx.lineTo(W*0.33, trailY); ctx.stroke();
+    ctx.setLineDash([]);
+    figure(W*0.11, trailY, 1.12, ECHOES[2], 0.4, 1);
+    figure(W*0.18, trailY, 1.16, ECHOES[1], 0.55, -1);
+    figure(W*0.25, trailY, 1.2, ECHOES[0], 0.72, 1);
+    figure(W*0.33, trailY, 1.25, GOLD, 1, -1);
+    // Same mistake, every loop: they're all about to walk into the same crate
+    ctx.fillStyle = '#ff6b5e';
+    ctx.font = 'bold 13px sans-serif';
+    ctx.textAlign = 'center';
+    [W*0.11, W*0.18, W*0.25].forEach((x, i) => {
+        ctx.globalAlpha = 0.45 + i*0.2;
+        ctx.fillText('!', x, trailY - 60);
+    });
+    ctx.globalAlpha = 1;
+
+    // The temporal timeline: a track per actor, interaction markers, and the gold playhead
+    ctx.fillStyle = 'rgba(6,10,20,0.92)';
+    ctx.fillRect(0, tlTop, W, H - tlTop);
+    ctx.fillStyle = 'rgba(255,181,74,0.5)';
+    ctx.fillRect(0, tlTop, W, 1);
+    const tracks = [GOLD, ...ECHOES.slice(0, 3)];
+    const th = (H - tlTop - 6)/tracks.length;
+    tracks.forEach((col, i) => {
+        const y = tlTop + 4 + i*th + th/2;
+        ctx.fillStyle = col;
+        ctx.beginPath(); ctx.arc(10, y, 2.5, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.08)';
+        ctx.fillRect(18, y - 0.5, W - 26, 1);
+        const len = i === 0 ? 0.62 : 0.9 - i*0.06;
+        ctx.fillStyle = col;
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(18, y - 1.2, (W - 26)*len, 2.4);
+        ctx.globalAlpha = 1;
+        [0.2 + i*0.07, 0.48 + i*0.04].forEach(f => {      // interaction markers
+            ctx.fillRect(18 + (W - 26)*f - 2.5, y - 2.5, 5, 5);
+        });
+    });
+    const phx = 18 + (W - 26)*0.62;
+    ctx.shadowColor = GOLD; ctx.shadowBlur = 6;
+    ctx.fillStyle = GOLD;
+    ctx.fillRect(phx - 0.75, tlTop + 2, 1.5, H - tlTop - 2);
+    ctx.beginPath(); ctx.moveTo(phx - 4, tlTop + 1); ctx.lineTo(phx + 4, tlTop + 1); ctx.lineTo(phx, tlTop + 6); ctx.closePath(); ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H*0.45, H*0.25, W/2, H*0.45, H*0.95);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.45)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 const tileCanvasDrawers = {
     'canvas-castle': drawCastleScene,
     'canvas-warzone': drawWarzoneScene,
@@ -11021,7 +11296,8 @@ const tileCanvasDrawers = {
     'canvas-laundry': drawLaundryScene,
     'canvas-dash': drawDashScene,
     'canvas-kart': drawKartScene,
-    'canvas-platformer': drawPlatformerScene
+    'canvas-platformer': drawPlatformerScene,
+    'canvas-recursion': drawRecursionScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -11047,7 +11323,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 38 canvases out of the screen reader's way.
+    // so keep 39 canvases out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
