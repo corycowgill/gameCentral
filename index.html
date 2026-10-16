@@ -36,7 +36,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 39 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 40 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -88,7 +88,8 @@
             {"@type": "ListItem", "position": 31, "name": "Chicago Dash", "url": "https://chicagodash.onrender.com"},
             {"@type": "ListItem", "position": 32, "name": "Family Kart", "url": "https://familykart.onrender.com"},
             {"@type": "ListItem", "position": 33, "name": "Chicago Family Adventure", "url": "https://family2dplatformer.onrender.com"},
-            {"@type": "ListItem", "position": 34, "name": "Recursion", "url": "https://recursiongame.onrender.com"}
+            {"@type": "ListItem", "position": 34, "name": "Recursion", "url": "https://recursiongame.onrender.com"},
+            {"@type": "ListItem", "position": 35, "name": "Windy City Pool Club", "url": "https://familybilliards.onrender.com"}
         ]
     }
     </script>
@@ -1907,6 +1908,43 @@
             border-color: rgba(63, 217, 255, 0.6);
         }
 
+        /* Windy City Pool Club - the game's teal felt, coral and cream */
+        .card-pool .card-bg {
+            background: linear-gradient(135deg, #18383d 0%, #0a2423 100%);
+        }
+        .card-pool .card-art::after {
+            height: 30px;
+            background: linear-gradient(to top, #133033, transparent);
+        }
+        .card-pool .card-genre { color: #a8bbb6; }
+        .card-pool .card-title { color: #fff9e9; }
+        .card-pool .feature-tag {
+            background: rgba(223, 97, 78, 0.12);
+            color: #f5d9d2;
+            border: 1px solid rgba(223, 97, 78, 0.34);
+        }
+        .card-pool .play-btn {
+            background: linear-gradient(135deg, #df614e, #f0a05a);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(223, 97, 78, 0.4);
+        }
+        .card-pool:hover {
+            box-shadow: 0 30px 60px rgba(223, 97, 78, 0.2);
+        }
+        .card-pool .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(168, 187, 182, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-pool:hover .glow-border {
+            border-color: rgba(223, 97, 78, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2495,7 +2533,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>39</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>40</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2539,6 +2577,34 @@
                     <span class="feature-tag">20 Waves</span>
                     <span class="feature-tag">Evolutions</span>
                     <span class="feature-tag">Ogre King</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Windy City Pool Club -->
+    <a href="https://familybilliards.onrender.com" class="game-card card-pool" data-category="sports">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-pool"></canvas>
+                <div class="game-icon">&#x1F3B1;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Billiards / Family Face-Off</div>
+                <div class="card-title">Windy City Pool Club</div>
+                <p class="card-desc">
+                    Chicago has settled its greatest rivalry the only way it knows how: North Side versus South Side, one pool table, nobody leaves until every ball is gone. House rules apply. Every ball is worth one point, including the 8-ball, which spent decades thinking it was special and is now just a guy. Sink one and keep shooting. Miss, and you hand over the cue and your dignity to whoever has been &ldquo;just saying&rdquo; things from the couch. Scratch, and the cue ball politely respawns on its own, which is more forgiveness than any real pool hall has ever offered. Hold to charge the power meter and release at the perfect moment, or, more realistically, release at 100% and watch the cue ball tour all four cushions before quietly dropping into a corner pocket. Two players on one device, or solo practice that counts how many shots it takes to clear the rack. Nobody has to know that number.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">House Rules</span>
+                    <span class="feature-tag">North vs South</span>
+                    <span class="feature-tag">Solo Practice</span>
+                    <span class="feature-tag">Touch Controls</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -3616,7 +3682,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="39" data-suffix="">0</div>
+        <div class="stat-value" data-target="40" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -11258,6 +11324,209 @@ function drawRecursionScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawPoolScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+    const rr = (x, y, rw, rh, r) => {
+        ctx.beginPath();
+        ctx.moveTo(x + r, y); ctx.arcTo(x + rw, y, x + rw, y + rh, r); ctx.arcTo(x + rw, y + rh, x, y + rh, r);
+        ctx.arcTo(x, y + rh, x, y, r); ctx.arcTo(x, y, x + rw, y, r); ctx.closePath();
+    };
+
+    // Neighborhood pool hall: dark teal wall, warm light over the table
+    const wall = ctx.createLinearGradient(0, 0, 0, H);
+    wall.addColorStop(0, '#11292c');
+    wall.addColorStop(1, '#081d2c');
+    ctx.fillStyle = wall;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(255,255,255,0.025)';           // wainscot stripes
+    for (let x = 0; x < W; x += 12) ctx.fillRect(x, H*0.3, 6, H*0.2);
+    const lamp = ctx.createRadialGradient(W*0.5, H*0.15, 4, W*0.5, H*0.5, W*0.55);
+    lamp.addColorStop(0, 'rgba(255,230,170,0.28)');
+    lamp.addColorStop(1, 'rgba(255,230,170,0)');
+    ctx.fillStyle = lamp;
+    ctx.fillRect(0, 0, W, H);
+
+    // Neon sign, one letter burned out, as is tradition
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.font = `bold ${Math.max(9, W*0.03)}px 'Arial Black', sans-serif`;
+    const sx = W*0.04, sy = H*0.1;
+    ctx.shadowColor = '#df614e'; ctx.shadowBlur = 10;
+    ctx.fillStyle = '#ff8a73';
+    ctx.fillText('WINDY CITY', sx, sy);
+    ctx.shadowColor = '#7fe0d0';
+    ctx.fillStyle = '#b9fff2';
+    const poolW = ctx.measureText('P').width;
+    ctx.fillText('P', sx, sy + H*0.08);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = 'rgba(185,255,242,0.22)';            // the dead "OO"
+    ctx.fillText('OO', sx + poolW, sy + H*0.08);
+    ctx.shadowColor = '#7fe0d0'; ctx.shadowBlur = 10;
+    ctx.fillStyle = '#b9fff2';
+    ctx.fillText('L CLUB', sx + poolW + ctx.measureText('OO').width, sy + H*0.08);
+    ctx.shadowBlur = 0;
+
+    // Chalkboard of house rules, with editorial notes
+    const bw = Math.min(W*0.3, 120), bh = H*0.34, bx = W - bw - W*0.04, by = H*0.05;
+    ctx.fillStyle = '#6b4a2e';
+    rr(bx - 3, by - 3, bw + 6, bh + 6, 3); ctx.fill();
+    ctx.fillStyle = '#1e2b28';
+    ctx.fillRect(bx, by, bw, bh);
+    ctx.fillStyle = 'rgba(240,240,230,0.88)';
+    ctx.font = `bold ${Math.max(7, bw*0.075)}px 'Comic Sans MS', 'Chalkboard SE', sans-serif`;
+    ctx.fillText('HOUSE RULES', bx + 5, by + bh*0.14);
+    ctx.font = `${Math.max(6.5, bw*0.066)}px 'Comic Sans MS', 'Chalkboard SE', sans-serif`;
+    ['1. Every ball = 1 pt', '2. Yes, even the 8', '3. No gloating', '    (this means DAD)'].forEach((t, i) => {
+        ctx.fillText(t, bx + 5, by + bh*(0.34 + i*0.18));
+    });
+    ctx.strokeStyle = 'rgba(240,240,230,0.7)';            // "no gloating" underlined twice
+    ctx.lineWidth = 0.8;
+    [0, 2.2].forEach(d => {
+        ctx.beginPath(); ctx.moveTo(bx + 5, by + bh*0.83 + d); ctx.lineTo(bx + bw*0.85, by + bh*0.83 + d); ctx.stroke();
+    });
+
+    // Open window: the Windy City lends a hand
+    const wx = W*0.04, wy = H*0.26, ww = W*0.14, wh = H*0.2;
+    ctx.fillStyle = '#6b4a2e';
+    ctx.fillRect(wx - 2, wy - 2, ww + 4, wh + 4);
+    const night = ctx.createLinearGradient(0, wy, 0, wy + wh);
+    night.addColorStop(0, '#1d3a6b'); night.addColorStop(1, '#3f5f9a');
+    ctx.fillStyle = night;
+    ctx.fillRect(wx, wy, ww, wh);
+    ctx.fillStyle = '#0d1a30';                            // skyline through the glass
+    [[0.05, 0.5], [0.2, 0.3], [0.33, 0.55], [0.5, 0.15], [0.66, 0.45], [0.8, 0.35]].forEach(([fx, fh]) => {
+        ctx.fillRect(wx + ww*fx, wy + wh*fh, ww*0.14, wh*(1 - fh));
+    });
+    ctx.fillStyle = '#ffd98a';
+    for (let i = 0; i < 10; i++) ctx.fillRect(wx + ww*(0.1 + (i*0.37 % 0.8)), wy + wh*(0.55 + (i*0.23 % 0.35)), 1.2, 1.2);
+    ctx.fillStyle = 'rgba(232,240,240,0.65)';            // curtain whipping inward
+    ctx.beginPath();
+    ctx.moveTo(wx + ww, wy); ctx.quadraticCurveTo(wx + ww*1.6, wy + wh*0.3, wx + ww*1.9, wy + wh*0.2);
+    ctx.quadraticCurveTo(wx + ww*1.5, wy + wh*0.7, wx + ww, wy + wh);
+    ctx.closePath(); ctx.fill();
+
+    // The table, in perspective
+    const tTop = H*0.52, tBot = H*0.98, inTop = W*0.2, inBot = W*0.02;
+    const rail = (t, inset) => {
+        const y = tTop + (tBot - tTop)*t, xi = inTop + (inBot - inTop)*t;
+        return [xi + inset, y, W - xi - inset];
+    };
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.beginPath(); ctx.ellipse(W/2, tBot + 2, W*0.5, 8, 0, 0, Math.PI*2); ctx.fill();
+    const wood = ctx.createLinearGradient(0, tTop, 0, tBot);
+    wood.addColorStop(0, '#8a5a34'); wood.addColorStop(1, '#5a3a20');
+    ctx.fillStyle = wood;
+    ctx.beginPath();
+    ctx.moveTo(inTop - 8, tTop - 6); ctx.lineTo(W - inTop + 8, tTop - 6);
+    ctx.lineTo(W - inBot + 4, tBot); ctx.lineTo(inBot - 4, tBot); ctx.closePath(); ctx.fill();
+    const felt = ctx.createRadialGradient(W/2, tTop + (tBot - tTop)*0.4, 10, W/2, tTop + (tBot - tTop)*0.5, W*0.55);
+    felt.addColorStop(0, '#2f7a66'); felt.addColorStop(0.6, '#286858'); felt.addColorStop(1, '#1e5146');
+    ctx.fillStyle = felt;
+    ctx.beginPath();
+    ctx.moveTo(inTop + 4, tTop); ctx.lineTo(W - inTop - 4, tTop);
+    ctx.lineTo(W - inBot - 14, tBot - 10); ctx.lineTo(inBot + 14, tBot - 10); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#d6e8d2';                            // diamond sights on the rail
+    for (let i = 1; i < 8; i++) {
+        const x = inTop + 4 + (W - 2*inTop - 8)*i/8;
+        ctx.beginPath(); ctx.arc(x, tTop - 3, 1.1, 0, Math.PI*2); ctx.fill();
+    }
+    // Pockets
+    ctx.fillStyle = '#0a0f10';
+    [[inTop + 4, tTop, 6], [W/2, tTop - 1, 5.5], [W - inTop - 4, tTop, 6],
+     [inBot + 14, tBot - 10, 9], [W/2, tBot - 8, 8], [W - inBot - 14, tBot - 10, 9]].forEach(([x, y, r]) => {
+        ctx.beginPath(); ctx.ellipse(x, y, r, r*0.65, 0, 0, Math.PI*2); ctx.fill();
+    });
+
+    // Balls
+    const BALLS = ['#f2c230', '#2456c6', '#d8342b', '#6a3ca8', '#f07a1e', '#1f8a4c', '#8a2a2a', '#1a1a1a'];
+    const ball = (x, y, r, n) => {
+        ctx.fillStyle = 'rgba(0,0,0,0.3)';
+        ctx.beginPath(); ctx.ellipse(x + r*0.3, y + r*0.8, r*0.9, r*0.35, 0, 0, Math.PI*2); ctx.fill();
+        const stripe = n > 8, col = n === 0 ? '#fffdf8' : BALLS[(n - 1) % 8];
+        ctx.fillStyle = stripe ? '#fffdf8' : col;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+        if (stripe) {
+            ctx.save(); ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.clip();
+            ctx.fillStyle = col; ctx.fillRect(x - r, y - r*0.5, r*2, r); ctx.restore();
+        }
+        if (n) {
+            ctx.fillStyle = '#fffdf8';
+            ctx.beginPath(); ctx.arc(x, y, r*0.45, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = '#18383d';
+            ctx.font = `bold ${r*0.75}px sans-serif`;
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(n, x, y + 0.3);
+        }
+        ctx.fillStyle = 'rgba(255,255,255,0.55)';
+        ctx.beginPath(); ctx.arc(x - r*0.35, y - r*0.4, r*0.25, 0, Math.PI*2); ctx.fill();
+    };
+    // A scattered, very non-regulation rack, kept clear of the tile's emoji badge
+    [[0.2, 0.7, 3], [0.33, 0.72, 11], [0.26, 0.8, 5], [0.62, 0.66, 9], [0.7, 0.7, 2], [0.66, 0.78, 14],
+     [0.74, 0.62, 6], [0.58, 0.86, 7], [0.4, 0.88, 12]].forEach(([fx, fy, n]) => ball(W*fx, H*fy, 6.5, n));
+
+    // The wind's contribution: a gust from the window gives the 4 a little shove
+    ctx.strokeStyle = 'rgba(232,240,240,0.5)';
+    ctx.lineWidth = 1.4;
+    ctx.lineCap = 'round';
+    [[0, 0], [8, 6], [-4, 12]].forEach(([dx, dy]) => {
+        ctx.beginPath();
+        ctx.moveTo(wx + ww + 6 + dx, wy + wh*0.6 + dy);
+        ctx.bezierCurveTo(W*0.24 + dx, H*0.42 + dy, W*0.26, H*0.56 + dy*0.5, W*0.3 + dx*0.3, H*0.6 + dy*0.3);
+        ctx.stroke();
+    });
+    ctx.lineCap = 'butt';
+    ball(W*0.33, H*0.62, 6, 4);
+    ctx.save();
+    ctx.translate(W*0.22, H*0.51); ctx.rotate(-0.08);
+    ctx.fillStyle = '#fff9e9';
+    ctx.font = `bold 8px 'Arial Black', sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.shadowColor = 'rgba(0,0,0,0.8)'; ctx.shadowBlur = 3;
+    ctx.fillText('WIND ASSIST +1', 0, 0);
+    ctx.restore();
+
+    // The cue ball, which has scratched, and is going in very confidently
+    const cbx = W - inBot - 24, cby = tBot - 18;
+    ctx.strokeStyle = 'rgba(255,253,248,0.45)';
+    ctx.lineWidth = 1;
+    [-3, 0, 3].forEach(d => {
+        ctx.beginPath(); ctx.moveTo(cbx - 26, cby - 14 + d); ctx.lineTo(cbx - 9, cby - 4 + d); ctx.stroke();
+    });
+    ball(cbx, cby, 7, 0);
+    ctx.save();
+    ctx.translate(cbx - 6, cby - 22); ctx.rotate(-0.12);
+    ctx.fillStyle = '#df614e';
+    rr(-22, -8, 44, 14, 3); ctx.fill();
+    ctx.fillStyle = '#fff9e9';
+    ctx.font = `bold 8px 'Arial Black', sans-serif`;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('SCRATCH!', 0, -1);
+    ctx.restore();
+
+    // A cue stick coming in from the bottom left, plus chalk sitting on the rail
+    ctx.save();
+    ctx.translate(W*0.05, H*1.02); ctx.rotate(-0.42);
+    const cue = ctx.createLinearGradient(0, 0, W*0.28, 0);
+    cue.addColorStop(0, '#2a1a10'); cue.addColorStop(0.45, '#6b4a2e'); cue.addColorStop(0.97, '#e8d7b0'); cue.addColorStop(1, '#2456c6');
+    ctx.fillStyle = cue;
+    ctx.beginPath(); ctx.moveTo(0, -4); ctx.lineTo(W*0.28, -1.5); ctx.lineTo(W*0.28, 1.5); ctx.lineTo(0, 4); ctx.closePath(); ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = '#2f6fd1';
+    ctx.fillRect(W - inTop - 22, tTop - 9, 6, 5);
+    ctx.fillStyle = '#4f8dff';
+    ctx.fillRect(W - inTop - 22, tTop - 9, 6, 1.5);
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W/2, H/2, H*0.25, W/2, H/2, H*0.95);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.45)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+}
+
 const tileCanvasDrawers = {
     'canvas-castle': drawCastleScene,
     'canvas-warzone': drawWarzoneScene,
@@ -11297,7 +11566,8 @@ const tileCanvasDrawers = {
     'canvas-dash': drawDashScene,
     'canvas-kart': drawKartScene,
     'canvas-platformer': drawPlatformerScene,
-    'canvas-recursion': drawRecursionScene
+    'canvas-recursion': drawRecursionScene,
+    'canvas-pool': drawPoolScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -11323,7 +11593,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 39 canvases out of the screen reader's way.
+    // so keep 40 canvases out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
