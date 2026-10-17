@@ -36,7 +36,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 41 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 42 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -90,7 +90,8 @@
             {"@type": "ListItem", "position": 33, "name": "Chicago Family Adventure", "url": "https://family2dplatformer.onrender.com"},
             {"@type": "ListItem", "position": 34, "name": "Recursion", "url": "https://recursiongame.onrender.com"},
             {"@type": "ListItem", "position": 35, "name": "Windy City Pool Club", "url": "https://familybilliards.onrender.com"},
-            {"@type": "ListItem", "position": 36, "name": "Wick", "url": "https://wick-8rz2.onrender.com"}
+            {"@type": "ListItem", "position": 36, "name": "Wick", "url": "https://wick-8rz2.onrender.com"},
+            {"@type": "ListItem", "position": 37, "name": "The Last Light", "url": "https://lastlightgame.onrender.com"}
         ]
     }
     </script>
@@ -1983,6 +1984,43 @@
             border-color: rgba(232, 176, 58, 0.6);
         }
 
+        /* The Last Light - torch amber and the Torchbearer's ochre against cold catacomb stone */
+        .card-lastlight .card-bg {
+            background: linear-gradient(135deg, #1a202d 0%, #07090d 100%);
+        }
+        .card-lastlight .card-art::after {
+            height: 30px;
+            background: linear-gradient(to top, #12161f, transparent);
+        }
+        .card-lastlight .card-genre { color: #9fb0c8; }
+        .card-lastlight .card-title { color: #ffb24a; }
+        .card-lastlight .feature-tag {
+            background: rgba(200, 150, 46, 0.12);
+            color: #f0d49a;
+            border: 1px solid rgba(200, 150, 46, 0.32);
+        }
+        .card-lastlight .play-btn {
+            background: linear-gradient(135deg, #ffb24a, #b8302c);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(255, 140, 50, 0.4);
+        }
+        .card-lastlight:hover {
+            box-shadow: 0 30px 60px rgba(255, 140, 50, 0.2);
+        }
+        .card-lastlight .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(159, 176, 200, 0.2);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-lastlight:hover .glow-border {
+            border-color: rgba(255, 178, 74, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2571,7 +2609,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>41</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>42</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2615,6 +2653,34 @@
                     <span class="feature-tag">20 Waves</span>
                     <span class="feature-tag">Evolutions</span>
                     <span class="feature-tag">Ogre King</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- The Last Light -->
+    <a href="https://lastlightgame.onrender.com" class="game-card card-lastlight" data-category="strategy">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-lastlight"></canvas>
+                <div class="game-icon">&#x1F525;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Survival Horror / 3D</div>
+                <div class="card-title">The Last Light</div>
+                <p class="card-desc">
+                    You have one torch, a satchel, a stick of chalk, and a vague sense that the catacombs are bigger on the inside. Somewhere far ahead burns a golden sanctuary fire. Between you and it: miles of cold stone, a great many skulls, and the Hunter, a tall ragged thing with glowing eyes that has been waiting a very long time for your torch to go out. It will go out. Fuel only burns one direction. When it hits zero the Hunt begins, and your options become: strike a match with shaking hands, crouch and walk very, very quietly, break its line of sight, or run for the sanctuary and hope you remember which way it was (this is what the chalk is for, and you will forget to use the chalk). Switch torch modes to trade light for fuel, fire a flame burst when something gets too close, and bank the relics you find to buy a bigger fuel reservoir, softer boots and a compass. Die, and you lose everything you were carrying. The Hunter keeps nothing. It just wanted the light.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">Torch Fuel</span>
+                    <span class="feature-tag">The Hunt</span>
+                    <span class="feature-tag">Sanctuary Upgrades</span>
+                    <span class="feature-tag">Touch &amp; Gamepad</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -3748,7 +3814,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="41" data-suffix="">0</div>
+        <div class="stat-value" data-target="42" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -11806,6 +11872,213 @@ function drawWickScene(canvas) {
     ctx.fillText('WAX', mx, my + 9);
 }
 
+function drawLastLightScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+    const vx = W*0.5, vy = H*0.3, floorH = H*0.7;
+
+    // Far end of the catacombs: cold blue haze, and the golden sanctuary fire
+    ctx.fillStyle = '#0a0d14';
+    ctx.fillRect(0, 0, W, H);
+    const haze = ctx.createRadialGradient(vx, vy, 2, vx, vy, W*0.5);
+    haze.addColorStop(0, '#3a4660'); haze.addColorStop(1, '#0a0d14');
+    ctx.fillStyle = haze;
+    ctx.fillRect(0, 0, W, H);
+    const sanct = ctx.createRadialGradient(vx, vy - 4, 1, vx, vy - 4, 26);
+    sanct.addColorStop(0, 'rgba(255,214,120,0.95)'); sanct.addColorStop(0.4, 'rgba(255,160,60,0.45)'); sanct.addColorStop(1, 'rgba(255,140,40,0)');
+    ctx.fillStyle = sanct;
+    ctx.fillRect(vx - 30, vy - 32, 60, 60);
+    ctx.fillStyle = '#1a1612';                            // altar and a robed statue
+    ctx.fillRect(vx - 9, vy - 1, 18, 4);
+    ctx.fillRect(vx - 2, vy - 11, 4, 10);
+    ctx.beginPath(); ctx.arc(vx, vy - 12, 2, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#ffd27a';
+    [-7, -4, 4, 7].forEach(dx => ctx.fillRect(vx + dx, vy - 3, 1, 2));
+
+    // Wet flagstone floor
+    const floor = ctx.createLinearGradient(0, vy, 0, H);
+    floor.addColorStop(0, '#2a3040'); floor.addColorStop(1, '#14171f');
+    ctx.fillStyle = floor;
+    ctx.fillRect(0, vy, W, H - vy);
+    ctx.strokeStyle = 'rgba(0,0,0,0.45)';
+    ctx.lineWidth = 1;
+    for (let i = -8; i <= 8; i++) {
+        ctx.beginPath(); ctx.moveTo(vx + i*2, vy); ctx.lineTo(vx + i*W*0.16, H); ctx.stroke();
+    }
+    for (let k = 1; k < 9; k++) {
+        const y = vy + floorH*Math.pow(k/8, 2.1);
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(255,190,100,0.12)';             // sanctuary glow reflected in puddles
+    ctx.beginPath(); ctx.moveTo(vx - 3, vy + 2); ctx.lineTo(vx + 3, vy + 2); ctx.lineTo(vx + 14, H); ctx.lineTo(vx - 14, H); ctx.closePath(); ctx.fill();
+
+    // Receding stone arches, far to near
+    const arch = (s, col) => {
+        const fy = vy + floorH*s, hw = W*0.55*s + 4, top = fy - H*1.25*s - 6;
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.rect(0, 0, W, fy + 1);
+        ctx.moveTo(vx - hw, fy + 1);
+        ctx.lineTo(vx - hw, top + hw);
+        ctx.arc(vx, top + hw, hw, Math.PI, 0);
+        ctx.lineTo(vx + hw, fy + 1);
+        ctx.closePath();
+        ctx.fill('evenodd');
+        ctx.strokeStyle = 'rgba(160,180,210,0.12)';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(vx - hw, fy); ctx.lineTo(vx - hw, top + hw); ctx.arc(vx, top + hw, hw, Math.PI, 0); ctx.lineTo(vx + hw, fy); ctx.stroke();
+        return { fy, hw, top };
+    };
+    [[0.06, '#262e40'], [0.1, '#222a3a'], [0.16, '#1e2534'], [0.25, '#1a202d'], [0.4, '#161b26']].forEach(([s, c]) => arch(s, c));
+    const near = arch(0.68, '#121620');
+
+    // Near walls: masonry courses and burial niches with skulls
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)';
+    for (let y = 8; y < near.fy; y += 11) {
+        [[0, vx - near.hw], [vx + near.hw, W]].forEach(([x0, x1]) => {
+            ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+        });
+    }
+    const niche = (x, y, nw, skull) => {
+        ctx.fillStyle = '#07090d';
+        ctx.beginPath(); ctx.moveTo(x, y + 12); ctx.lineTo(x, y + 4); ctx.arc(x + nw/2, y + 4, nw/2, Math.PI, 0); ctx.lineTo(x + nw, y + 12); ctx.closePath(); ctx.fill();
+        if (skull) {
+            ctx.fillStyle = '#b8ab8c';
+            ctx.beginPath(); ctx.arc(x + nw/2, y + 7, 3.4, 0, Math.PI*2); ctx.fill();
+            ctx.fillRect(x + nw/2 - 2, y + 9, 4, 3);
+            ctx.fillStyle = '#07090d';
+            ctx.fillRect(x + nw/2 - 2, y + 6, 1.4, 1.6); ctx.fillRect(x + nw/2 + 0.6, y + 6, 1.4, 1.6);
+        }
+    };
+    [[0.02, 0.12, 1], [0.1, 0.12, 0], [0.02, 0.32, 0], [0.1, 0.32, 1], [0.86, 0.14, 1], [0.93, 0.36, 1]]
+        .forEach(([fx, fy, s]) => niche(W*fx, H*fy, 13, s));
+
+    // Chalk arrow left on the floor (Q marks the way back)
+    ctx.strokeStyle = 'rgba(235,240,245,0.6)';
+    ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    ctx.moveTo(W*0.58, H*0.9); ctx.lineTo(W*0.66, H*0.84);
+    ctx.moveTo(W*0.62, H*0.835); ctx.lineTo(W*0.66, H*0.84); ctx.lineTo(W*0.65, H*0.875);
+    ctx.stroke();
+
+    // The Hunter: tall, ragged, patient, and very interested in your torch going out
+    const hx = W*0.84, hb = H*0.86, hh = H*0.62;
+    const mist = ctx.createRadialGradient(hx, hb - hh*0.5, 4, hx, hb - hh*0.5, hh*0.75);
+    mist.addColorStop(0, 'rgba(120,145,185,0.45)'); mist.addColorStop(1, 'rgba(120,145,185,0)');
+    ctx.fillStyle = mist;                                 // cold mist behind it, so the silhouette reads
+    ctx.fillRect(hx - hh, hb - hh*1.3, hh*2, hh*1.5);
+    ctx.fillStyle = 'rgba(4,5,8,0.92)';
+    ctx.beginPath();
+    ctx.moveTo(hx - 5, hb - hh);
+    ctx.quadraticCurveTo(hx + 9, hb - hh - 4, hx + 8, hb - hh*0.82);
+    ctx.lineTo(hx + 13, hb - hh*0.68);
+    for (let i = 0; i <= 8; i++) {                        // shredded hem
+        const x = hx + 15 - i*4.2, y = hb - (i % 2 ? 10 : 0) - Math.random()*6;
+        ctx.lineTo(x, y);
+    }
+    ctx.lineTo(hx - 15, hb - hh*0.66);
+    ctx.lineTo(hx - 9, hb - hh*0.82);
+    ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = 'rgba(4,5,8,0.9)';                  // long arms and clawed fingers
+    ctx.lineCap = 'round';
+    [[-1, 0.2], [1, -0.1]].forEach(([side, tilt]) => {
+        ctx.lineWidth = 3;
+        const sx = hx + side*10, sy = hb - hh*0.78, ex = hx + side*(20 + tilt*10), ey = hb - hh*0.22;
+        ctx.beginPath(); ctx.moveTo(sx, sy); ctx.quadraticCurveTo(sx + side*10, sy + hh*0.25, ex, ey); ctx.stroke();
+        ctx.lineWidth = 1.2;
+        [-3, 0, 3].forEach(d => { ctx.beginPath(); ctx.moveTo(ex, ey); ctx.lineTo(ex + d, ey + 10); ctx.stroke(); });
+    });
+    ctx.lineCap = 'butt';
+    ctx.shadowColor = '#ffd25a'; ctx.shadowBlur = 8;
+    ctx.fillStyle = '#ffe08a';
+    ctx.beginPath(); ctx.ellipse(hx - 3, hb - hh*0.9, 1.6, 1, 0, 0, Math.PI*2); ctx.ellipse(hx + 3, hb - hh*0.9, 1.6, 1, 0, 0, Math.PI*2); ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Ground fog
+    for (let i = 0; i < 3; i++) {
+        const fog = ctx.createLinearGradient(0, H*(0.68 + i*0.08), 0, H*(0.86 + i*0.06));
+        fog.addColorStop(0, 'rgba(140,160,190,0)'); fog.addColorStop(0.5, 'rgba(140,160,190,0.12)'); fog.addColorStop(1, 'rgba(140,160,190,0)');
+        ctx.fillStyle = fog;
+        ctx.fillRect(0, H*(0.68 + i*0.08), W, H*0.2);
+    }
+
+    // The Torchbearer, from behind: ochre hood, ragged cloak, satchel, torch held high
+    const tx = W*0.24, tb = H*0.97, s = Math.min(1.25, H/170);
+    ctx.save();
+    ctx.translate(tx, tb); ctx.scale(s, s);
+    ctx.fillStyle = '#1c1a1a';                             // boots and legs
+    ctx.fillRect(-9, -26, 7, 26); ctx.fillRect(3, -24, 7, 24);
+    ctx.fillStyle = '#3a2a1e';
+    ctx.fillRect(-10, -7, 9, 7); ctx.fillRect(2, -6, 9, 6);
+    const cloak = ctx.createLinearGradient(-20, -80, 20, -20);
+    cloak.addColorStop(0, '#e0b04a'); cloak.addColorStop(1, '#8a5e1e');
+    ctx.fillStyle = cloak;
+    ctx.beginPath();                                       // cloak with a torn hem
+    ctx.moveTo(-6, -78);
+    ctx.quadraticCurveTo(-20, -60, -22, -32);
+    [[-17, -26], [-14, -33], [-9, -24], [-5, -30], [0, -22], [5, -29], [10, -23], [14, -31], [18, -26]].forEach(([x, y]) => ctx.lineTo(x, y));
+    ctx.quadraticCurveTo(20, -60, 7, -78);
+    ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#c8962e';                             // hood
+    ctx.beginPath(); ctx.moveTo(-9, -70); ctx.quadraticCurveTo(-10, -90, 0, -93); ctx.quadraticCurveTo(10, -90, 9, -70); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.beginPath(); ctx.moveTo(0, -92); ctx.quadraticCurveTo(6, -84, 4, -71); ctx.lineTo(9, -70); ctx.quadraticCurveTo(10, -88, 0, -92); ctx.fill();
+    ctx.strokeStyle = '#4a2e1a'; ctx.lineWidth = 2.4;      // satchel strap and bag
+    ctx.beginPath(); ctx.moveTo(8, -74); ctx.lineTo(-12, -42); ctx.stroke();
+    ctx.fillStyle = '#5a3a22';
+    ctx.fillRect(-20, -46, 13, 11);
+    ctx.fillStyle = '#6e4a2c';
+    ctx.fillRect(-20, -46, 13, 4);
+    ctx.fillStyle = '#8a5e1e';                             // raised arm
+    ctx.save(); ctx.translate(11, -68); ctx.rotate(-0.55);
+    ctx.fillRect(0, -3, 20, 6);
+    ctx.restore();
+    ctx.strokeStyle = '#4a2e1a'; ctx.lineWidth = 3;        // torch handle
+    ctx.beginPath(); ctx.moveTo(26, -72); ctx.lineTo(31, -96); ctx.stroke();
+    ctx.fillStyle = '#2a2420';
+    ctx.fillRect(28, -102, 6, 6);
+    ctx.restore();
+    // Torch flame and the warm light it throws
+    const fx = tx + 31*s, fy = tb - 106*s;
+    ctx.globalCompositeOperation = 'lighter';
+    const glow = ctx.createRadialGradient(fx, fy, 2, fx, fy, H*0.6);
+    glow.addColorStop(0, 'rgba(255,170,70,0.55)'); glow.addColorStop(0.3, 'rgba(255,140,50,0.18)'); glow.addColorStop(1, 'rgba(255,120,40,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#e0522a';
+    ctx.beginPath(); ctx.moveTo(fx, fy - 18); ctx.quadraticCurveTo(fx + 9, fy - 2, fx, fy + 4); ctx.quadraticCurveTo(fx - 9, fy - 2, fx, fy - 18); ctx.fill();
+    ctx.fillStyle = '#ffb24a';
+    ctx.beginPath(); ctx.moveTo(fx + 1, fy - 12); ctx.quadraticCurveTo(fx + 6, fy, fx, fy + 3); ctx.quadraticCurveTo(fx - 5, fy, fx + 1, fy - 12); ctx.fill();
+    ctx.fillStyle = '#fff2c8';
+    ctx.beginPath(); ctx.ellipse(fx, fy, 2, 3.5, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#ffb24a';                             // embers
+    [[6, -24], [-4, -30], [10, -36], [2, -42]].forEach(([dx, dy]) => ctx.fillRect(fx + dx, fy + dy, 1.4, 1.4));
+
+    // Vignette
+    const vig = ctx.createRadialGradient(W*0.4, H*0.55, H*0.25, W*0.4, H*0.55, H*1.05);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.6)');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, W, H);
+
+    // Torch fuel, running low (when it hits zero, the Hunt begins)
+    const mx = W*0.05, my = H*0.06, mw = W*0.26;
+    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+    ctx.fillRect(mx - 2, my - 2, mw + 4, 8);
+    const fuel = ctx.createLinearGradient(mx, 0, mx + mw, 0);
+    fuel.addColorStop(0, '#b8302c'); fuel.addColorStop(1, '#ffb24a');
+    ctx.fillStyle = fuel;
+    ctx.fillRect(mx, my, mw*0.22, 4);
+    ctx.fillStyle = '#e8d8b8';
+    ctx.font = 'bold 7px sans-serif';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillText('FUEL', mx, my + 8);
+}
+
 const tileCanvasDrawers = {
     'canvas-castle': drawCastleScene,
     'canvas-warzone': drawWarzoneScene,
@@ -11847,7 +12120,8 @@ const tileCanvasDrawers = {
     'canvas-platformer': drawPlatformerScene,
     'canvas-recursion': drawRecursionScene,
     'canvas-pool': drawPoolScene,
-    'canvas-wick': drawWickScene
+    'canvas-wick': drawWickScene,
+    'canvas-lastlight': drawLastLightScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -11873,7 +12147,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 41 canvases out of the screen reader's way.
+    // so keep 42 canvases out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
