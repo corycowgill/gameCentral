@@ -36,7 +36,7 @@
         "@type": "WebSite",
         "name": "Hallucinated Games",
         "url": "https://www.hallucinatedgames.com/",
-        "description": "Free AI-generated browser games. 40 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
+        "description": "Free AI-generated browser games. 41 games built entirely by AI - tower defense, RTS, shooters, football, soccer, puzzles, and more.",
         "publisher": {
             "@type": "Organization",
             "name": "Hallucinated Games",
@@ -89,7 +89,8 @@
             {"@type": "ListItem", "position": 32, "name": "Family Kart", "url": "https://familykart.onrender.com"},
             {"@type": "ListItem", "position": 33, "name": "Chicago Family Adventure", "url": "https://family2dplatformer.onrender.com"},
             {"@type": "ListItem", "position": 34, "name": "Recursion", "url": "https://recursiongame.onrender.com"},
-            {"@type": "ListItem", "position": 35, "name": "Windy City Pool Club", "url": "https://familybilliards.onrender.com"}
+            {"@type": "ListItem", "position": 35, "name": "Windy City Pool Club", "url": "https://familybilliards.onrender.com"},
+            {"@type": "ListItem", "position": 36, "name": "Wick", "url": "https://wick-8rz2.onrender.com"}
         ]
     }
     </script>
@@ -1945,6 +1946,43 @@
             border-color: rgba(223, 97, 78, 0.6);
         }
 
+        /* Wick - candle-flame amber and wax cream over the game's night purple */
+        .card-wick .card-bg {
+            background: linear-gradient(135deg, #2e1648 0%, #0c0516 100%);
+        }
+        .card-wick .card-art::after {
+            height: 30px;
+            background: linear-gradient(to top, #1c0d2a, transparent);
+        }
+        .card-wick .card-genre { color: #e8b03a; }
+        .card-wick .card-title { color: #fbe9c8; }
+        .card-wick .feature-tag {
+            background: rgba(232, 176, 58, 0.12);
+            color: #ffe2a0;
+            border: 1px solid rgba(232, 176, 58, 0.32);
+        }
+        .card-wick .play-btn {
+            background: linear-gradient(135deg, #ffb24a, #e0522a);
+            color: #1c0d2a;
+            box-shadow: 0 4px 20px rgba(255, 178, 74, 0.4);
+        }
+        .card-wick:hover {
+            box-shadow: 0 30px 60px rgba(255, 178, 74, 0.2);
+        }
+        .card-wick .glow-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 20px;
+            border: 1px solid rgba(232, 176, 58, 0.22);
+            z-index: 3;
+            pointer-events: none;
+            transition: border-color 0.3s ease;
+        }
+        .card-wick:hover .glow-border {
+            border-color: rgba(232, 176, 58, 0.6);
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2533,7 +2571,7 @@
     <div class="studio-badge">Hallucinated Games</div>
     <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
-    <p class="game-count"><span>40</span> Games &mdash; Built by AI, Debugged by Luck</p>
+    <p class="game-count"><span>41</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
 
@@ -2577,6 +2615,34 @@
                     <span class="feature-tag">20 Waves</span>
                     <span class="feature-tag">Evolutions</span>
                     <span class="feature-tag">Ogre King</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Wick -->
+    <a href="https://wick-8rz2.onrender.com" class="game-card card-wick" data-category="puzzle">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-wick"></canvas>
+                <div class="game-icon">&#x1F56F;&#xFE0F;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Puzzle Platformer / Game Jam</div>
+                <div class="card-title">Wick</div>
+                <p class="card-desc">
+                    You are Wick, a candle-cat, which is a terrible thing to be. Your wax is your health, your height and your light, and it is melting the entire time. Walking melts it faster. Jumping costs wax. The only way across a gap is to drip some of yourself onto the floor and climb it, so every ledge is a small negotiation about how much of your own body a step is worth. Reach the next torch before you burn down to a stub and you get your wax back. Grab the jack-o&rsquo;-lanterns for a snack. Wind gusts try to blow you out, water drips are exactly as bad for a candle as you&rsquo;d think, cobwebs are sticky, and fuse ropes burn gates open if you&rsquo;re brave enough to light them. Eight levels from Market Row to the Castle Stair, every sprite drawn in code and every sound synthesized, built for an AI game jam with the theme TORCH. As Wick shrinks, the face stays the same size, so the closer you are to burning out, the cuter and more desperate Wick looks.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">8 Levels</span>
+                    <span class="feature-tag">Wax = Health</span>
+                    <span class="feature-tag">Build With Wax</span>
+                    <span class="feature-tag">Touch &amp; Gamepad</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -3682,7 +3748,7 @@
 
 <div class="stats-ticker">
     <div class="stat-item">
-        <div class="stat-value" data-target="40" data-suffix="">0</div>
+        <div class="stat-value" data-target="41" data-suffix="">0</div>
         <div class="stat-label">Games Shipped</div>
     </div>
     <div class="stat-item">
@@ -11527,6 +11593,219 @@ function drawPoolScene(canvas) {
     ctx.fillRect(0, 0, W, H);
 }
 
+function drawWickScene(canvas) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.offsetWidth * 2;
+    const h = canvas.height = canvas.offsetHeight * 2;
+    ctx.scale(2, 2);
+    const W = w/2, H = h/2;
+    const OUT = '#2a1630', WAX = '#f6e6c4', SHADE = '#dcb98a', FLAME = '#ffb24a';
+    const groundY = H*0.82;
+
+    // Autumn night over the old town
+    const sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, '#0c0516');
+    sky.addColorStop(0.6, '#2e1648');
+    sky.addColorStop(1, '#3a2a3e');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(255,240,220,0.8)';
+    [[0.08, 0.1], [0.3, 0.06], [0.55, 0.12], [0.72, 0.05], [0.93, 0.18], [0.44, 0.22]].forEach(([x, y]) => ctx.fillRect(W*x, H*y, 1.2, 1.2));
+    ctx.fillStyle = '#fbe9c8';                            // harvest moon
+    ctx.beginPath(); ctx.arc(W*0.66, H*0.16, 13, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = 'rgba(220,185,138,0.5)';
+    ctx.beginPath(); ctx.arc(W*0.66 - 4, H*0.16 - 2, 3, 0, Math.PI*2); ctx.arc(W*0.66 + 5, H*0.16 + 4, 2, 0, Math.PI*2); ctx.fill();
+
+    // Rooftops and a castle on the hill
+    ctx.fillStyle = '#1c0d2a';
+    ctx.beginPath();
+    ctx.moveTo(0, H*0.6);
+    [[0.06, 0.5], [0.12, 0.6], [0.18, 0.46], [0.26, 0.6], [0.34, 0.52], [0.4, 0.6]].forEach(([x, y]) => ctx.lineTo(W*x, H*y));
+    ctx.lineTo(W*0.4, H); ctx.lineTo(0, H); ctx.closePath(); ctx.fill();
+    ctx.fillRect(W*0.82, H*0.3, W*0.06, H*0.4);           // castle keep
+    ctx.fillRect(W*0.76, H*0.42, W*0.2, H*0.3);
+    for (let i = 0; i < 4; i++) ctx.fillRect(W*0.82 + i*W*0.017, H*0.27, W*0.009, H*0.04);
+    ctx.fillStyle = '#e8b03a';
+    ctx.fillRect(W*0.845, H*0.36, 2, 3);
+    ctx.fillRect(W*0.8, H*0.5, 2, 3);
+    ctx.fillRect(W*0.92, H*0.48, 2, 3);
+
+    // Stone ground with a gap, and a high ledge on the right
+    const stone = (x, y, sw, sh) => {
+        ctx.fillStyle = '#4a2c2a';
+        ctx.fillRect(x, y, sw, sh);
+        ctx.fillStyle = '#6c3a24';
+        ctx.fillRect(x, y, sw, 2);
+        ctx.strokeStyle = 'rgba(12,5,22,0.6)';
+        ctx.lineWidth = 1;
+        for (let yy = y + 7, row = 0; yy < y + sh; yy += 7, row++) {
+            ctx.beginPath(); ctx.moveTo(x, yy); ctx.lineTo(x + sw, yy); ctx.stroke();
+            for (let xx = x + (row % 2)*7; xx < x + sw; xx += 14) {
+                ctx.beginPath(); ctx.moveTo(xx, yy); ctx.lineTo(xx, yy + 7); ctx.stroke();
+            }
+        }
+    };
+    stone(0, groundY, W*0.44, H - groundY);
+    stone(W*0.6, groundY, W*0.4, H - groundY);
+    stone(W*0.72, H*0.6, W*0.28, groundY - H*0.6);
+
+    // Wax blobs Wick dripped to step up to the ledge
+    const blob = (x, y, r) => {
+        ctx.fillStyle = SHADE; ctx.strokeStyle = OUT; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.ellipse(x, y, r, r*0.75, 0, Math.PI, 0); ctx.lineTo(x + r, y); ctx.closePath(); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = WAX;
+        ctx.beginPath(); ctx.ellipse(x - r*0.25, y - r*0.4, r*0.35, r*0.18, 0, 0, Math.PI*2); ctx.fill();
+    };
+    blob(W*0.64, groundY, 9);
+    blob(W*0.68, groundY - 7, 8);
+    blob(W*0.665, groundY - 14, 6);
+
+    // Cobweb in the corner and a hay bale
+    ctx.strokeStyle = 'rgba(230,236,248,0.4)';
+    ctx.lineWidth = 0.7;
+    for (let i = 0; i < 5; i++) {
+        const a = i*Math.PI/8;
+        ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(Math.cos(a)*42, Math.sin(a)*42); ctx.stroke();
+    }
+    [12, 22, 32].forEach(r => { ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI/2); ctx.stroke(); });
+    ctx.fillStyle = '#c9a03a';
+    ctx.fillRect(W*0.02, groundY - 14, 26, 14);
+    ctx.strokeStyle = '#8a6a1a'; ctx.lineWidth = 1;
+    [4, 9].forEach(d => { ctx.beginPath(); ctx.moveTo(W*0.02, groundY - 14 + d); ctx.lineTo(W*0.02 + 26, groundY - 14 + d); ctx.stroke(); });
+
+    // Jack-o'-lanterns: +15 wax each
+    const pumpkin = (x, y, r) => {
+        ctx.fillStyle = '#f08a38'; ctx.strokeStyle = OUT; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.ellipse(x, y - r*0.8, r, r*0.8, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+        ctx.beginPath(); ctx.ellipse(x, y - r*0.8, r*0.4, r*0.8, 0, 0, Math.PI*2); ctx.stroke();
+        ctx.fillStyle = '#5a6a2a'; ctx.fillRect(x - 1.5, y - r*1.75, 3, 4);
+        ctx.fillStyle = '#ffe2a0';
+        ctx.beginPath(); ctx.moveTo(x - r*0.55, y - r); ctx.lineTo(x - r*0.25, y - r*1.25); ctx.lineTo(x - r*0.1, y - r); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(x + r*0.55, y - r); ctx.lineTo(x + r*0.25, y - r*1.25); ctx.lineTo(x + r*0.1, y - r); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(x - r*0.5, y - r*0.6); ctx.lineTo(x + r*0.5, y - r*0.6); ctx.lineTo(x, y - r*0.3); ctx.fill();
+    };
+    pumpkin(W*0.33, groundY, 9);
+    pumpkin(W*0.92, H*0.6, 7);
+
+    // A falling water drip over the gap (shelter under anything solid!)
+    ctx.fillStyle = '#9fc8e8';
+    [[0.52, 0.3], [0.52, 0.5], [0.52, 0.68]].forEach(([x, y], i) => {
+        ctx.globalAlpha = 0.4 + i*0.25;
+        ctx.beginPath(); ctx.ellipse(W*x, H*y, 1.8, 3, 0, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    // Wind gust with swirling leaves
+    ctx.strokeStyle = 'rgba(251,233,200,0.3)';
+    ctx.lineWidth = 1.2;
+    [[0, 0], [6, 7]].forEach(([dx, dy]) => {
+        ctx.beginPath(); ctx.moveTo(W*0.62 + dx, H*0.36 + dy); ctx.bezierCurveTo(W*0.7, H*0.3 + dy, W*0.76, H*0.42 + dy, W*0.86, H*0.36 + dy); ctx.stroke();
+    });
+    [['#e0522a', 0.68, 0.33], ['#e8b03a', 0.76, 0.4], ['#b8302c', 0.84, 0.34]].forEach(([c, x, y]) => {
+        ctx.fillStyle = c;
+        ctx.beginPath(); ctx.ellipse(W*x, H*y, 3, 1.6, 0.6, 0, Math.PI*2); ctx.fill();
+    });
+
+    // The torch checkpoint on the ledge
+    const tx = W*0.8, ty = H*0.6;
+    ctx.fillStyle = '#5a3424';
+    ctx.fillRect(tx - 2, ty - 22, 4, 22);
+    ctx.fillStyle = '#3a2a3e';
+    ctx.fillRect(tx - 5, ty - 26, 10, 5);
+    const flame = (x, y, s) => {
+        ctx.fillStyle = '#e0522a';
+        ctx.beginPath(); ctx.moveTo(x, y - 16*s); ctx.quadraticCurveTo(x + 8*s, y - 4*s, x, y); ctx.quadraticCurveTo(x - 8*s, y - 4*s, x, y - 16*s); ctx.fill();
+        ctx.fillStyle = FLAME;
+        ctx.beginPath(); ctx.moveTo(x, y - 11*s); ctx.quadraticCurveTo(x + 5*s, y - 3*s, x, y); ctx.quadraticCurveTo(x - 5*s, y - 3*s, x, y - 11*s); ctx.fill();
+        ctx.fillStyle = '#fff6dc';
+        ctx.beginPath(); ctx.ellipse(x, y - 3*s, 1.6*s, 3*s, 0, 0, Math.PI*2); ctx.fill();
+    };
+    flame(tx, ty - 25, 1.1);
+
+    // Wick the candle-cat, a bit melted already, looking hopefully at the torch
+    const wx = W*0.21, wy = groundY, bw = 22, bh = 30;
+    const ws = 1.6;
+    ctx.save();
+    ctx.translate(wx, wy); ctx.scale(ws, ws);
+    ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.fillStyle = SHADE; ctx.strokeStyle = OUT; ctx.lineWidth = 2;   // wax pool
+    ctx.beginPath(); ctx.ellipse(0, -1, bw/2 + 6, 4, 0, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+    ctx.lineWidth = 7; ctx.strokeStyle = OUT;                          // tail
+    const tail = () => { ctx.beginPath(); ctx.moveTo(-bw/2 + 3, -5); ctx.bezierCurveTo(-bw/2 - 10, -4, -bw/2 - 13, -14, -bw/2 - 6, -22); };
+    tail(); ctx.stroke();
+    ctx.lineWidth = 4; ctx.strokeStyle = WAX; tail(); ctx.stroke();
+    ctx.fillStyle = WAX; ctx.strokeStyle = OUT; ctx.lineWidth = 2;
+    [-1, 1].forEach(s => {                                             // ears
+        ctx.beginPath(); ctx.moveTo(s*4, -bh + 2); ctx.lineTo(s*9, -bh - 7); ctx.lineTo(s*11, -bh + 3); ctx.closePath(); ctx.fill(); ctx.stroke();
+    });
+    ctx.beginPath();                                                   // body, with drips down the side
+    ctx.moveTo(-bw/2, -2); ctx.lineTo(-bw/2, -bh + 6); ctx.quadraticCurveTo(-bw/2, -bh, -bw/2 + 6, -bh);
+    ctx.lineTo(bw/2 - 6, -bh); ctx.quadraticCurveTo(bw/2, -bh, bw/2, -bh + 6); ctx.lineTo(bw/2, -2); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = SHADE;
+    ctx.fillRect(bw/2 - 6, -bh + 4, 4, bh - 6);
+    ctx.fillStyle = WAX;
+    [[-7, -bh + 1, 8], [2, -bh + 1, 12]].forEach(([x, y, l]) => {
+        ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + 4, y); ctx.lineTo(x + 4, y + l); ctx.arc(x + 2, y + l, 2, 0, Math.PI); ctx.closePath(); ctx.fill();
+    });
+    ctx.fillStyle = '#fff6dc';
+    ctx.fillRect(-bw/2 + 3, -bh + 3, 3, bh - 10);
+    ctx.fillStyle = OUT;                                               // face, glancing up and right
+    ctx.beginPath(); ctx.ellipse(-2, -bh + 12, 2, 2.6, 0, 0, Math.PI*2); ctx.ellipse(6, -bh + 12, 2, 2.6, 0, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(-1.4, -bh + 11, 0.8, 0, Math.PI*2); ctx.arc(6.6, -bh + 11, 0.8, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#e0402c';
+    ctx.beginPath(); ctx.moveTo(1, -bh + 15.5); ctx.lineTo(3, -bh + 15.5); ctx.lineTo(2, -bh + 17); ctx.closePath(); ctx.fill();
+    ctx.strokeStyle = OUT; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(0.8, -bh + 17.5, 1.3, 0, Math.PI*0.9); ctx.arc(3.2, -bh + 17.5, 1.3, Math.PI*0.1, Math.PI); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,140,120,0.45)';                          // blush
+    ctx.beginPath(); ctx.ellipse(-6, -bh + 16, 2.5, 1.5, 0, 0, Math.PI*2); ctx.ellipse(10, -bh + 16, 2.5, 1.5, 0, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#2a1630'; ctx.lineWidth = 1.8;                  // the wick
+    ctx.beginPath(); ctx.moveTo(1, -bh); ctx.quadraticCurveTo(2, -bh - 4, 1, -bh - 6); ctx.stroke();
+    flame(1, -bh - 5, 1);
+    ctx.restore();
+
+    // Darkness, with pools of light around every flame
+    const dark = document.createElement('canvas');
+    dark.width = w; dark.height = h;
+    const d = dark.getContext('2d');
+    d.scale(2, 2);
+    d.fillStyle = 'rgba(12,5,22,0.45)';
+    d.fillRect(0, 0, W, H);
+    d.globalCompositeOperation = 'destination-out';
+    [[wx + 1, wy - (bh + 12)*ws, H*0.5], [tx, ty - 34, H*0.4], [W*0.33, groundY - 9, H*0.14], [W*0.66, groundY - 8, H*0.16], [W*0.92, H*0.6 - 7, H*0.1], [W*0.66, H*0.16, H*0.22]]
+        .forEach(([x, y, r]) => {
+            const g = d.createRadialGradient(x, y, 0, x, y, r);
+            g.addColorStop(0, 'rgba(0,0,0,1)'); g.addColorStop(0.55, 'rgba(0,0,0,0.6)'); g.addColorStop(1, 'rgba(0,0,0,0)');
+            d.fillStyle = g;
+            d.fillRect(x - r, y - r, r*2, r*2);
+        });
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(dark, 0, 0);
+    ctx.restore();
+    ctx.globalCompositeOperation = 'lighter';              // warm glow
+    [[wx + 1.6, wy - (bh + 12)*ws, 46], [tx, ty - 34, 30]].forEach(([x, y, r]) => {
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, 'rgba(255,178,74,0.35)'); g.addColorStop(1, 'rgba(255,178,74,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.globalCompositeOperation = 'source-over';
+
+    // Wax meter, the game's real clock
+    const mx = W*0.05, my = H*0.06, mw = W*0.24;
+    ctx.fillStyle = 'rgba(28,13,42,0.8)';
+    ctx.fillRect(mx - 2, my - 2, mw + 4, 9);
+    const meter = ctx.createLinearGradient(mx, 0, mx + mw, 0);
+    meter.addColorStop(0, '#e0402c'); meter.addColorStop(0.5, '#e8b03a'); meter.addColorStop(1, '#fbe9c8');
+    ctx.fillStyle = meter;
+    ctx.fillRect(mx, my, mw*0.38, 5);
+    ctx.fillStyle = '#fbe9c8';
+    ctx.font = `bold 7px sans-serif`;
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillText('WAX', mx, my + 9);
+}
+
 const tileCanvasDrawers = {
     'canvas-castle': drawCastleScene,
     'canvas-warzone': drawWarzoneScene,
@@ -11567,7 +11846,8 @@ const tileCanvasDrawers = {
     'canvas-kart': drawKartScene,
     'canvas-platformer': drawPlatformerScene,
     'canvas-recursion': drawRecursionScene,
-    'canvas-pool': drawPoolScene
+    'canvas-pool': drawPoolScene,
+    'canvas-wick': drawWickScene
 };
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -11593,7 +11873,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 40 canvases out of the screen reader's way.
+    // so keep 41 canvases out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
