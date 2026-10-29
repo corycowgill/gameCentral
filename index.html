@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Returning visitors skip the "INSERT COIN" reel (set when it's dismissed)
+        try { if (localStorage.getItem('hg-entered')) document.documentElement.classList.add('hg-returning'); } catch (e) {}
+    </script>
     <title>Hallucinated Games | Free AI-Generated Browser Games - Play Now</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
     <meta name="description" content="Free browser games built entirely by AI &mdash; shooters, RTS, sports, puzzles, parser adventures, kaiju rampage, gravity puzzles and more. 100% vibe coded, 0% unit tested. Hallucinated Games, Chicago IL.">
@@ -30,7 +34,7 @@
     <meta name="twitter:description" content="A growing collection of free browser games built entirely by AI &mdash; tower defense, RTS, shooters, sports, puzzles, card games, parser adventures, kaiju rampage and more. 100% vibe coded, 0% unit tested.">
 
     <!-- Structured Data -->
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="ld-website">
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
@@ -48,52 +52,277 @@
         }
     }
     </script>
-    <script type="application/ld+json">
+    <script type="application/ld+json" id="ld-games">
     {
         "@context": "https://schema.org",
         "@type": "ItemList",
         "name": "AI-Generated Browser Games",
-        "numberOfItems": 29,
+        "numberOfItems": 44,
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Kaiju Rampage", "url": "https://kaiju-am8i.onrender.com"},
-            {"@type": "ListItem", "position": 2, "name": "Dad Tax Attack!", "url": "https://dadtax.onrender.com"},
-            {"@type": "ListItem", "position": 3, "name": "UFO Shooter", "url": "https://ufoshooter.onrender.com"},
-            {"@type": "ListItem", "position": 4, "name": "Shard Shooter", "url": "https://shardshooter.onrender.com"},
-            {"@type": "ListItem", "position": 5, "name": "Void Striker", "url": "https://spaceshipgame.onrender.com"},
-            {"@type": "ListItem", "position": 6, "name": "Dinosaur Escape", "url": "https://dinosaur-escape.onrender.com"},
-            {"@type": "ListItem", "position": 7, "name": "PicPuzzle", "url": "https://picpuzzle.onrender.com"},
-            {"@type": "ListItem", "position": 8, "name": "Family Basketball", "url": "https://cowgillbasketball.onrender.com"},
-            {"@type": "ListItem", "position": 9, "name": "Family Bowl", "url": "https://cowgillbowl.onrender.com"},
-            {"@type": "ListItem", "position": 10, "name": "Warzone", "url": "https://warzone-y0ln.onrender.com"},
-            {"@type": "ListItem", "position": 11, "name": "Thermonuclear War", "url": "https://thermonuclearwargame.onrender.com"},
-            {"@type": "ListItem", "position": 12, "name": "Castle Siege 3D", "url": "https://castlesiege.onrender.com/index_3d.html"},
-            {"@type": "ListItem", "position": 13, "name": "Reef Rescue", "url": "https://colorpuzzler.onrender.com"},
-            {"@type": "ListItem", "position": 14, "name": "Robot Attack 2026", "url": "https://robotattack.onrender.com"},
-            {"@type": "ListItem", "position": 15, "name": "War - The Card Game", "url": "https://warcardgame.onrender.com"},
-            {"@type": "ListItem", "position": 16, "name": "Player Two's Birthday Stuffie Adventure", "url": "https://bdaystuffy.onrender.com"},
-            {"@type": "ListItem", "position": 17, "name": "Rubik's Cube 3D", "url": "https://rubiccube3d.onrender.com"},
-            {"@type": "ListItem", "position": 18, "name": "Pass Da Pig 3D", "url": "https://passdapig3dcowgill2026.onrender.com"},
-            {"@type": "ListItem", "position": 19, "name": "The Last Will of Ashvale", "url": "https://textgame2000.onrender.com"},
-            {"@type": "ListItem", "position": 20, "name": "Family-Man", "url": "https://cowgillman.onrender.com"},
-            {"@type": "ListItem", "position": 21, "name": "Scrap Rocket: Moonshot Mayhem", "url": "https://rocket5000.onrender.com"},
-            {"@type": "ListItem", "position": 22, "name": "Gravity Flip Lab", "url": "https://gravityflip.onrender.com"},
-            {"@type": "ListItem", "position": 23, "name": "Checkers", "url": "https://checkers5000.onrender.com"},
-            {"@type": "ListItem", "position": 24, "name": "Performance Review", "url": "https://synergygame.onrender.com"},
-            {"@type": "ListItem", "position": 25, "name": "Player One Soccer", "url": "https://brennansoccer.onrender.com"},
-            {"@type": "ListItem", "position": 26, "name": "Player Two's Battle Tops", "url": "https://parkerbattle.onrender.com"},
-            {"@type": "ListItem", "position": 27, "name": "Typing Battle", "url": "https://typingbattle.onrender.com"},
-            {"@type": "ListItem", "position": 28, "name": "Chicago Chess", "url": "https://chess2000.onrender.com"},
-            {"@type": "ListItem", "position": 29, "name": "Castle Survivor", "url": "https://castlesurvivor.onrender.com"},
-            {"@type": "ListItem", "position": 30, "name": "Laundry Monster", "url": "https://laundrymonster.onrender.com"},
-            {"@type": "ListItem", "position": 31, "name": "Chicago Dash", "url": "https://chicagodash.onrender.com"},
-            {"@type": "ListItem", "position": 32, "name": "Family Kart", "url": "https://familykart.onrender.com"},
-            {"@type": "ListItem", "position": 33, "name": "Chicago Family Adventure", "url": "https://family2dplatformer.onrender.com"},
-            {"@type": "ListItem", "position": 34, "name": "Recursion", "url": "https://recursiongame.onrender.com"},
-            {"@type": "ListItem", "position": 35, "name": "Windy City Pool Club", "url": "https://familybilliards.onrender.com"},
-            {"@type": "ListItem", "position": 36, "name": "Wick", "url": "https://wick-8rz2.onrender.com"},
-            {"@type": "ListItem", "position": 37, "name": "The Last Light", "url": "https://lastlightgame.onrender.com"},
-            {"@type": "ListItem", "position": 38, "name": "Squiggles", "url": "https://squiggles.onrender.com"},
-            {"@type": "ListItem", "position": 39, "name": "Stuffy Town Defense", "url": "https://stuffiebattle.onrender.com"}
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Castle Survivor",
+                "url": "https://castlesurvivor.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Stuffy Town Defense",
+                "url": "https://stuffiebattle.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Squiggles",
+                "url": "https://squiggles.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "The Last Light",
+                "url": "https://lastlightgame.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Wick",
+                "url": "https://wick-8rz2.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 6,
+                "name": "Windy City Pool Club",
+                "url": "https://familybilliards.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 7,
+                "name": "RECURSION",
+                "url": "https://recursiongame.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 8,
+                "name": "Chicago Family Adventure",
+                "url": "https://family2dplatformer.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 9,
+                "name": "Family Kart",
+                "url": "https://familykart.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 10,
+                "name": "Chicago Dash",
+                "url": "https://chicagodash.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 11,
+                "name": "Laundry Monster",
+                "url": "https://laundrymonster.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 12,
+                "name": "Alien Digger",
+                "url": "https://aliendigger.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 13,
+                "name": "Kaiju Rampage",
+                "url": "https://kaiju-am8i.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 14,
+                "name": "Dad Tax Attack!",
+                "url": "https://dadtax.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 15,
+                "name": "UFO Shooter",
+                "url": "https://ufoshooter.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 16,
+                "name": "Shard Shooter",
+                "url": "https://shardshooter.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 17,
+                "name": "Void Striker",
+                "url": "https://spaceshipgame.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 18,
+                "name": "Dinosaur Escape",
+                "url": "https://dinosaur-escape.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 19,
+                "name": "PicPuzzle",
+                "url": "https://picpuzzle.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 20,
+                "name": "Family Basketball",
+                "url": "https://cowgillbasketball.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 21,
+                "name": "Family Bowl",
+                "url": "https://cowgillbowl.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 22,
+                "name": "Warzone",
+                "url": "https://warzone-y0ln.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 23,
+                "name": "Thermonuclear War",
+                "url": "https://thermonuclearwargame.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 24,
+                "name": "Castle Siege 3D",
+                "url": "https://castlesiege.onrender.com/index_3d.html"
+            },
+            {
+                "@type": "ListItem",
+                "position": 25,
+                "name": "Reef Rescue",
+                "url": "https://colorpuzzler.onrender.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 26,
+                "name": "Robot Attack 2026",
+                "url": "https://robotattack.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 27,
+                "name": "War",
+                "url": "https://warcardgame.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 28,
+                "name": "Player Two's Birthday Stuffie Adventure",
+                "url": "https://bdaystuffy.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 29,
+                "name": "Rubik's Cube 3D",
+                "url": "https://rubiccube3d.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 30,
+                "name": "Pass Da Pig 3D",
+                "url": "https://passdapig3dcowgill2026.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 31,
+                "name": "The Last Will of Ashvale",
+                "url": "https://textgame2000.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 32,
+                "name": "Family-Man",
+                "url": "https://cowgillman.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 33,
+                "name": "Scrap Rocket: Moonshot Mayhem",
+                "url": "https://rocket5000.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 34,
+                "name": "Gravity Flip Lab",
+                "url": "https://gravityflip.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 35,
+                "name": "Checkers",
+                "url": "https://checkers5000.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 36,
+                "name": "Performance Review",
+                "url": "https://synergygame.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 37,
+                "name": "Player One Soccer",
+                "url": "https://brennansoccer.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 38,
+                "name": "Typing Battle",
+                "url": "https://typingbattle.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 39,
+                "name": "Player Two's Battle Tops",
+                "url": "https://parkerbattle.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 40,
+                "name": "Chicago Chess",
+                "url": "https://chess2000.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 41,
+                "name": "World Cup Family Fun Bracket 2026",
+                "url": "https://soccerbracket2026.onrender.com/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 42,
+                "name": "Cosmos Explorer",
+                "url": "https://cosmosexplorer.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 43,
+                "name": "Da Pinball",
+                "url": "https://chicagopinballwiz5000.onrender.com"
+            },
+            {
+                "@type": "ListItem",
+                "position": 44,
+                "name": "Mom's Ant Attack",
+                "url": "https://momsantattack.onrender.com"
+            }
         ]
     }
     </script>
@@ -2495,6 +2724,7 @@
             opacity: 0;
             pointer-events: none;
         }
+        .hg-returning .welcome-overlay { display: none; }
 
         /* Full-screen video background */
         .reel-video {
@@ -2654,7 +2884,7 @@
 
 <!-- Cinematic Highlight Reel Overlay -->
 <div class="welcome-overlay" id="welcome-overlay">
-    <video class="reel-video" id="reel-video" muted loop playsinline preload="auto">
+    <video class="reel-video" id="reel-video" muted loop playsinline preload="none" poster="images/reel-poster.jpg">
         <source src="highlight_reel.mp4" type="video/mp4">
     </video>
     <div class="reel-vignette"></div>
@@ -2670,7 +2900,7 @@
     </div>
 </div>
 
-<audio id="bg-music" src="Saturday_Morning_Levels.mp3" loop preload="auto"></audio>
+<audio id="bg-music" src="Saturday_Morning_Levels.mp3" loop preload="none"></audio>
 
 <div class="bg-grid"></div>
 <div class="particles" id="particles"></div>
@@ -12687,6 +12917,33 @@ window.addEventListener('DOMContentLoaded', () => {
     const firstStatTarget = document.querySelector('.stats-ticker .stat-value[data-target]');
     if (firstStatTarget) firstStatTarget.dataset.target = String(gameCount);
 
+    // Same for the structured data: rebuild the game list and the count in
+    // the site description from the tiles (tools/sync-game-list.py keeps the
+    // static copy right for crawlers that don't run JavaScript).
+    const ldGames = document.getElementById('ld-games');
+    if (ldGames) {
+        ldGames.textContent = JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            'name': 'AI-Generated Browser Games',
+            'numberOfItems': gameCount,
+            'itemListElement': Array.from(cards, (card, i) => ({
+                '@type': 'ListItem',
+                'position': i + 1,
+                'name': card.querySelector('.card-title')?.textContent.trim() || '',
+                'url': card.getAttribute('href')
+            }))
+        });
+    }
+    const ldSite = document.getElementById('ld-website');
+    if (ldSite) {
+        try {
+            const site = JSON.parse(ldSite.textContent);
+            site.description = site.description.replace(/\d+ games/, gameCount + ' games');
+            ldSite.textContent = JSON.stringify(site);
+        } catch (e) {}
+    }
+
     // Auto-attach aria-label to each tile so screen readers announce
     // "Play <Title> — <Genre>" instead of the bare URL.
     cards.forEach(card => {
@@ -12699,7 +12956,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tile art is decorative and the tile itself already carries an aria-label,
-    // so keep 44 canvases out of the screen reader's way.
+    // so keep every tile canvas out of the screen reader's way.
     document.querySelectorAll('.card-art canvas')
         .forEach(c => c.setAttribute('aria-hidden', 'true'));
 
@@ -12775,13 +13032,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
     audio.volume = 0.35;
 
-    // Start highlight reel video as soon as possible (muted autoplay is allowed)
-    reelVideo.play().then(() => {
-        reelVideo.classList.add('playing');
-    }).catch(() => {
-        // Fallback: show video statically
-        reelVideo.classList.add('playing');
-    });
+    const returning = document.documentElement.classList.contains('hg-returning');
+
+    // First visit only: start the highlight reel (muted autoplay is allowed).
+    // Returning visitors never see the overlay, so the video is never fetched.
+    if (returning) {
+        overlay.style.display = 'none';
+    } else {
+        reelVideo.play().then(() => {
+            reelVideo.classList.add('playing');
+        }).catch(() => {
+            // Fallback: show the poster frame
+            reelVideo.classList.add('playing');
+        });
+    }
 
     function startMusic() {
         audio.play().then(() => {
@@ -12802,13 +13066,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Welcome overlay — dismiss reel and enter the site.
     // Music stays off by default; the user opts in via the toggle button.
-    enterBtn.addEventListener('click', () => {
+    function enterSite() {
+        if (overlay.classList.contains('hidden')) return;
+        try { localStorage.setItem('hg-entered', '1'); } catch (e) {}
         overlay.classList.add('hidden');
         setTimeout(() => {
             overlay.style.display = 'none';
             reelVideo.pause();
+            reelVideo.removeAttribute('src');
+            reelVideo.load();               // stop any remaining download
         }, 800);
-    });
+    }
+    enterBtn.addEventListener('click', enterSite);
+    if (!returning) {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+                if (e.key !== 'Escape') e.preventDefault();
+                enterSite();
+            }
+        }, { once: true });
+    }
 
     // Music toggle button
     btn.addEventListener('click', () => {
