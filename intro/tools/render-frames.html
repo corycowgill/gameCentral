@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Render intro frames</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+<style>
+  body { background: #07070c; color: #00ffaa; font-family: monospace; padding: 30px; }
+  #log { white-space: pre; line-height: 1.6; }
+  canvas { width: 480px; border: 1px solid #333; margin-top: 16px; display: block; }
+</style>
+</head>
+<body>
+<div id="log">idle</div>
+<canvas id="c" width="1920" height="1080"></canvas>
+
+<script src="../hallucinated-intro.js"></script>
+<script>
+/*
+ * Renders the intro one deterministic frame at a time and POSTs each PNG to
+ * frame-server.py. Driven by render-video.sh; open it directly and it starts
+ * on its own.
+ *
+ *   ?fps=30&scale=1   fps and a resolution multiplier (0.5 = 960x540)
+ */
+(function () {
+  var params = new URLSearchParams(location.search);
+  var FPS = parseInt(params.get('fps') || '30', 10);
+  var SCALE = parseFloat(params.get('scale') || '1');
+
+  var W = Math.round(HallucinatedIntro.WIDTH * SCALE);
+  var H = Math.round(HallucinatedIntro.HEIGHT * SCALE);
+  var TOTAL = Math.round(HallucinatedIntro.DURATION * FPS);
+
+  var canvas = document.getElementById('c');
+  canvas.width = W; canvas.height = H;
+  var ctx = canvas.getContext('2d');
+  var log = document.getElementById('log');
+
+  window.RENDER_DONE = false;
+  window.RENDER_ERROR = null;
+
+  function toBlob(cv) {
+    return new Promise(function (res, rej) {
+      cv.toBlob(function (b) { b ? res(b) : rej(new Error('toBlob failed')); }, 'image/png');
+    });
+  }
+
+  /* A dropped keep-alive socket mid-capture should cost one retry, not the
+     whole render. */
+  async function post(i, blob) {
+    var lastErr;
+    for (var attempt = 0; attempt < 4; attempt++) {
+      try {
+        var resp = await fetch('/frame/' + i, { method: 'POST', body: blob });
+        if (resp.ok) return;
+        lastErr = new Error('HTTP ' + resp.status);
+      } catch (e) {
+        lastErr = e;
+      }
+      await new Promise(function (r) { setTimeout(r, 150 * (attempt + 1)); });
+    }
+    throw new Error('frame ' + i + ' failed after 4 tries: ' + lastErr);
+  }
+
+  async function run() {
+    await HallucinatedIntro.ensureFonts();
+    // Force the scene build before frame 0 so every frame is equally warm.
+    HallucinatedIntro.renderFrame(ctx, 0, W, H, {});
+
+    for (var i = 0; i < TOTAL; i++) {
+      var t = i / FPS;
+      HallucinatedIntro.renderFrame(ctx, t, W, H, {});
+      var blob = await toBlob(canvas);
+      await post(i, blob);
+      if (i % 10 === 0 || i === TOTAL - 1) {
+        log.textContent = 'frame ' + (i + 1) + ' / ' + TOTAL +
+          '  (' + W + 'x' + H + ' @ ' + FPS + 'fps)';
+      }
+    }
+    log.textContent = 'done: ' + TOTAL + ' frames at ' + W + 'x' + H + ' @ ' + FPS + 'fps';
+    window.RENDER_DONE = true;
+  }
+
+  run().catch(function (e) {
+    window.RENDER_ERROR = String(e);
+    log.textContent = 'ERROR: ' + e;
+  });
+})();
+</script>
+</body>
+</html>
