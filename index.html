@@ -64,14 +64,14 @@
             {
                 "@type": "ListItem",
                 "position": 1,
-                "name": "Castle Survivor",
-                "url": "https://castlesurvivor.onrender.com"
+                "name": "Immune Protocol",
+                "url": "https://corycowgill.github.io/ImmuneProtocol/"
             },
             {
                 "@type": "ListItem",
                 "position": 2,
-                "name": "Immune Protocol",
-                "url": "https://corycowgill.github.io/ImmuneProtocol/"
+                "name": "Castle Survivor",
+                "url": "https://castlesurvivor.onrender.com"
             },
             {
                 "@type": "ListItem",
@@ -2934,36 +2934,8 @@
         No games match <span id="search-empty-term"></span>. Try a different word.
     </div>
 
-    <!-- Castle Survivor -->
-    <a href="https://castlesurvivor.onrender.com" class="game-card card-survivor featured" data-category="shooter">
-        <div class="card-bg"></div>
-        <div class="glow-border"></div>
-        <div class="card-content">
-            <div class="card-art">
-                <canvas id="canvas-survivor"></canvas>
-                <div class="game-icon">&#x1F6E1;&#xFE0F;</div>
-            </div>
-            <div class="card-info">
-                <div class="card-genre">Survivors-like / 3D Action</div>
-                <div class="card-title">Castle Survivor</div>
-                <p class="card-desc">
-                    A medieval kingdom is under siege, and the realm&rsquo;s entire defense budget went to one dad and his two sons. Dad is the sturdy one with a broadsword and a shield wall, which is also how he handles bedtime negotiations. Player One trades health for a piercing spear and a free reroll, because he will not accept these cards. Player Two is fast, fragile and dashes straight into danger, which is historically accurate. You just walk. Your sword swings itself. Twenty waves of goblins, wolves and ogres pour in from every edge, and each level-up deals three cards &mdash; evolve a weapon into Excalibur or Armageddon and feel briefly invincible. Then the archers arrive. They hang back, they strafe, they fire every three seconds, and they are the #1 cause of death in the kingdom. Go get them. Survive seventeen minutes and the Ogre King shows up personally to complain. Private Mode hides the other two knights, so each kid can believe they&rsquo;re Dad&rsquo;s favorite.
-                </p>
-                <div class="card-features">
-                    <span class="feature-tag">3 Knights</span>
-                    <span class="feature-tag">20 Waves</span>
-                    <span class="feature-tag">Evolutions</span>
-                    <span class="feature-tag">Ogre King</span>
-                </div>
-                <div class="play-btn">
-                    Play Now <span class="arrow">&#8594;</span>
-                </div>
-            </div>
-        </div>
-    </a>
-
     <!-- Immune Protocol -->
-    <a href="https://corycowgill.github.io/ImmuneProtocol/" class="game-card card-immune" data-category="shooter">
+    <a href="https://corycowgill.github.io/ImmuneProtocol/" class="game-card card-immune featured" data-category="shooter">
         <div class="card-bg"></div>
         <div class="glow-border"></div>
         <div class="card-content">
@@ -2982,6 +2954,34 @@
                     <span class="feature-tag">Auto-Turret</span>
                     <span class="feature-tag">Custom Carbine</span>
                     <span class="feature-tag">Mega Virus</span>
+                </div>
+                <div class="play-btn">
+                    Play Now <span class="arrow">&#8594;</span>
+                </div>
+            </div>
+        </div>
+    </a>
+
+    <!-- Castle Survivor -->
+    <a href="https://castlesurvivor.onrender.com" class="game-card card-survivor" data-category="shooter">
+        <div class="card-bg"></div>
+        <div class="glow-border"></div>
+        <div class="card-content">
+            <div class="card-art">
+                <canvas id="canvas-survivor"></canvas>
+                <div class="game-icon">&#x1F6E1;&#xFE0F;</div>
+            </div>
+            <div class="card-info">
+                <div class="card-genre">Survivors-like / 3D Action</div>
+                <div class="card-title">Castle Survivor</div>
+                <p class="card-desc">
+                    A medieval kingdom is under siege, and the realm&rsquo;s entire defense budget went to one dad and his two sons. Dad is the sturdy one with a broadsword and a shield wall, which is also how he handles bedtime negotiations. Player One trades health for a piercing spear and a free reroll, because he will not accept these cards. Player Two is fast, fragile and dashes straight into danger, which is historically accurate. You just walk. Your sword swings itself. Twenty waves of goblins, wolves and ogres pour in from every edge, and each level-up deals three cards &mdash; evolve a weapon into Excalibur or Armageddon and feel briefly invincible. Then the archers arrive. They hang back, they strafe, they fire every three seconds, and they are the #1 cause of death in the kingdom. Go get them. Survive seventeen minutes and the Ogre King shows up personally to complain. Private Mode hides the other two knights, so each kid can believe they&rsquo;re Dad&rsquo;s favorite.
+                </p>
+                <div class="card-features">
+                    <span class="feature-tag">3 Knights</span>
+                    <span class="feature-tag">20 Waves</span>
+                    <span class="feature-tag">Evolutions</span>
+                    <span class="feature-tag">Ogre King</span>
                 </div>
                 <div class="play-btn">
                     Play Now <span class="arrow">&#8594;</span>
@@ -12299,8 +12299,10 @@ function drawImmuneScene(canvas) {
     const ctx = canvas.getContext('2d');
     const w = canvas.width = canvas.offsetWidth * 2;
     const h = canvas.height = canvas.offsetHeight * 2;
-    ctx.scale(2, 2);
-    const W = w/2, H = h/2;
+    // Drawn for a regular tile (about 360x220); scale details up in the larger featured slot
+    const k = Math.max(1, (w/2/360 + h/2/220) / 2);
+    ctx.scale(2*k, 2*k);
+    const W = w/2/k, H = h/2/k;
     const cx = W*0.7, cy = H*0.38;   // the far end of the artery, where the light comes from
 
     // The artery: dark crimson walls closing in around a glowing far opening
@@ -12490,10 +12492,10 @@ function drawImmuneScene(canvas) {
     ctx.font = "bold 7px 'Orbitron', sans-serif";
     ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
     const bar = (y, label, pct, col) => {
-        ctx.fillStyle = 'rgba(10,2,4,0.6)'; ctx.fillRect(6, y, 66, 11);
+        ctx.fillStyle = 'rgba(10,2,4,0.6)'; ctx.fillRect(6, y, 72, 11);
         ctx.fillStyle = col; ctx.fillText(label, 9, y + 5.8);
-        ctx.fillStyle = 'rgba(255,255,255,0.15)'; ctx.fillRect(38, y + 3.5, 30, 4);
-        ctx.fillStyle = col; ctx.fillRect(38, y + 3.5, 30*pct, 4);
+        ctx.fillStyle = 'rgba(255,255,255,0.15)'; ctx.fillRect(44, y + 3.5, 30, 4);
+        ctx.fillStyle = col; ctx.fillRect(44, y + 3.5, 30*pct, 4);
     };
     bar(6, 'AMBER', 0.58, '#ffb02e');
     bar(19, 'TEAL', 0.86, '#3ad8c8');
