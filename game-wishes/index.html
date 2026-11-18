@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="../fonts/orbitron-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="../fonts/rajdhani-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <title>Game Wishes | Personalized Games for Kids Who Need a Break - Hallucinated Games</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+    <meta name="description" content="Hallucinated Games is now accepting requests for personalized browser games for kids in the hospital, stuck at home, or going through a hard stretch. Tell us the game your kid dreams about and we'll build it for them, free.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.hallucinatedgames.com/game-wishes/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.hallucinatedgames.com/game-wishes/">
+    <meta property="og:title" content="Game Wishes | A video game made just for your kid">
+    <meta property="og:description" content="Personalized browser games, free, for kids in the hospital, homebound, or in need of a fun distraction. Parents and guardians can request one here.">
+    <meta property="og:site_name" content="Hallucinated Games">
+    <meta property="og:image" content="https://www.hallucinatedgames.com/images/og-card.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://www.hallucinatedgames.com/images/og-card.jpg">
+
+    <style>
+        @font-face { font-family: 'Orbitron'; font-weight: 700; font-display: swap; src: url('../fonts/orbitron-latin-700-normal.woff2') format('woff2'); }
+        @font-face { font-family: 'Orbitron'; font-weight: 900; font-display: swap; src: url('../fonts/orbitron-latin-900-normal.woff2') format('woff2'); }
+        @font-face { font-family: 'Rajdhani'; font-weight: 400; font-display: swap; src: url('../fonts/rajdhani-latin-400-normal.woff2') format('woff2'); }
+        @font-face { font-family: 'Rajdhani'; font-weight: 500; font-display: swap; src: url('../fonts/rajdhani-latin-500-normal.woff2') format('woff2'); }
+        @font-face { font-family: 'Rajdhani'; font-weight: 600; font-display: swap; src: url('../fonts/rajdhani-latin-600-normal.woff2') format('woff2'); }
+        @font-face { font-family: 'Rajdhani'; font-weight: 700; font-display: swap; src: url('../fonts/rajdhani-latin-700-normal.woff2') format('woff2'); }
+
+        :root {
+            --bg: #0a0a0f;
+            --panel: #12121b;
+            --panel-2: #181826;
+            --line: rgba(255, 255, 255, 0.08);
+            --text: #e4e4ea;
+            --muted: #a0a0ae;
+            --mint: #00ffaa;
+            --violet: #7b61ff;
+            --warm: #ffc46b;
+            --error: #ff7a7a;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .bg-grid {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(0, 255, 170, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 170, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .glow {
+            position: fixed; z-index: 0; pointer-events: none;
+            width: 700px; height: 700px; border-radius: 50%;
+            filter: blur(120px); opacity: 0.18;
+        }
+        .glow.a { background: var(--violet); top: -250px; left: -200px; }
+        .glow.b { background: var(--mint); bottom: -300px; right: -250px; opacity: 0.1; }
+
+        a { color: var(--mint); }
+        a:hover { color: #7dffd0; }
+        :focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+
+        .wrap { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+        .topnav { display: flex; justify-content: space-between; align-items: center; padding: 22px 0; gap: 12px; }
+        .topnav a {
+            font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
+        }
+        .topnav .home { color: var(--muted); }
+        .topnav .home:hover { color: var(--mint); }
+        .topnav .cta {
+            padding: 8px 18px; border: 1px solid rgba(0, 255, 170, 0.35); border-radius: 20px; color: var(--mint);
+        }
+
+        header.hero { text-align: center; padding: 40px 0 30px; }
+        .badge {
+            display: inline-block; padding: 7px 22px; margin-bottom: 22px;
+            border: 1px solid rgba(255, 196, 107, 0.4); border-radius: 30px;
+            background: rgba(255, 196, 107, 0.07); color: var(--warm);
+            font-size: 14px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif; font-weight: 900;
+            font-size: clamp(1.8rem, 5.5vw, 3.1rem); line-height: 1.12; margin-bottom: 18px;
+            background: linear-gradient(135deg, #ffffff 0%, #00ffaa 55%, #7b61ff 100%);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .lede { font-size: clamp(1.1rem, 2.6vw, 1.35rem); color: #c8c8d4; max-width: 640px; margin: 0 auto 28px; }
+        .btn {
+            display: inline-block; padding: 14px 30px; border: 0; border-radius: 30px; cursor: pointer;
+            background: linear-gradient(135deg, #00ffaa, #00c98a); color: #04140e;
+            font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; text-decoration: none;
+            box-shadow: 0 4px 24px rgba(0, 255, 170, 0.3); transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn:hover { color: #04140e; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 255, 170, 0.4); }
+        .btn.secondary { background: transparent; color: var(--mint); border: 1px solid rgba(0, 255, 170, 0.4); box-shadow: none; }
+        .btn.secondary:hover { color: var(--mint); background: rgba(0, 255, 170, 0.08); }
+
+        section { margin: 56px 0; }
+        h2 {
+            font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: clamp(1.15rem, 3vw, 1.5rem);
+            letter-spacing: 1px; margin-bottom: 16px; color: #fff;
+        }
+        h2 .kicker { display: block; font-family: 'Rajdhani', sans-serif; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: var(--mint); margin-bottom: 6px; }
+        p + p { margin-top: 14px; }
+        .muted { color: var(--muted); }
+
+        .mission {
+            background: linear-gradient(135deg, rgba(123, 97, 255, 0.1), rgba(0, 255, 170, 0.05));
+            border: 1px solid var(--line); border-radius: 20px; padding: 30px;
+        }
+        .mission p { font-size: 1.08rem; }
+        .sig { margin-top: 18px; color: var(--warm); font-weight: 600; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+        @media (max-width: 360px) { .grid { grid-template-columns: 1fr; } }
+        .tile { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+        .tile .ico { font-size: 28px; line-height: 1; margin-bottom: 10px; }
+        .tile h3 { font-family: 'Orbitron', sans-serif; font-size: 14px; letter-spacing: 1px; color: #fff; margin-bottom: 6px; }
+        .tile p { font-size: 16px; color: var(--muted); line-height: 1.5; }
+
+        ol.steps { list-style: none; counter-reset: s; display: grid; gap: 14px; }
+        ol.steps li { counter-increment: s; position: relative; padding: 18px 20px 18px 66px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+        ol.steps li::before {
+            content: counter(s); position: absolute; left: 18px; top: 18px; width: 32px; height: 32px; border-radius: 50%;
+            display: grid; place-items: center; background: rgba(0, 255, 170, 0.12); color: var(--mint);
+            font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 700;
+        }
+        ol.steps strong { color: #fff; }
+
+        ul.plain { list-style: none; display: grid; gap: 10px; }
+        ul.plain li { padding-left: 26px; position: relative; }
+        ul.plain li::before { content: '\25B8'; position: absolute; left: 4px; color: var(--mint); }
+
+        /* Form */
+        .form-card { background: var(--panel); border: 1px solid rgba(0, 255, 170, 0.18); border-radius: 22px; padding: 30px; }
+        fieldset { border: 0; margin: 0 0 26px; }
+        legend {
+            font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--mint); margin-bottom: 14px;
+        }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .field { margin-bottom: 16px; }
+        label, .label { display: block; font-weight: 600; color: #fff; margin-bottom: 6px; font-size: 16px; }
+        .req { color: var(--warm); }
+        .hint { display: block; font-weight: 400; color: var(--muted); font-size: 14px; margin-top: 2px; }
+        input[type=text], input[type=email], input[type=tel], select, textarea {
+            width: 100%; padding: 12px 14px; border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.14); background: var(--panel-2); color: var(--text);
+            font-family: 'Rajdhani', sans-serif; font-size: 17px; line-height: 1.4;
+        }
+        textarea { min-height: 110px; resize: vertical; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--mint); box-shadow: 0 0 0 3px rgba(0, 255, 170, 0.15); }
+        select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--mint) 50%), linear-gradient(135deg, var(--mint) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat; padding-right: 38px; }
+        .check { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; font-weight: 500; color: var(--text); }
+        .check input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--mint); flex: none; }
+        .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--error); }
+        .err { display: none; color: var(--error); font-size: 14px; margin-top: 4px; }
+        .field.invalid .err, .check.invalid + .err { display: block; }
+        .counter { text-align: right; font-size: 13px; color: var(--muted); margin-top: 2px; }
+        .form-note { font-size: 15px; color: var(--muted); margin-top: 14px; }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px; }
+
+        .done { display: none; margin-top: 24px; padding: 24px; border-radius: 16px; border: 1px solid rgba(255, 196, 107, 0.35); background: rgba(255, 196, 107, 0.06); }
+        .done.show { display: block; }
+        .done h3 { font-family: 'Orbitron', sans-serif; font-size: 16px; color: var(--warm); margin-bottom: 8px; }
+        .done pre {
+            white-space: pre-wrap; word-break: break-word; margin-top: 14px; padding: 14px; max-height: 260px; overflow: auto;
+            background: #0d0d14; border: 1px solid var(--line); border-radius: 12px;
+            font-family: ui-monospace, 'Courier New', monospace; font-size: 13px; color: #cfcfda;
+        }
+        .copy-status { font-size: 15px; color: var(--mint); }
+
+        details { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; }
+        summary { cursor: pointer; font-weight: 700; color: #fff; }
+        details p { margin-top: 10px; color: var(--muted); }
+
+        footer { text-align: center; padding: 30px 0 50px; border-top: 1px solid var(--line); margin-top: 60px; color: var(--muted); font-size: 14px; }
+        footer .logo { font-family: 'Orbitron', sans-serif; letter-spacing: 3px; color: #555; font-weight: 700; margin-bottom: 8px; }
+
+        @media (max-width: 640px) {
+            body { font-size: 17px; }
+            .row { grid-template-columns: 1fr; gap: 0; }
+            .mission, .form-card { padding: 22px 18px; }
+            .topnav .cta { display: none; }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow a"></div>
+<div class="glow b"></div>
+
+<div class="wrap">
+    <nav class="topnav" aria-label="Site">
+        <a class="home" href="../">&larr; Hallucinated Games</a>
+        <a class="cta" href="#request">Request a game</a>
+    </nav>
+
+    <header class="hero">
+        <div class="badge">Now accepting requests</div>
+        <h1>A video game made just for your kid</h1>
+        <p class="lede">For kids stuck in a hospital bed, stuck at home, or stuck in a hard stretch of life: tell us the game they dream about, and we&rsquo;ll build it for them. Their idea, their characters, their name on the title screen. Free.</p>
+        <a class="btn" href="#request">Request a game</a>
+    </header>
+
+    <section class="mission" aria-labelledby="mission-title">
+        <h2 id="mission-title"><span class="kicker">Our mission is growing</span>Games that help, not just games</h2>
+        <p>Hallucinated Games started as a dad and his two kids building silly browser games with AI. Along the way we learned something: a game that stars <em>you</em>, made from your own ideas, is a special kind of magic. Kids light up when the hero on screen is the character they dreamed up.</p>
+        <p>So we&rsquo;re expanding what we do. Alongside the arcade, we&rsquo;re now building personalized games for kids and families who could really use a fun distraction: kids in the hospital, kids who are homebound or recovering, and families going through something tough who don&rsquo;t have much to smile about right now.</p>
+        <p>We can&rsquo;t fix a hospital stay. But we can make a long afternoon a little shorter, give a kid something to be excited about, and maybe give a worn-out parent a few quiet minutes. That&rsquo;s the goal: less stress, more fun, and a game that&rsquo;s theirs.</p>
+        <p class="sig">&mdash; Cory, Hallucinated Games</p>
+    </section>
+
+    <section aria-labelledby="who-title">
+        <h2 id="who-title"><span class="kicker">Who it&rsquo;s for</span>Kids who could use a little fun</h2>
+        <div class="grid">
+            <div class="tile"><div class="ico" aria-hidden="true">&#x1F3E5;</div><h3>In the hospital</h3><p>Long stays, waiting rooms, treatment days. A game to look forward to.</p></div>
+            <div class="tile"><div class="ico" aria-hidden="true">&#x1F3E0;</div><h3>Homebound</h3><p>Kids who can&rsquo;t get out much because of illness, disability or recovery.</p></div>
+            <div class="tile"><div class="ico" aria-hidden="true">&#x1F49B;</div><h3>Going through it</h3><p>Families in a tough season who could use something joyful and easy.</p></div>
+            <div class="tile"><div class="ico" aria-hidden="true">&#x1F30E;</div><h3>Underserved communities</h3><p>Families who wouldn&rsquo;t otherwise have access to something like this.</p></div>
+        </div>
+    </section>
+
+    <section aria-labelledby="how-title">
+        <h2 id="how-title"><span class="kicker">How it works</span>From idea to playable game</h2>
+        <ol class="steps">
+            <li><strong>Tell us about the game.</strong> Fill out the form below with your kid: what the game is about, who the characters are, and what they look like. Wild ideas welcome.</li>
+            <li><strong>We get in touch.</strong> We&rsquo;ll reply by email or phone to say hello, ask any questions, and confirm the details.</li>
+            <li><strong>We build it.</strong> We design and build the game around your kid&rsquo;s ideas, and may check in with a preview along the way.</li>
+            <li><strong>Game on.</strong> You get a private link. It plays right in a web browser on a tablet, laptop or computer. No downloads, no accounts, no ads, no purchases.</li>
+        </ol>
+    </section>
+
+    <section aria-labelledby="request-title" id="request">
+        <h2 id="request-title"><span class="kicker">Request a game</span>Tell us about the game of their dreams</h2>
+        <p class="muted" style="margin-bottom: 20px;">This form is for parents and guardians. Fill it out together with your kid if you can. Their exact words are the best part.</p>
+
+        <div class="form-card">
+            <form id="wish-form" novalidate>
+                <fieldset>
+                    <legend>About you</legend>
+                    <div class="row">
+                        <div class="field">
+                            <label for="parentName">Your name <span class="req">*</span></label>
+                            <input type="text" id="parentName" name="parentName" autocomplete="name" required maxlength="80">
+                            <span class="err">Please tell us your name.</span>
+                        </div>
+                        <div class="field">
+                            <label for="relationship">Relationship to the child <span class="req">*</span></label>
+                            <select id="relationship" name="relationship" required>
+                                <option value="">Choose one</option>
+                                <option>Parent</option>
+                                <option>Guardian</option>
+                                <option>Grandparent</option>
+                                <option>Other family member with the parent&rsquo;s OK</option>
+                                <option>Hospital staff, child life specialist or social worker, with the family&rsquo;s OK</option>
+                            </select>
+                            <span class="err">Please choose one.</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                            <label for="email">Email <span class="req">*</span></label>
+                            <input type="email" id="email" name="email" autocomplete="email" required maxlength="120">
+                            <span class="err">Please enter an email we can reply to.</span>
+                        </div>
+                        <div class="field">
+                            <label for="phone">Phone <span class="hint">Optional, if you&rsquo;d rather we call or text</span></label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="30">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="contactPref">Best way to reach you</label>
+                        <select id="contactPref" name="contactPref">
+                            <option>Email</option>
+                            <option>Phone call</option>
+                            <option>Text message</option>
+                        </select>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>About the player</legend>
+                    <div class="row">
+                        <div class="field">
+                            <label for="kidName">First name or nickname <span class="hint">For the title screen. No last names, please.</span></label>
+                            <input type="text" id="kidName" name="kidName" maxlength="40">
+                        </div>
+                        <div class="field">
+                            <label for="age">Age <span class="req">*</span></label>
+                            <input type="text" id="age" name="age" inputmode="numeric" required maxlength="10">
+                            <span class="err">Please tell us how old they are.</span>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="situation">What&rsquo;s going on right now? <span class="req">*</span></label>
+                        <select id="situation" name="situation" required>
+                            <option value="">Choose the closest fit</option>
+                            <option>In the hospital</option>
+                            <option>Homebound or recovering at home</option>
+                            <option>Ongoing treatment or frequent appointments</option>
+                            <option>Family going through a hard time</option>
+                            <option>Other</option>
+                        </select>
+                        <span class="err">Please choose the closest fit.</span>
+                    </div>
+                    <div class="field">
+                        <label for="story">A little about why this would help <span class="hint">A sentence or two is plenty. Please skip diagnoses and medical details, we don&rsquo;t need them.</span></label>
+                        <textarea id="story" name="story" maxlength="600" data-counter></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>The game</legend>
+                    <div class="field">
+                        <label for="gameIdea">What should the game be about? <span class="req">*</span> <span class="hint">Racing dinosaurs? A space rescue? A cat who runs a bakery? Saving the world from broccoli? Anything goes.</span></label>
+                        <textarea id="gameIdea" name="gameIdea" required maxlength="1200" data-counter></textarea>
+                        <span class="err">Please tell us a little about the game.</span>
+                    </div>
+                    <div class="field">
+                        <label for="characters">Who are the characters, and what do they look like? <span class="req">*</span> <span class="hint">The hero, sidekicks, villains, pets. Colors, outfits, powers, silly hats.</span></label>
+                        <textarea id="characters" name="characters" required maxlength="1200" data-counter></textarea>
+                        <span class="err">Please describe at least the main character.</span>
+                    </div>
+                    <div class="field">
+                        <label for="favorites">Favorite things, colors or games they love <span class="hint">Optional. Helps us get the feel right.</span></label>
+                        <textarea id="favorites" name="favorites" maxlength="600" data-counter></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="field">
+                            <label for="device">What will they play on?</label>
+                            <select id="device" name="device">
+                                <option>Not sure yet</option>
+                                <option>Tablet (iPad or Android)</option>
+                                <option>Laptop or computer</option>
+                                <option>Phone</option>
+                                <option>Chromebook</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="controls">Any play needs?</label>
+                            <select id="controls" name="controls">
+                                <option>No special needs</option>
+                                <option>Touch only, simple taps</option>
+                                <option>One hand only</option>
+                                <option>Slow-paced, no time pressure</option>
+                                <option>Other (I&rsquo;ll explain below)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label for="avoid">Anything we should avoid or include? <span class="hint">Optional. Fears, scary stuff, needles, loud sounds, reading level, an inside joke, the family dog.</span></label>
+                        <textarea id="avoid" name="avoid" maxlength="600" data-counter></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Almost done</legend>
+                    <label class="check" id="consentAdultWrap"><input type="checkbox" id="consentAdult" required> I&rsquo;m 18 or older and I&rsquo;m the child&rsquo;s parent or guardian, or I have their permission to send this request.</label>
+                    <span class="err">Please confirm this so we can take your request.</span>
+                    <label class="check" id="consentContactWrap"><input type="checkbox" id="consentContact" required> It&rsquo;s OK for Hallucinated Games to contact me about this request.</label>
+                    <span class="err">We need your OK to reply to you.</span>
+                </fieldset>
+
+                <div class="actions">
+                    <button type="submit" class="btn">Send my request</button>
+                </div>
+                <p class="form-note">Pressing Send opens your email app with your request already written, addressed to <a href="mailto:hallucinated.games.inc@gmail.com">hallucinated.games.inc@gmail.com</a>. Just press send there. Nothing is stored on this website.</p>
+            </form>
+
+            <div class="done" id="done" role="status" aria-live="polite" tabindex="-1">
+                <h3>Thank you! One last step.</h3>
+                <p>Your email app should have opened with your request filled in. <strong>Press send in your email app</strong> and it&rsquo;s on its way to us. We read every request and will reply as soon as we can.</p>
+                <p>If your email app didn&rsquo;t open, copy your request and email it to <a href="mailto:hallucinated.games.inc@gmail.com">hallucinated.games.inc@gmail.com</a>.</p>
+                <div class="actions" style="margin-top: 14px;">
+                    <button type="button" class="btn secondary" id="copy-btn">Copy my request</button>
+                    <a class="btn secondary" id="mail-again" href="#">Open email again</a>
+                    <span class="copy-status" id="copy-status" aria-live="polite"></span>
+                </div>
+                <pre id="request-text"></pre>
+            </div>
+        </div>
+    </section>
+
+    <section aria-labelledby="expect-title">
+        <h2 id="expect-title"><span class="kicker">Good to know</span>What to expect</h2>
+        <details>
+            <summary>Does it cost anything?</summary>
+            <p>No. These games are a free project. There&rsquo;s nothing to buy, now or later, and the games have no ads or in-game purchases.</p>
+        </details>
+        <details>
+            <summary>How long does it take?</summary>
+            <p>Usually a few weeks, depending on the game and how many requests we have. If timing matters, like an upcoming surgery, a long stay or a birthday, tell us in the form and we&rsquo;ll do our best.</p>
+        </details>
+        <details>
+            <summary>Can you take every request?</summary>
+            <p>We&rsquo;re a very small team (one dad, a lot of AI and two kid testers), so we may not be able to say yes to everyone. We give priority to kids in the hospital, kids who are homebound and families with the greatest need. We&rsquo;ll always reply and let you know either way.</p>
+        </details>
+        <details>
+            <summary>What kind of games can you make?</summary>
+            <p>Browser games like the ones in <a href="../">our arcade</a>: adventures, platformers, racing, tower defense, puzzles, shooters with goofy blasters, and more. They run in a web browser on most tablets and computers. We keep them kid-friendly and can make them gentle, slow-paced or touch-only if that helps.</p>
+        </details>
+        <details>
+            <summary>Who will see the game?</summary>
+            <p>The game lives at a private link we send only to you. We won&rsquo;t post it in the arcade or share your kid&rsquo;s name or story anywhere unless you tell us that&rsquo;s OK.</p>
+        </details>
+        <details>
+            <summary>How do you handle our information?</summary>
+            <p>We use what you send only to reply to you and build the game. We don&rsquo;t sell or share it, and we don&rsquo;t need last names, photos, addresses or medical details, so please leave those out. Ask us any time and we&rsquo;ll delete your request. This page has no cookies, analytics or tracking.</p>
+        </details>
+        <details>
+            <summary>Is this a medical or therapy service?</summary>
+            <p>No. We make games for fun and distraction. We&rsquo;re not affiliated with any hospital, and a game is no substitute for care from your child&rsquo;s medical team.</p>
+        </details>
+    </section>
+
+    <section style="text-align: center;">
+        <h2>Know a family who could use this?</h2>
+        <p class="muted" style="max-width: 560px; margin: 0 auto 20px;">Share this page with them, or with a child life team, nurse or social worker who works with kids. Questions? Email <a href="mailto:hallucinated.games.inc@gmail.com">hallucinated.games.inc@gmail.com</a>.</p>
+        <a class="btn" href="#request">Request a game</a>
+    </section>
+
+    <footer>
+        <div class="logo">HALLUCINATED GAMES</div>
+        <p><a href="../">Back to the arcade</a></p>
+        <p style="margin-top: 10px;">Hallucinated Games, Chicago IL.</p>
+    </footer>
+</div>
+
+<script>
+(function () {
+    const TO = 'hallucinated.games.inc@gmail.com';
+    const form = document.getElementById('wish-form');
+    const done = document.getElementById('done');
+    const pre = document.getElementById('request-text');
+    const mailAgain = document.getElementById('mail-again');
+    const copyStatus = document.getElementById('copy-status');
+    const val = id => (document.getElementById(id).value || '').trim();
+
+    // Character counters on the longer boxes
+    form.querySelectorAll('textarea[data-counter]').forEach(t => {
+        const c = document.createElement('div');
+        c.className = 'counter';
+        const upd = () => { c.textContent = t.value.length + ' / ' + t.maxLength; };
+        t.after(c); t.addEventListener('input', upd); upd();
+    });
+
+    // Clear an error as soon as the field is fixed
+    form.addEventListener('input', e => {
+        const f = e.target.closest('.field');
+        if (f) f.classList.remove('invalid');
+        const ch = e.target.closest('.check');
+        if (ch && e.target.checked) ch.classList.remove('invalid');
+    });
+
+    function validate() {
+        let first = null;
+        form.querySelectorAll('[required]').forEach(el => {
+            let ok;
+            if (el.type === 'checkbox') {
+                ok = el.checked;
+                el.closest('.check').classList.toggle('invalid', !ok);
+            } else {
+                ok = el.value.trim() !== '' && (el.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+                el.closest('.field').classList.toggle('invalid', !ok);
+            }
+            if (!ok && !first) first = el;
+        });
+        if (first) first.focus();
+        return !first;
+    }
+
+    function buildText() {
+        const line = (label, v) => label + ': ' + (v || '-');
+        const block = (label, v) => label + ':\n' + (v || '-');
+        return [
+            'GAME WISH REQUEST',
+            '',
+            '-- About the parent/guardian --',
+            line('Name', val('parentName')),
+            line('Relationship', val('relationship')),
+            line('Email', val('email')),
+            line('Phone', val('phone')),
+            line('Best way to reach me', val('contactPref')),
+            '',
+            '-- About the player --',
+            line('First name or nickname', val('kidName')),
+            line('Age', val('age')),
+            line('Situation', val('situation')),
+            block('Why this would help', val('story')),
+            '',
+            '-- The game --',
+            block('What the game is about', val('gameIdea')),
+            '',
+            block('Characters and what they look like', val('characters')),
+            '',
+            block('Favorite things, colors, games', val('favorites')),
+            '',
+            line('Will play on', val('device')),
+            line('Play needs', val('controls')),
+            block('Avoid or include', val('avoid')),
+            '',
+            '-- Confirmations --',
+            "I'm 18+ and the parent/guardian, or have their permission: yes",
+            'OK to contact me about this request: yes',
+            '',
+            'Sent from the Game Wishes form at hallucinatedgames.com/game-wishes/'
+        ].join('\n');
+    }
+
+    function mailtoHref(text) {
+        const who = val('kidName') || 'my kid';
+        const subject = 'Game Wish: a game for ' + who + ', age ' + val('age');
+        return 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (!validate()) return;
+        const text = buildText();
+        const href = mailtoHref(text);
+        pre.textContent = text;
+        mailAgain.href = href;
+        copyStatus.textContent = '';
+        done.classList.add('show');
+        window.location.href = href;
+        setTimeout(() => done.focus({ preventScroll: false }), 50);
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', async () => {
+        const text = 'To: ' + TO + '\n\n' + pre.textContent;
+        try {
+            await navigator.clipboard.writeText(text);
+            copyStatus.textContent = 'Copied! Paste it into an email to ' + TO + '.';
+        } catch (err) {
+            const r = document.createRange(); r.selectNodeContents(pre);
+            const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+            copyStatus.textContent = 'Selected. Press Ctrl+C (or Cmd+C) to copy.';
+        }
+    });
+})();
+</script>
+</body>
+</html>

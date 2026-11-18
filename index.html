@@ -2310,6 +2310,64 @@
             border-color: rgba(232, 176, 58, 0.6);
         }
 
+        /* Game Wishes announcement banner */
+        .wish-banner {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            max-width: 1140px;
+            margin: -24px auto 40px;
+            padding: 18px 24px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 196, 107, 0.35);
+            background: linear-gradient(135deg, rgba(255, 196, 107, 0.1), rgba(123, 97, 255, 0.1));
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+        }
+        .wish-banner:hover {
+            border-color: rgba(255, 196, 107, 0.7);
+            box-shadow: 0 10px 40px rgba(255, 196, 107, 0.15);
+            transform: translateY(-2px);
+        }
+        .wish-banner-icon { font-size: 34px; line-height: 1; flex: none; }
+        .wish-banner-text { flex: 1; min-width: 0; }
+        .wish-banner-kicker {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #ffc46b;
+        }
+        .wish-banner-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+            font-weight: 700;
+            color: #fff;
+            margin: 2px 0 4px;
+        }
+        .wish-banner-desc { font-size: 16px; color: #b0b0bc; line-height: 1.45; }
+        .wish-banner-cta {
+            flex: none;
+            padding: 10px 20px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #ffc46b, #ff9f4a);
+            color: #1a1006;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        @media (max-width: 1200px) { .wish-banner { margin-left: 30px; margin-right: 30px; } }
+        @media (max-width: 640px) {
+            .wish-banner { flex-wrap: wrap; margin: -24px 16px 32px; padding: 16px 18px; }
+            .wish-banner-cta { width: 100%; text-align: center; }
+        }
+
         /* Footer */
         footer {
             position: relative;
@@ -2367,6 +2425,8 @@
             text-decoration: none;
             transition: all 0.25s ease;
         }
+        .footer-contact a + a { margin-left: 10px; }
+        @media (max-width: 480px) { .footer-contact a + a { margin: 10px 0 0; } }
         .footer-contact a:hover {
             background: rgba(0, 255, 170, 0.12);
             border-color: rgba(0, 255, 170, 0.7);
@@ -2914,6 +2974,16 @@
     <p class="game-count"><span>24</span> Games &mdash; Built by AI, Debugged by Luck</p>
     <div class="divider"></div>
 </header>
+
+<a class="wish-banner" href="game-wishes/">
+    <div class="wish-banner-icon" aria-hidden="true">&#x1F49B;</div>
+    <div class="wish-banner-text">
+        <div class="wish-banner-kicker">New &middot; Game Wishes</div>
+        <div class="wish-banner-title">Now accepting personalized game requests</div>
+        <div class="wish-banner-desc">Know a kid stuck in the hospital, stuck at home, or going through a tough stretch? Tell us the game they dream about and we&rsquo;ll build it for them, free.</div>
+    </div>
+    <div class="wish-banner-cta">Request a game &rarr;</div>
+</a>
 
 <div class="search-bar">
     <input type="search" id="game-search" class="game-search" placeholder="Search games..." aria-label="Search games" autocomplete="off">
@@ -3633,7 +3703,7 @@
 <footer>
     <div class="footer-logo">HALLUCINATED GAMES</div>
     <p class="footer-tagline">100% vibe coded &mdash; 0% unit tested &mdash; built with <span>&#9889;</span> and mass hallucination &mdash; &copy; 2026 &mdash; who are we kidding, AI generated content can't be copyrighted! LOL.</p>
-    <p class="footer-contact"><a href="mailto:hallucinated.games.inc@gmail.com">Contact Us</a></p>
+    <p class="footer-contact"><a href="mailto:hallucinated.games.inc@gmail.com">Contact Us</a> <a href="game-wishes/">Request a Personalized Game</a></p>
     <p class="footer-about"><button type="button" id="about-open">About Hallucinated Games</button></p>
     <p class="footer-privacy"><strong>Privacy:</strong> no cookies, no analytics, no tracking. We store one setting in your browser so the intro only plays once, and our host keeps standard server logs. Each game opens on its own site, and some save your progress in your browser.</p>
     <p style="margin-top:20px;font-size:10px;color:#333;letter-spacing:1px;">Hallucinated Games, Chicago IL. Proudly serving AI game slop since 2026.</p>
