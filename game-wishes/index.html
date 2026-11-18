@@ -294,16 +294,9 @@
 
                 <fieldset>
                     <legend>About the player</legend>
-                    <div class="row">
-                        <div class="field">
-                            <label for="kidName">First name or nickname <span class="hint">For the title screen. No last names, please.</span></label>
-                            <input type="text" id="kidName" name="kidName" maxlength="40">
-                        </div>
-                        <div class="field">
-                            <label for="age">Age <span class="req">*</span></label>
-                            <input type="text" id="age" name="age" inputmode="numeric" required maxlength="10">
-                            <span class="err">Please tell us how old they are.</span>
-                        </div>
+                    <div class="field">
+                        <label for="kidName">First name or nickname <span class="hint">Optional, for the title screen. No last names, please.</span></label>
+                        <input type="text" id="kidName" name="kidName" maxlength="40">
                     </div>
                     <div class="field">
                         <label for="situation">What&rsquo;s going on right now? <span class="req">*</span></label>
@@ -325,6 +318,25 @@
 
                 <fieldset>
                     <legend>The game</legend>
+                    <div class="field">
+                        <label for="gameType">What type of game? <span class="req">*</span> <span class="hint">Pick the closest. You can describe it in your own words below.</span></label>
+                        <select id="gameType" name="gameType" required>
+                            <option value="">Choose a type</option>
+                            <option>Adventure or quest</option>
+                            <option>Platformer (run and jump)</option>
+                            <option>Racing</option>
+                            <option>Puzzle</option>
+                            <option>Tower defense or strategy</option>
+                            <option>Shooter or blaster (kid-friendly)</option>
+                            <option>Sports</option>
+                            <option>Building or creating</option>
+                            <option>Pet or animal care</option>
+                            <option>Story or choose-your-path</option>
+                            <option>Not sure, surprise us</option>
+                            <option>Something else</option>
+                        </select>
+                        <span class="err">Please choose a type of game.</span>
+                    </div>
                     <div class="field">
                         <label for="gameIdea">What should the game be about? <span class="req">*</span> <span class="hint">Racing dinosaurs? A space rescue? A cat who runs a bakery? Saving the world from broccoli? Anything goes.</span></label>
                         <textarea id="gameIdea" name="gameIdea" required maxlength="1200" data-counter></textarea>
@@ -498,11 +510,11 @@
             '',
             '-- About the player --',
             line('First name or nickname', val('kidName')),
-            line('Age', val('age')),
             line('Situation', val('situation')),
             block('Why this would help', val('story')),
             '',
             '-- The game --',
+            line('Type of game', val('gameType')),
             block('What the game is about', val('gameIdea')),
             '',
             block('Characters and what they look like', val('characters')),
@@ -523,7 +535,7 @@
 
     function mailtoHref(text) {
         const who = val('kidName') || 'my kid';
-        const subject = 'Game Wish: a game for ' + who + ', age ' + val('age');
+        const subject = 'Game Wish for ' + who + ' (' + val('gameType') + ')';
         return 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
     }
 
