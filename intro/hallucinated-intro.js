@@ -580,8 +580,13 @@
           overlay = document.createElement('div');
           overlay.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:#000;' +
             'display:flex;align-items:center;justify-content:center;cursor:pointer';
+          // Announce what this is, and how to get past it, to screen reader users
+          overlay.setAttribute('role', 'img');
+          overlay.setAttribute('aria-label', 'Hallucinated Games studio intro' +
+            (skippable ? '. Press any key or tap to skip.' : ''));
           canvas = document.createElement('canvas');
           canvas.style.cssText = 'width:100%;height:100%;display:block';
+          canvas.setAttribute('aria-hidden', 'true');
           overlay.appendChild(canvas);
           document.body.appendChild(overlay);
         }

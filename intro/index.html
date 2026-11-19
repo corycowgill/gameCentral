@@ -29,7 +29,7 @@
     background-clip: text;
     margin-bottom: 6px;
   }
-  .sub { color: #777; letter-spacing: 1px; margin-bottom: 24px; font-weight: 300; }
+  .sub { color: #9a9aa6; letter-spacing: 1px; margin-bottom: 24px; font-weight: 300; }
 
   .stage {
     position: relative;
@@ -63,6 +63,7 @@
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
+  :focus-visible { outline: 2px solid #00ffaa; outline-offset: 3px; }
   button:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0, 255, 170, 0.3); }
   button.ghost {
     background: rgba(123, 97, 255, 0.14);
@@ -88,7 +89,7 @@
     align-items: center;
     gap: 12px;
     margin-top: 14px;
-    color: #777;
+    color: #9a9aa6;
     font-size: 14px;
     letter-spacing: 1px;
   }
@@ -121,29 +122,29 @@
     color: #b9c4d4;
   }
   pre .t { color: #00ffaa; }
-  pre .c { color: #55596a; }
-  p.note { color: #777; font-size: 14px; line-height: 1.7; margin-top: 12px; }
+  pre .c { color: #8a8fa3; }
+  p.note { color: #9a9aa6; font-size: 14px; line-height: 1.7; margin-top: 12px; }
 </style>
 </head>
 <body>
-<div class="wrap">
+<main class="wrap">
   <h1>Hallucinated Games &mdash; Studio Intro</h1>
   <p class="sub">Canvas animation, no video file. Drop it in front of any game.</p>
 
   <div class="stage">
-    <canvas id="stage"></canvas>
+    <canvas id="stage" role="img" aria-label="Hallucinated Games studio intro: the logo forms out of static, then the tagline appears"></canvas>
   </div>
 
   <div class="controls">
-    <button id="play">&#9654; Play intro</button>
-    <button id="fullscreen" class="ghost">Fullscreen overlay</button>
+    <button type="button" id="play"><span aria-hidden="true">&#9654;</span> Play intro</button>
+    <button type="button" id="fullscreen" class="ghost">Fullscreen overlay</button>
     <label class="check"><input type="checkbox" id="sound" checked> Sound</label>
     <label class="check"><input type="checkbox" id="lowq"> Low quality</label>
   </div>
 
   <div class="scrub">
-    <span>Scrub</span>
-    <input type="range" id="scrub" min="0" max="4.6" step="0.01" value="0">
+    <label for="scrub">Scrub</label>
+    <input type="range" id="scrub" aria-describedby="tval" min="0" max="4.6" step="0.01" value="0">
     <code id="tval">0.00s</code>
   </div>
 
@@ -162,7 +163,7 @@
       without a user gesture.
     </p>
   </div>
-</div>
+</main>
 
 <script src="hallucinated-intro.js"></script>
 <script>

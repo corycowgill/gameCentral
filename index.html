@@ -6,6 +6,12 @@
     <script>
         // Returning visitors skip the "INSERT COIN" reel (set when it's dismissed)
         try { if (localStorage.getItem('hg-entered')) document.documentElement.classList.add('hg-returning'); } catch (e) {}
+        // Motion off: the visitor's saved choice, or their system's reduced-motion setting
+        try {
+            var hgMotion = localStorage.getItem('hg-motion');
+            if (hgMotion === 'off' || (hgMotion === null && window.matchMedia('(prefers-reduced-motion: reduce)').matches))
+                document.documentElement.classList.add('motion-off');
+        } catch (e) {}
     </script>
     <link rel="preload" href="fonts/orbitron-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/rajdhani-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -2381,7 +2387,7 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 16px;
             font-weight: 700;
-            color: #333;
+            color: #85858f;
             letter-spacing: 3px;
             margin-bottom: 8px;
         }
@@ -2650,6 +2656,63 @@
             text-transform: uppercase;
         }
 
+
+        /* ── Accessibility ── */
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        .skip-link {
+            position: fixed;
+            top: 12px; left: 12px;
+            z-index: 20000;
+            padding: 10px 18px;
+            border-radius: 8px;
+            background: #00ffaa;
+            color: #04140e;
+            font-weight: 700;
+            text-decoration: none;
+            transform: translateY(-200%);
+        }
+        .skip-link:focus { transform: none; }
+        :focus-visible {
+            outline: 2px solid #00ffaa;
+            outline-offset: 3px;
+        }
+        .game-search:focus-visible { outline: 2px solid #00ffaa; outline-offset: 2px; }
+        h1[tabindex="-1"]:focus, main[tabindex="-1"]:focus { outline: none; }
+
+        /* Fixed corner controls: music and motion */
+        .corner-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+        }
+        .corner-controls .music-toggle { position: static; }
+        @media (max-width: 768px) {
+            .corner-controls { top: 12px; right: 12px; gap: 6px; }
+        }
+
+        /* Motion off: the visitor's toggle, or prefers-reduced-motion by default */
+        html.motion-off *, html.motion-off *::before, html.motion-off *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+        html.motion-off { scroll-behavior: auto; }
+        html.motion-off .particles { display: none; }
+        html.motion-off .game-card { opacity: 1; transform: none !important; }
+        html.motion-off .studio-badge, html.motion-off h1, html.motion-off .subtitle,
+        html.motion-off .game-count, html.motion-off .divider { opacity: 1; transform: none; }
+
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -2857,7 +2920,8 @@
         .reel-tagline {
             font-family: 'Rajdhani', sans-serif;
             font-size: clamp(0.9rem, 2.5vw, 1.3rem);
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
             letter-spacing: 6px;
             text-transform: uppercase;
             margin-bottom: 40px;
@@ -2867,7 +2931,8 @@
         .welcome-sub {
             font-family: 'Rajdhani', sans-serif;
             font-size: clamp(0.95rem, 2.5vw, 1.2rem);
-            color: rgba(255, 255, 255, 0.65);
+            color: rgba(255, 255, 255, 0.88);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
             max-width: 520px;
             line-height: 1.7;
             margin-bottom: 36px;
@@ -2921,7 +2986,8 @@
         .welcome-disclaimer {
             font-family: 'Rajdhani', sans-serif;
             font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.72);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
             margin-top: 28px;
             letter-spacing: 1px;
         }
@@ -2938,42 +3004,51 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to games</a>
+
 <!-- Cinematic Highlight Reel Overlay -->
-<div class="welcome-overlay" id="welcome-overlay">
-    <video class="reel-video" id="reel-video" muted loop playsinline preload="none" poster="images/reel-poster.jpg">
+<div class="welcome-overlay" id="welcome-overlay" role="dialog" aria-modal="true" aria-labelledby="welcome-title" aria-describedby="welcome-sub">
+    <video class="reel-video" id="reel-video" muted loop playsinline preload="none" poster="images/reel-poster.jpg" aria-hidden="true">
         <source src="highlight_reel.mp4" type="video/mp4">
     </video>
-    <div class="reel-vignette"></div>
-    <div class="reel-scanlines"></div>
+    <div class="reel-vignette" aria-hidden="true"></div>
+    <div class="reel-scanlines" aria-hidden="true"></div>
     <div class="reel-content">
-        <div class="welcome-title">HALLUCINATED GAMES</div>
+        <h2 class="welcome-title" id="welcome-title">HALLUCINATED GAMES</h2>
         <div class="reel-tagline">AI-Generated &bull; Vibe Coded &bull; Zero Regrets</div>
-        <div class="welcome-sub">
+        <div class="welcome-sub" id="welcome-sub">
             Every game built entirely by AI. Tested by nobody. Shipped with reckless confidence.
         </div>
-        <button class="welcome-enter-btn" id="welcome-enter-btn">INSERT COIN</button>
+        <button type="button" class="welcome-enter-btn" id="welcome-enter-btn" aria-label="Insert coin: enter the arcade">INSERT COIN</button>
         <div class="welcome-disclaimer">* No actual coins required. We haven't hallucinated monetization... yet.</div>
     </div>
 </div>
 
 <audio id="bg-music" src="Saturday_Morning_Levels.mp3" loop preload="none"></audio>
 
-<div class="bg-grid"></div>
-<div class="particles" id="particles"></div>
-
-<button class="music-toggle" id="music-toggle" aria-label="Toggle chiptune music">
-    <span class="mt-icon">&#x266B;</span>
-    <span class="mt-label">MUSIC OFF</span>
-    <span class="mt-bars"><span></span><span></span><span></span><span></span></span>
-</button>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="particles" id="particles" aria-hidden="true"></div>
 
 <header>
     <div class="studio-badge">Hallucinated Games</div>
-    <h1>Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
+    <h1 tabindex="-1">Where Agentic Teams<br>and Vibe Coding<br>Come Together To Build!</h1>
     <p class="subtitle">No QA team. No roadmap. No regrets. Just vibes.</p>
     <p class="game-count"><span>24</span> Games &mdash; Built by AI, Debugged by Luck</p>
-    <div class="divider"></div>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="corner-controls">
+        <button type="button" class="music-toggle motion-toggle" id="motion-toggle">
+            <span class="mt-icon" aria-hidden="true">&#x2728;</span>
+            <span class="mt-label">MOTION ON</span>
+        </button>
+        <button type="button" class="music-toggle" id="music-toggle">
+            <span class="mt-icon" aria-hidden="true">&#x266B;</span>
+            <span class="mt-label">MUSIC OFF</span>
+            <span class="mt-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+        </button>
+    </div>
 </header>
+
+<main id="main" tabindex="-1">
 
 <a class="wish-banner" href="game-wishes/">
     <div class="wish-banner-icon" aria-hidden="true">&#x1F49B;</div>
@@ -2989,14 +3064,17 @@
     <input type="search" id="game-search" class="game-search" placeholder="Search games..." aria-label="Search games" autocomplete="off">
 </div>
 
-<div class="filter-bar" id="filter-bar">
-    <button class="filter-pill active" data-filter="all">All Games</button>
-    <button class="filter-pill" data-filter="shooter">Shooters</button>
-    <button class="filter-pill" data-filter="strategy">Strategy</button>
-    <button class="filter-pill" data-filter="puzzle">Puzzle</button>
-    <button class="filter-pill" data-filter="party">Party</button>
-    <button class="filter-pill" data-filter="card">Card</button>
+<div class="filter-bar" id="filter-bar" role="group" aria-label="Filter games by genre">
+    <button type="button" class="filter-pill active" aria-pressed="true" data-filter="all">All Games</button>
+    <button type="button" class="filter-pill" aria-pressed="false" data-filter="shooter">Shooters</button>
+    <button type="button" class="filter-pill" aria-pressed="false" data-filter="strategy">Strategy</button>
+    <button type="button" class="filter-pill" aria-pressed="false" data-filter="puzzle">Puzzle</button>
+    <button type="button" class="filter-pill" aria-pressed="false" data-filter="party">Party</button>
+    <button type="button" class="filter-pill" aria-pressed="false" data-filter="card">Card</button>
 </div>
+
+<h2 class="visually-hidden" id="games-heading">Games</h2>
+<p class="visually-hidden" id="results-status" role="status" aria-live="polite"></p>
 
 <div class="game-grid">
 
@@ -3015,7 +3093,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">3D FPS / Microscopic Defense</div>
-                <div class="card-title">Immune Protocol</div>
+                <h3 class="card-title">Immune Protocol</h3>
                 <p class="card-desc">
                     Somebody is sick, and modern medicine has decided the answer is you: a nano-soldier with a carbine, injected straight into a stranger&rsquo;s bloodstream. Nobody asked the patient. Defend two tissue nodes per mission against viruses that coil before they lunge, spores that swell before they spit, and bacilli that latch on and start tearing like it&rsquo;s a Black Friday sale. You get one auto-turret, so plant it on one approach and sprint to the other, which is also how most parents handle two toddlers. Hold E to stitch wounds shut with a tissue sealer, because in here you are both the army and the urgent care. Eight missions tour the bloodstream, a heart valve, the lungs (survive a full breath), the stomach (drain the acid, mind your boots), the intestines (dodge the pressure wave, don&rsquo;t ask), the inner ear, and finally the brain, where a Mega Virus waits with three cores and zero respect for HIPAA. Customize your carbine between missions and pick a field upgrade like the Insulated Suit, which exists for exactly the reasons you think. Your immune system has been doing this for free your whole life. Say thank you.
                 </p>
@@ -3043,7 +3121,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Survivors-like / 3D Action</div>
-                <div class="card-title">Castle Survivor</div>
+                <h3 class="card-title">Castle Survivor</h3>
                 <p class="card-desc">
                     A medieval kingdom is under siege, and the realm&rsquo;s entire defense budget went to one dad and his two sons. Dad is the sturdy one with a broadsword and a shield wall, which is also how he handles bedtime negotiations. Player One trades health for a piercing spear and a free reroll, because he will not accept these cards. Player Two is fast, fragile and dashes straight into danger, which is historically accurate. You just walk. Your sword swings itself. Twenty waves of goblins, wolves and ogres pour in from every edge, and each level-up deals three cards &mdash; evolve a weapon into Excalibur or Armageddon and feel briefly invincible. Then the archers arrive. They hang back, they strafe, they fire every three seconds, and they are the #1 cause of death in the kingdom. Go get them. Survive seventeen minutes and the Ogre King shows up personally to complain. Private Mode hides the other two knights, so each kid can believe they&rsquo;re Dad&rsquo;s favorite.
                 </p>
@@ -3071,7 +3149,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Tower Defense / Plush</div>
-                <div class="card-title">Stuffy Town Defense</div>
+                <h3 class="card-title">Stuffy Town Defense</h3>
                 <p class="card-desc">
                     The dust bunnies are coming, and Buttonwood Meadow&rsquo;s entire military is made of stuffed animals. This is fine. Button Blaster is a red teddy bear with a cannon that fires buttons, which raises questions about where its eyes came from. Bunny Ranger has a bow and excellent range and no explanation for either. Frost Flipper is a penguin who lives in a snow globe and slows everything down, including, emotionally, the dust bunnies. Stitch Engineer is a fox in goggles with a rapid-fire thread gun and the confidence of someone who has never been through a washing machine. Place your plush pals on the stitched build pads, earn buttons, upgrade, sell when you panic, and keep at least one town heart beating through fifteen waves. Every fifth wave brings a boss: an enormous, furious patchwork monster who is mostly just upset that nobody hugs it. Speed it up, pause it, and protect the Town Hall. Small heroes. Big button energy.
                 </p>
@@ -3099,7 +3177,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Doodle Defense / Draw to Play</div>
-                <div class="card-title">Squiggles</div>
+                <h3 class="card-title">Squiggles</h3>
                 <p class="card-desc">
                     Here is how this game happened. A human sat in a meeting. The meeting did not need them. Over the course of an hour, a ballpoint pen produced a ziggurat, a sun with teeth, some circles, a spiral, a square spiral, and a lot of hatching. The human then took a phone picture of this masterpiece and typed: &ldquo;build this random pic as a game and be creative.&rdquo; So we did. This is AI slop made from a sloppy drawing, and honestly, it slaps. Stray scribbles are crawling toward Blot, the ink blob who lives in the temple at the top of the ziggurat. Each scribble wears a stack of glyphs. Draw the front glyph anywhere on the page &mdash; a Peak, a Ring, a Swirl, a Meander &mdash; and it peels off every scribble wearing it. Strip them bare and they get crossed out. Multi-hits charge the toothed sun for an Inkburst, and every fifth wave the Maze shows up wearing ten glyphs like it&rsquo;s going to a gala. No action items were completed during the making of this game.
                 </p>
@@ -3127,7 +3205,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Puzzle Platformer / Game Jam</div>
-                <div class="card-title">Wick</div>
+                <h3 class="card-title">Wick</h3>
                 <p class="card-desc">
                     You are Wick, a candle-cat, which is a terrible thing to be. Your wax is your health, your height and your light, and it is melting the entire time. Walking melts it faster. Jumping costs wax. The only way across a gap is to drip some of yourself onto the floor and climb it, so every ledge is a small negotiation about how much of your own body a step is worth. Reach the next torch before you burn down to a stub and you get your wax back. Grab the jack-o&rsquo;-lanterns for a snack. Wind gusts try to blow you out, water drips are exactly as bad for a candle as you&rsquo;d think, cobwebs are sticky, and fuse ropes burn gates open if you&rsquo;re brave enough to light them. Eight levels from Market Row to the Castle Stair, every sprite drawn in code and every sound synthesized, built for an AI game jam with the theme TORCH. As Wick shrinks, the face stays the same size, so the closer you are to burning out, the cuter and more desperate Wick looks.
                 </p>
@@ -3155,7 +3233,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Temporal Puzzle / 3D</div>
-                <div class="card-title">RECURSION</div>
+                <h3 class="card-title">RECURSION</h3>
                 <p class="card-desc">
                     A puzzle game where the only person qualified to help you is you. Unfortunately, you&rsquo;re also the idiot who created the problem. Record your actions, rewind time, and team up with past versions of yourself to solve increasingly ridiculous puzzles. Hold doors open for yourself, move crates with yourself, and watch helplessly as your past self makes the exact same stupid mistake you made 15 seconds ago. It&rsquo;s teamwork, except everyone on the team is you, and somehow nobody knows what they&rsquo;re doing.
                 </p>
@@ -3183,7 +3261,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Platformer / 2D Action</div>
-                <div class="card-title">Chicago Family Adventure</div>
+                <h3 class="card-title">Chicago Family Adventure</h3>
                 <p class="card-desc">
                     Five family members, one fluffy dog, and an entire city that apparently needs saving. Pick Dad, Mom, Player One, Player Two, or Lupin and jump, stomp, and occasionally panic your way through a pixel-art Chicago. Each character has a special ability. Dad ground-pounds, Mom double-jumps, the boys have speed and firepower, and Lupin is a dog who somehow got promoted to playable hero. Race across downtown rooftops, dodge CTA trains, battle angry pigeons, construction cones, rats, and alien invaders, and collect enough Chicago hot dogs to survive the Loop. Four levels of old-school platforming, secret collectibles, power-ups, and a giant robot boss made out of the CTA&rsquo;s finest equipment. Built by AI agents that have never played Mario but are extremely confident they understand jumping physics. The Brown Line remains the most dangerous enemy.
                 </p>
@@ -3212,7 +3290,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Kart Racing / 3D</div>
-                <div class="card-title">Family Kart</div>
+                <h3 class="card-title">Family Kart</h3>
                 <p class="card-desc">
                     Six family members, three laps, zero mercy. Dad is the Powerhouse with a Dad Boost that roars down any straightaway. Mom is the Strategist, who smiles every time she passes you and carries a shield for everything you throw at her. Player One takes the clean racing line, Player Two takes every risky shortcut, and Lupin, a fluffy Tibetan Terrier with zero brakes, drops bouncing tennis balls behind him. Then there&rsquo;s Grandma: cheerful, sweet, and the owner of a homing pie aimed at whoever is in first. Race the Chicago lakefront, the neighborhood alleys, a giant kitchen, Lupin&rsquo;s dog park and a lake-effect Snowpocalypse. Hold the drift until the sparks turn purple, then fire Flying Pizzas, Banana Peels, Giant Dog Bones and Chicago Potholes at the people you love. Two Grand Prix cups, Time Trials against your own ghost, and two-player split screen, so the arguments can happen on one couch.
                 </p>
@@ -3240,7 +3318,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Endless Runner / 3D</div>
-                <div class="card-title">Chicago Dash</div>
+                <h3 class="card-title">Chicago Dash</h3>
                 <p class="card-desc">
                     Run through Chicago at full speed, dodging CTA trains, construction barrels, potholes, and whatever else the city forgot to fix. Sprint through the Loop, race along the Riverwalk, and collect deep-dish pizza power-ups because apparently that&rsquo;s what passes for athletic nutrition around here. Three lanes, endless obstacles, and a steadily increasing chance of getting flattened by the Brown Line. Built by an AI that has never ridden the CTA but is extremely confident about how trains work. Keep running, collect coins, and see how far you make it before Chicago&rsquo;s infrastructure finally wins.
                 </p>
@@ -3268,7 +3346,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Arcade Management / 3D</div>
-                <div class="card-title">Laundry Monster</div>
+                <h3 class="card-title">Laundry Monster</h3>
                 <p class="card-desc">
                     Washing is easy. <em>Finishing</em> is the game. Pull dirty clothes off the Monster, wash, dry, fold, and put them away &mdash; only the closet scores. The moment a dryer stops, a 15-second wrinkle clock starts. Wet laundry mildews in 20. You can carry two things at a time, so walking is the real cost. Pants always have pockets: hold to check them, or skip it and gamble on the tissue, the crayon, the wallet, or your AirPods. Every dry cycle clogs the lint trap, which never helps the load in front of you and eventually catches fire. Every wash may send one sock to the Void. You will never reach zero. Panic-dump on The Chair and it all wrinkles twice as fast. The Monster grows from everything you fail to finish, and late in a run it has eyes. It ends the same way every time: THE LAUNDRY WON.
                 </p>
@@ -3296,7 +3374,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Arcade Mining / Survival-Descent</div>
-                <div class="card-title">Alien Digger</div>
+                <h3 class="card-title">Alien Digger</h3>
                 <p class="card-desc">
                     Drill a hole in somebody else&rsquo;s planet, rob it, and leave. Two hundred tiles of alien crust sit between your rig and the core &mdash; ochre earth, then rock, then ice, then something bioluminescent, then crystal, then magma, which is exactly as welcoming as it sounds. Fuel is the real clock: drilling burns it fast, coasting burns it slow, and running dry starts chewing through your hull instead. Plant three fusion charges in the core and a 90-second timer begins, which is the moment you learn that the tunnel you dug on the way down was not designed for coming back up. The drill also has no weapon. Ramming is the entire combat system, and it damages you too. Make it out and you get PLANET CRACKED plus every ore you banked. Miss it and you get TOO SLOW, subtitled &ldquo;you were still inside.&rdquo;
                 </p>
@@ -3324,7 +3402,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Kaiju Rampage / Action</div>
-                <div class="card-title">Kaiju Rampage</div>
+                <h3 class="card-title">Kaiju Rampage</h3>
                 <p class="card-desc">
                     You are the giant radioactive lizard your government warned you about. Stomp neighborhoods, swat helicopters, and exhale atomic breath at anything that beeps. Tiny screaming citizens flee in 4 directions because the AI only knew 4 directions. Tanks roll up, miss spectacularly, and explode in glorious pixel fire. There is no win condition, only collateral damage. Godzilla's lawyers have been notified.
                 </p>
@@ -3352,7 +3430,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Local Multiplayer / Party</div>
-                <div class="card-title">Dad Tax Attack!</div>
+                <h3 class="card-title">Dad Tax Attack!</h3>
                 <p class="card-desc">
                     Three-player couch chaos where Dad reaches across the dinner table with a horrifyingly stretchy arm to steal pizza slices from his kids &mdash; while they furiously mash buttons to block him. One player on mouse, one on gamepad, one on keyboard. Features a stamina system so the kids can't just hold block forever, a sad wilted salad as Dad's motivation, and an Italian chiptune banger. Parenting simulator of the year.
                 </p>
@@ -3380,7 +3458,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Tower Defense / Strategy</div>
-                <div class="card-title">Dinosaur Escape</div>
+                <h3 class="card-title">Dinosaur Escape</h3>
                 <p class="card-desc">
                     Jurassic Park but you're on a budget. Place traps along the escape path to stop increasingly angry dinosaurs from breaking containment. The neon aesthetic says "arcade classic" but the gameplay says "vibe coded at 2am." We love it anyway.
                 </p>
@@ -3408,7 +3486,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Real-Time Strategy</div>
-                <div class="card-title">Warzone</div>
+                <h3 class="card-title">Warzone</h3>
                 <p class="card-desc">
                     We asked Claude to build Command &amp; Conquer and this is what we got. Pick from 6 nations, manage supply lines, and wage war across arctic tundra to scorching deserts. It has a map editor, replays, and multiplayer &mdash; features we didn't even ask for.
                 </p>
@@ -3436,7 +3514,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Competitive Tower Defense</div>
-                <div class="card-title">Castle Siege 3D</div>
+                <h3 class="card-title">Castle Siege 3D</h3>
                 <p class="card-desc">
                     Two castles enter, one castle leaves. Build turrets, magic towers, and catapults while hurling goblins and dark knights at your friend's castle. Will it crash? Maybe. Will it be fun? Absolutely. Is the AI balanced? We'll get back to you on that.
                 </p>
@@ -3464,7 +3542,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Base Strategy / Mech Combat</div>
-                <div class="card-title">Robot Attack 2026</div>
+                <h3 class="card-title">Robot Attack 2026</h3>
                 <p class="card-desc">
                     Vibe-coded with an AI copilot after the kids went to bed and zero regrets. Command a base, launch missiles, and send giant disposable mechs to punch your enemy's headquarters into a crater &mdash; all wrapped in an amber CRT glow that screams "what if a Game Boy ran a war room." Strategy optional, explosions mandatory.
                 </p>
@@ -3492,7 +3570,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Birthday Adventure / Platformer</div>
-                <div class="card-title">Player Two's Birthday Stuffie Adventure</div>
+                <h3 class="card-title">Player Two's Birthday Stuffie Adventure</h3>
                 <p class="card-desc">
                     It's Player Two's birthday and his stuffed animals have escaped into a wild adventure! Guide your favorite stuffies through birthday-themed levels stuffed with cake, presents, and party chaos. Built by an AI that has never attended a kid's birthday party but watched enough YouTube to fake it. Happy birthday, Player Two &mdash; here's a game nobody asked for but everyone needed.
                 </p>
@@ -3520,7 +3598,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Gothic Parser Adventure</div>
-                <div class="card-title">The Last Will of Ashvale</div>
+                <h3 class="card-title">The Last Will of Ashvale</h3>
                 <p class="card-desc">
                     Autumn, 1888. The coachman drops you at the gates of Ashvale Manor and bolts at unwholesome speed, leaving you with a telegram, a fog, and the sound of your own breathing. You are Dr. Alistair Vance, paranormal investigator. Lord Edmund lies dead inside, his will contested, the household scattered &mdash; and you have until the manor's clock strikes thirteen. A five-haunting parser adventure where typing EXAMINE PORTRAIT may be the bravest thing you do all night.
                 </p>
@@ -3548,7 +3626,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Rocket Builder / Physics</div>
-                <div class="card-title">Scrap Rocket: Moonshot Mayhem</div>
+                <h3 class="card-title">Scrap Rocket: Moonshot Mayhem</h3>
                 <p class="card-desc">
                     A chaotic, physics-driven rocket builder where you bolt together a ridiculous spacecraft from a junkyard's worth of barrels, leaf-blowers, garden hoses, and questionable structural decisions &mdash; then light the fuse and pray it makes it to the moon at 1,000,000 ft. Most attempts end in spectacular cartwheels, gravity-assisted somersaults, or a fireball at the launch pad. Iterate, scavenge, and gradually evolve from "lawn-dart" to "lunar legend."
                 </p>
@@ -3576,7 +3654,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Office Battle Card Game</div>
-                <div class="card-title">Performance Review</div>
+                <h3 class="card-title">Performance Review</h3>
                 <p class="card-desc">
                     Finally, a game that captures the true violence of corporate America. Build a deck of 20 stereotypical office employees &mdash; The Intern, The Sales Bro, The CEO &mdash; and battle in Pok&eacute;mon-style turn-based combat. Spend Energy (refills each turn, like your coffee), trade Influence damage minus Tenure, and weaponize abilities like Mandatory Meetings, office gossip, and an IT Guy who reboots everything. Sales beats People-Ops beats Engineering beats Finance beats Creative beats Operations beats Sales. Caffeine is neutral &mdash; it doesn't pick sides, it just vibrates. KO every card or take down the CEO for an instant W. Quick Battle if you don't have time to build a deck, because you have a stand-up at 9:15.
                 </p>
@@ -3604,7 +3682,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Typing Tutor / Skill</div>
-                <div class="card-title">Typing Battle</div>
+                <h3 class="card-title">Typing Battle</h3>
                 <p class="card-desc">
                     Four mini-games and a panda avatar are here to teach you how to type &mdash; like, actually type, with all ten fingers, the way nature intended. Drill the keys in calm Practice mode, catch Falling Words before they crash, blast keyboard enemies in Word Blaster, or chase a checkered flag through the stars in Adventure Race. Tracks WPM, accuracy, streak, and score, because nothing motivates a kid like the cold judgment of a number going down. The AI swears this is educational. Your kids will mostly believe it.
                 </p>
@@ -3632,7 +3710,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Space Exploration / Adventure</div>
-                <div class="card-title">Cosmos Explorer</div>
+                <h3 class="card-title">Cosmos Explorer</h3>
                 <p class="card-desc">
                     Fire up your engines and chart a course through an endless, star-strewn galaxy. Slingshot around alien planets, thread glittering asteroid fields, and scan uncharted worlds for the secrets they've been hiding since the dawn of time. Every jump drops you somewhere new &mdash; a ringed gas giant, a shimmering nebula, a lonely moon waiting to be named. Manage your fuel, dodge the debris, and see just how deep into the cosmos your curiosity will carry you. Space is big. Go find out how big.
                 </p>
@@ -3660,7 +3738,7 @@
             </div>
             <div class="card-info">
                 <div class="card-genre">Bug Defense / Arcade</div>
-                <div class="card-title">Mom's Ant Attack</div>
+                <h3 class="card-title">Mom's Ant Attack</h3>
                 <p class="card-desc">
                     Somebody left the picnic out again, and now the whole colony's marching on the kitchen. Grab your slipper, Mom &mdash; it's time to defend the crumbs. Waves of six-legged invaders swarm the tablecloth from every crack and corner, and only your lightning reflexes stand between them and the sugar bowl. Squash the scouts before they signal the swarm, clear the trail before it becomes a highway, and rack up a combo big enough to make the exterminator jealous. They're organized. They're relentless. They will not respect your clean floors.
                 </p>
@@ -3698,7 +3776,9 @@
     </div>
 </div>
 
-<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">&#x2191;</button>
+<button type="button" class="scroll-top" id="scroll-top" aria-label="Scroll to top"><span aria-hidden="true">&#x2191;</span></button>
+
+</main>
 
 <footer>
     <div class="footer-logo">HALLUCINATED GAMES</div>
@@ -3706,7 +3786,7 @@
     <p class="footer-contact"><a href="mailto:hallucinated.games.inc@gmail.com">Contact Us</a> <a href="game-wishes/">Request a Personalized Game</a></p>
     <p class="footer-about"><button type="button" id="about-open">About Hallucinated Games</button></p>
     <p class="footer-privacy"><strong>Privacy:</strong> no cookies, no analytics, no tracking. We store one setting in your browser so the intro only plays once, and our host keeps standard server logs. Each game opens on its own site, and some save your progress in your browser.</p>
-    <p style="margin-top:20px;font-size:10px;color:#333;letter-spacing:1px;">Hallucinated Games, Chicago IL. Proudly serving AI game slop since 2026.</p>
+    <p style="margin-top:20px;font-size:12px;color:#8a8a8a;letter-spacing:1px;">Hallucinated Games, Chicago IL. Proudly serving AI game slop since 2026.</p>
 </footer>
 
 <dialog class="about-dialog" id="about-dialog" aria-labelledby="about-title">
@@ -3807,6 +3887,7 @@
     const cards = document.querySelectorAll('.game-card');
     cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
+            if (document.documentElement.classList.contains('motion-off')) return;
             const rect = card.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width - 0.5;
             const y = (e.clientY - rect.top) / rect.height - 0.5;
@@ -3832,6 +3913,7 @@
         const count = (filter === 'all')
             ? cards.length
             : Array.from(cards).filter(c => c.dataset.category === filter).length;
+        pill.dataset.label = pill.textContent.trim().toLowerCase();
         pill.textContent = pill.textContent.trim() + ` (${count})`;
     });
 
@@ -3869,21 +3951,35 @@
         } else {
             emptyState.classList.remove('visible');
         }
+        return visibleCount;
+    }
+
+    const resultsStatus = document.getElementById('results-status');
+    function announce(count) {
+        if (!resultsStatus) return;
+        const pill = document.querySelector('.filter-pill.active');
+        const label = pill && pill.dataset.filter !== 'all' ? pill.dataset.label + ' ' : '';
+        resultsStatus.textContent = count === 1 ? `Showing 1 ${label}game` : `Showing ${count} ${label}games`;
     }
 
     pills.forEach(pill => {
         pill.addEventListener('click', () => {
-            pills.forEach(p => p.classList.remove('active'));
+            pills.forEach(p => { p.classList.remove('active'); p.setAttribute('aria-pressed', 'false'); });
             pill.classList.add('active');
+            pill.setAttribute('aria-pressed', 'true');
             activeFilter = pill.dataset.filter;
-            applyFilters();
+            announce(applyFilters());
         });
     });
 
     if (searchInput) {
+        let searchTimer = null;
         searchInput.addEventListener('input', () => {
             activeSearch = searchInput.value.trim().toLowerCase();
-            applyFilters();
+            const count = applyFilters();
+            // Announce once typing pauses, not on every keystroke (the empty state announces itself)
+            clearTimeout(searchTimer);
+            if (count > 0) searchTimer = setTimeout(() => announce(count), 600);
         });
         // ESC clears the search
         searchInput.addEventListener('keydown', (e) => {
@@ -3908,6 +4004,10 @@
                 stats.forEach(stat => {
                     const target = parseInt(stat.dataset.target);
                     const suffix = stat.dataset.suffix || '';
+                    if (document.documentElement.classList.contains('motion-off')) {
+                        stat.textContent = target + suffix;
+                        return;
+                    }
                     const duration = 1200;
                     const start = performance.now();
                     function tick(now) {
@@ -12651,12 +12751,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Auto-attach aria-label to each tile so screen readers announce
     // "Play <Title> — <Genre>" instead of the bare URL.
-    cards.forEach(card => {
-        if (card.hasAttribute('aria-label')) return;
+    cards.forEach((card, i) => {
         const title = card.querySelector('.card-title')?.textContent?.trim();
         const genre = card.querySelector('.card-genre')?.textContent?.trim();
-        if (title) {
-            card.setAttribute('aria-label', genre ? `Play ${title} — ${genre}` : `Play ${title}`);
+        if (title && !card.hasAttribute('aria-label')) {
+            card.setAttribute('aria-label', genre ? `Play Now: ${title} (${genre})` : `Play Now: ${title}`);
+        }
+        const desc = card.querySelector('.card-desc');
+        if (desc) {
+            desc.id = desc.id || `card-desc-${i + 1}`;
+            card.setAttribute('aria-describedby', desc.id);
         }
     });
 
@@ -12739,17 +12843,30 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const returning = document.documentElement.classList.contains('hg-returning');
 
+    // While the welcome overlay is up, everything behind it is inert, so keyboard
+    // and screen reader users can't wander into a page they can't see.
+    const behind = Array.from(document.body.children).filter(el =>
+        el !== overlay && !['SCRIPT', 'AUDIO', 'DIALOG'].includes(el.tagName));
+    const setBehindInert = on => behind.forEach(el => { if (on) el.setAttribute('inert', ''); else el.removeAttribute('inert'); });
+
     // First visit only: start the highlight reel (muted autoplay is allowed).
     // Returning visitors never see the overlay, so the video is never fetched.
+    // With motion off, the reel stays on its still poster frame.
     if (returning) {
         overlay.style.display = 'none';
     } else {
-        reelVideo.play().then(() => {
+        setBehindInert(true);
+        enterBtn.focus();
+        if (document.documentElement.classList.contains('motion-off')) {
             reelVideo.classList.add('playing');
-        }).catch(() => {
-            // Fallback: show the poster frame
-            reelVideo.classList.add('playing');
-        });
+        } else {
+            reelVideo.play().then(() => {
+                reelVideo.classList.add('playing');
+            }).catch(() => {
+                // Fallback: show the poster frame
+                reelVideo.classList.add('playing');
+            });
+        }
     }
 
     function startMusic() {
@@ -12775,6 +12892,9 @@ window.addEventListener('DOMContentLoaded', () => {
         if (overlay.classList.contains('hidden')) return;
         try { localStorage.setItem('hg-entered', '1'); } catch (e) {}
         overlay.classList.add('hidden');
+        setBehindInert(false);
+        const h1 = document.querySelector('header h1');
+        if (h1) h1.focus({ preventScroll: true });
         setTimeout(() => {
             overlay.style.display = 'none';
             reelVideo.pause();
@@ -12796,6 +12916,23 @@ window.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
         if (playing) stopMusic(); else startMusic();
     });
+
+    // Motion toggle: stops background animation, the reel and the card effects
+    const motionBtn = document.getElementById('motion-toggle');
+    if (motionBtn) {
+        const motionLabel = motionBtn.querySelector('.mt-label');
+        const sync = () => {
+            const off = document.documentElement.classList.contains('motion-off');
+            motionLabel.textContent = off ? 'MOTION OFF' : 'MOTION ON';
+        };
+        sync();
+        motionBtn.addEventListener('click', () => {
+            const off = document.documentElement.classList.toggle('motion-off');
+            try { localStorage.setItem('hg-motion', off ? 'off' : 'on'); } catch (e) {}
+            if (off) { reelVideo.pause(); document.querySelectorAll('.game-card').forEach(c => c.style.transform = ''); }
+            sync();
+        });
+    }
 })();
 </script>
 

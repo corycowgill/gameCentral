@@ -154,8 +154,9 @@
         .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
         .field { margin-bottom: 16px; }
         label, .label { display: block; font-weight: 600; color: #fff; margin-bottom: 6px; font-size: 16px; }
+        label + .hint { margin-top: -4px; }
         .req { color: var(--warm); }
-        .hint { display: block; font-weight: 400; color: var(--muted); font-size: 14px; margin-top: 2px; }
+        .hint { display: block; font-weight: 400; color: var(--muted); font-size: 14px; margin: -2px 0 8px; }
         input[type=text], input[type=email], input[type=tel], select, textarea {
             width: 100%; padding: 12px 14px; border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.14); background: var(--panel-2); color: var(--text);
@@ -188,7 +189,19 @@
         details p { margin-top: 10px; color: var(--muted); }
 
         footer { text-align: center; padding: 30px 0 50px; border-top: 1px solid var(--line); margin-top: 60px; color: var(--muted); font-size: 14px; }
-        footer .logo { font-family: 'Orbitron', sans-serif; letter-spacing: 3px; color: #555; font-weight: 700; margin-bottom: 8px; }
+        footer .logo { font-family: 'Orbitron', sans-serif; letter-spacing: 3px; color: #85858f; font-weight: 700; margin-bottom: 8px; }
+
+        .skip-link {
+            position: fixed; top: 12px; left: 12px; z-index: 100; padding: 10px 18px; border-radius: 8px;
+            background: var(--mint); color: #04140e; font-weight: 700; text-decoration: none; transform: translateY(-200%);
+        }
+        .skip-link:focus { transform: none; color: #04140e; }
+        .check:focus-within { outline: 2px solid var(--mint); outline-offset: 4px; border-radius: 6px; }
+        .check input:focus-visible { outline: none; }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+        }
 
         @media (max-width: 640px) {
             body { font-size: 17px; }
@@ -199,9 +212,10 @@
     </style>
 </head>
 <body>
-<div class="bg-grid"></div>
-<div class="glow a"></div>
-<div class="glow b"></div>
+<a class="skip-link" href="#request">Skip to the request form</a>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="glow a" aria-hidden="true"></div>
+<div class="glow b" aria-hidden="true"></div>
 
 <div class="wrap">
     <nav class="topnav" aria-label="Site">
@@ -209,6 +223,7 @@
         <a class="cta" href="#request">Request a game</a>
     </nav>
 
+    <main id="main">
     <header class="hero">
         <div class="badge">Now accepting requests</div>
         <h1>A video game made just for your kid</h1>
@@ -249,17 +264,18 @@
         <p class="muted" style="margin-bottom: 20px;">This form is for parents and guardians. Fill it out together with your kid if you can. Their exact words are the best part.</p>
 
         <div class="form-card">
-            <form id="wish-form" novalidate>
+            <form id="wish-form" novalidate aria-describedby="required-note">
+                <p class="form-note" id="required-note" style="margin: 0 0 18px;">Fields marked <span class="req">*</span> are required.</p>
                 <fieldset>
                     <legend>About you</legend>
                     <div class="row">
                         <div class="field">
-                            <label for="parentName">Your name <span class="req">*</span></label>
+                            <label for="parentName">Your name <span class="req" aria-hidden="true">*</span></label>
                             <input type="text" id="parentName" name="parentName" autocomplete="name" required maxlength="80">
-                            <span class="err">Please tell us your name.</span>
+                            <span class="err" id="parentName-err">Please tell us your name.</span>
                         </div>
                         <div class="field">
-                            <label for="relationship">Relationship to the child <span class="req">*</span></label>
+                            <label for="relationship">Relationship to the child <span class="req" aria-hidden="true">*</span></label>
                             <select id="relationship" name="relationship" required>
                                 <option value="">Choose one</option>
                                 <option>Parent</option>
@@ -268,18 +284,19 @@
                                 <option>Other family member with the parent&rsquo;s OK</option>
                                 <option>Hospital staff, child life specialist or social worker, with the family&rsquo;s OK</option>
                             </select>
-                            <span class="err">Please choose one.</span>
+                            <span class="err" id="relationship-err">Please choose one.</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="field">
-                            <label for="email">Email <span class="req">*</span></label>
+                            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
                             <input type="email" id="email" name="email" autocomplete="email" required maxlength="120">
-                            <span class="err">Please enter an email we can reply to.</span>
+                            <span class="err" id="email-err">Please enter an email we can reply to.</span>
                         </div>
                         <div class="field">
-                            <label for="phone">Phone <span class="hint">Optional, if you&rsquo;d rather we call or text</span></label>
-                            <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="30">
+                            <label for="phone">Phone</label>
+                            <span class="hint" id="phone-hint">Optional, if you&rsquo;d rather we call or text</span>
+                            <input type="tel" id="phone" aria-describedby="phone-hint" name="phone" autocomplete="tel" maxlength="30">
                         </div>
                     </div>
                     <div class="field">
@@ -295,11 +312,12 @@
                 <fieldset>
                     <legend>About the player</legend>
                     <div class="field">
-                        <label for="kidName">First name or nickname <span class="hint">Optional, for the title screen. No last names, please.</span></label>
-                        <input type="text" id="kidName" name="kidName" maxlength="40">
+                        <label for="kidName">First name or nickname</label>
+                        <span class="hint" id="kidName-hint">Optional, for the title screen. No last names, please.</span>
+                        <input type="text" id="kidName" aria-describedby="kidName-hint" name="kidName" maxlength="40">
                     </div>
                     <div class="field">
-                        <label for="situation">What&rsquo;s going on right now? <span class="req">*</span></label>
+                        <label for="situation">What&rsquo;s going on right now? <span class="req" aria-hidden="true">*</span></label>
                         <select id="situation" name="situation" required>
                             <option value="">Choose the closest fit</option>
                             <option>In the hospital</option>
@@ -308,19 +326,21 @@
                             <option>Family going through a hard time</option>
                             <option>Other</option>
                         </select>
-                        <span class="err">Please choose the closest fit.</span>
+                        <span class="err" id="situation-err">Please choose the closest fit.</span>
                     </div>
                     <div class="field">
-                        <label for="story">A little about why this would help <span class="hint">A sentence or two is plenty. Please skip diagnoses and medical details, we don&rsquo;t need them.</span></label>
-                        <textarea id="story" name="story" maxlength="600" data-counter></textarea>
+                        <label for="story">A little about why this would help</label>
+                        <span class="hint" id="story-hint">A sentence or two is plenty. Please skip diagnoses and medical details, we don&rsquo;t need them.</span>
+                        <textarea id="story" aria-describedby="story-hint" name="story" maxlength="600" data-counter></textarea>
                     </div>
                 </fieldset>
 
                 <fieldset>
                     <legend>The game</legend>
                     <div class="field">
-                        <label for="gameType">What type of game? <span class="req">*</span> <span class="hint">Pick the closest. You can describe it in your own words below.</span></label>
-                        <select id="gameType" name="gameType" required>
+                        <label for="gameType">What type of game? <span class="req" aria-hidden="true">*</span></label>
+                        <span class="hint" id="gameType-hint">Pick the closest. You can describe it in your own words below.</span>
+                        <select id="gameType" aria-describedby="gameType-hint" name="gameType" required>
                             <option value="">Choose a type</option>
                             <option>Adventure or quest</option>
                             <option>Platformer (run and jump)</option>
@@ -335,21 +355,24 @@
                             <option>Not sure, surprise us</option>
                             <option>Something else</option>
                         </select>
-                        <span class="err">Please choose a type of game.</span>
+                        <span class="err" id="gameType-err">Please choose a type of game.</span>
                     </div>
                     <div class="field">
-                        <label for="gameIdea">What should the game be about? <span class="req">*</span> <span class="hint">Racing dinosaurs? A space rescue? A cat who runs a bakery? Saving the world from broccoli? Anything goes.</span></label>
-                        <textarea id="gameIdea" name="gameIdea" required maxlength="1200" data-counter></textarea>
-                        <span class="err">Please tell us a little about the game.</span>
+                        <label for="gameIdea">What should the game be about? <span class="req" aria-hidden="true">*</span></label>
+                        <span class="hint" id="gameIdea-hint">Racing dinosaurs? A space rescue? A cat who runs a bakery? Saving the world from broccoli? Anything goes.</span>
+                        <textarea id="gameIdea" aria-describedby="gameIdea-hint" name="gameIdea" required maxlength="1200" data-counter></textarea>
+                        <span class="err" id="gameIdea-err">Please tell us a little about the game.</span>
                     </div>
                     <div class="field">
-                        <label for="characters">Who are the characters, and what do they look like? <span class="req">*</span> <span class="hint">The hero, sidekicks, villains, pets. Colors, outfits, powers, silly hats.</span></label>
-                        <textarea id="characters" name="characters" required maxlength="1200" data-counter></textarea>
-                        <span class="err">Please describe at least the main character.</span>
+                        <label for="characters">Who are the characters, and what do they look like? <span class="req" aria-hidden="true">*</span></label>
+                        <span class="hint" id="characters-hint">The hero, sidekicks, villains, pets. Colors, outfits, powers, silly hats.</span>
+                        <textarea id="characters" aria-describedby="characters-hint" name="characters" required maxlength="1200" data-counter></textarea>
+                        <span class="err" id="characters-err">Please describe at least the main character.</span>
                     </div>
                     <div class="field">
-                        <label for="favorites">Favorite things, colors or games they love <span class="hint">Optional. Helps us get the feel right.</span></label>
-                        <textarea id="favorites" name="favorites" maxlength="600" data-counter></textarea>
+                        <label for="favorites">Favorite things, colors or games they love</label>
+                        <span class="hint" id="favorites-hint">Optional. Helps us get the feel right.</span>
+                        <textarea id="favorites" aria-describedby="favorites-hint" name="favorites" maxlength="600" data-counter></textarea>
                     </div>
                     <div class="row">
                         <div class="field">
@@ -374,17 +397,18 @@
                         </div>
                     </div>
                     <div class="field">
-                        <label for="avoid">Anything we should avoid or include? <span class="hint">Optional. Fears, scary stuff, needles, loud sounds, reading level, an inside joke, the family dog.</span></label>
-                        <textarea id="avoid" name="avoid" maxlength="600" data-counter></textarea>
+                        <label for="avoid">Anything we should avoid or include?</label>
+                        <span class="hint" id="avoid-hint">Optional. Fears, scary stuff, needles, loud sounds, reading level, an inside joke, the family dog.</span>
+                        <textarea id="avoid" aria-describedby="avoid-hint" name="avoid" maxlength="600" data-counter></textarea>
                     </div>
                 </fieldset>
 
                 <fieldset>
                     <legend>Almost done</legend>
                     <label class="check" id="consentAdultWrap"><input type="checkbox" id="consentAdult" required> I&rsquo;m 18 or older and I&rsquo;m the child&rsquo;s parent or guardian, or I have their permission to send this request.</label>
-                    <span class="err">Please confirm this so we can take your request.</span>
+                    <span class="err" id="consentAdult-err">Please confirm this so we can take your request.</span>
                     <label class="check" id="consentContactWrap"><input type="checkbox" id="consentContact" required> It&rsquo;s OK for Hallucinated Games to contact me about this request.</label>
-                    <span class="err">We need your OK to reply to you.</span>
+                    <span class="err" id="consentContact-err">We need your OK to reply to you.</span>
                 </fieldset>
 
                 <div class="actions">
@@ -445,6 +469,8 @@
         <a class="btn" href="#request">Request a game</a>
     </section>
 
+    </main>
+
     <footer>
         <div class="logo">HALLUCINATED GAMES</div>
         <p><a href="../">Back to the arcade</a></p>
@@ -466,17 +492,30 @@
     form.querySelectorAll('textarea[data-counter]').forEach(t => {
         const c = document.createElement('div');
         c.className = 'counter';
+        c.setAttribute('aria-hidden', 'true');
         const upd = () => { c.textContent = t.value.length + ' / ' + t.maxLength; };
         t.after(c); t.addEventListener('input', upd); upd();
     });
 
     // Clear an error as soon as the field is fixed
-    form.addEventListener('input', e => {
-        const f = e.target.closest('.field');
-        if (f) f.classList.remove('invalid');
-        const ch = e.target.closest('.check');
-        if (ch && e.target.checked) ch.classList.remove('invalid');
-    });
+    const clearError = e => {
+        const el = e.target;
+        const f = el.closest('.field');
+        if (f && el.value.trim() !== '') { f.classList.remove('invalid'); markInvalid(el, false); }
+        const ch = el.closest('.check');
+        if (ch && el.checked) { ch.classList.remove('invalid'); markInvalid(el, false); }
+    };
+    form.addEventListener('input', clearError);
+    form.addEventListener('change', clearError);
+
+    // Point each control at its error message while it's showing
+    function markInvalid(el, bad) {
+        const errId = el.id + '-err';
+        const ids = (el.getAttribute('aria-describedby') || '').split(' ').filter(x => x && x !== errId);
+        if (bad) { ids.push(errId); el.setAttribute('aria-invalid', 'true'); }
+        else el.removeAttribute('aria-invalid');
+        if (ids.length) el.setAttribute('aria-describedby', ids.join(' ')); else el.removeAttribute('aria-describedby');
+    }
 
     function validate() {
         let first = null;
@@ -489,6 +528,7 @@
                 ok = el.value.trim() !== '' && (el.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
                 el.closest('.field').classList.toggle('invalid', !ok);
             }
+            markInvalid(el, !ok);
             if (!ok && !first) first = el;
         });
         if (first) first.focus();

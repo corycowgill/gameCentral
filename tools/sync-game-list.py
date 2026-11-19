@@ -16,7 +16,7 @@ page = Path(__file__).resolve().parent.parent / 'index.html'
 src = page.read_text(encoding='utf-8')
 
 tiles = re.findall(
-    r'<a href="([^"]+)" class="game-card[^"]*"[^>]*>.*?<div class="card-title">(.*?)</div>',
+    r'<a href="([^"]+)" class="game-card[^"]*"[^>]*>.*?<(?:div|h3) class="card-title">(.*?)</(?:div|h3)>',
     src, re.S)
 games = [{'name': html.unescape(re.sub(r'<[^>]+>', '', t)).strip(), 'url': u} for u, t in tiles]
 n = len(games)
